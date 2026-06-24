@@ -1,0 +1,60 @@
+enum Role {
+  ADMIN
+  CUSTOMER
+  STAFF
+}
+
+enum ProviderName {
+  GOOGLE
+  APPLE
+}
+
+model Provider {
+  id         String       @id @default(uuid())
+  name       ProviderName
+  providerId String
+  email      String?
+  userId     String
+  user       User         @relation(fields: [userId], references: [id])
+  createdAt  DateTime     @default(now())
+
+  @@unique([name, providerId])
+}
+
+model User {
+  id                       String                    @id @default(uuid())
+  email                    String?                   @unique
+  firstName                String
+  lastName                 String
+  provider                 Provider[]
+  phoneNumber              String?                   @unique
+  phoneVerified            Boolean                   @default(false)
+  emailVerified            Boolean                   @default(false)
+  hashedPassword           String?                   @unique
+  role                     Role                      @default(CUSTOMER)
+  profileImageId           String?                   @unique
+  profileImage             Media?                    @relation(fields: [profileImageId], references: [id])
+  sentMessages             ChatMessage[]
+  customerOrders           Order[]                   @relation("CustomerOrders")
+  otps                     Otp[]
+  notifications            Notification[]
+  staffOrders              Order[]                   @relation("StaffOrders")
+  conversationParticipants ConversationParticipant[]
+  recentServices           RecentService[]
+  recurringOrders          RecurringOrder[]
+  campaignsCreated         Campaign[]
+  orderDrafts              OrderDraft[]
+  personalPromotions       Promotion[]
+  promotionRedemptions     PromotionRedemption[]
+  loyaltyAccount           LoyaltyAccount?
+  referralsMade            Referral[]                @relation("ReferralsMade")
+  referralReceived         Referral?                 @relation("ReferralReceived")
+  rewardRedemptions        RewardRedemption[]
+  liveOrderEvents          LiveOrder[]               @relation("EventTriggeredBy")
+  liveOrderWorkedOn        LiveOrder[]               @relation("WorkedOnBy")
+  createdServices          Service[]                 @relation("ServiceCreatedBy")
+  updatedServices          Service[]                 @relation("ServiceUpdatedBy")
+  sessions                 Session[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}

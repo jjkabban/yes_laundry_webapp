@@ -1,0 +1,35 @@
+
+enum OrderEventType {
+  CREATED
+  CONFIRMED
+  ASSIGNED
+  REASSIGNED
+  PICKED_UP
+  PROCESSING_STARTED
+  PROFESSIONAL_CLEANING
+  READY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  PAYMENT_RECEIVED
+  CANCELLED
+  NOTE_ADDED
+}
+
+model LiveOrder {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  eventType    OrderEventType
+  status       OrderStatus?
+  workedOnById String
+  workedOnBy   User           @relation("WorkedOnBy", fields: [workedOnById], references: [id])
+
+  triggeredById String?
+  triggeredBy   User?   @relation("EventTriggeredBy", fields: [triggeredById], references: [id])
+
+  notes    String?
+  metadata Json?
+
+  createdAt DateTime @default(now())
+}

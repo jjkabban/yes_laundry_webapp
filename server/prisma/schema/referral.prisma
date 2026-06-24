@@ -1,0 +1,25 @@
+enum ReferralStatus {
+  PENDING // referee signed up, hasn't completed qualifying action yet
+  COMPLETED // referee completed first order, reward issued
+  EXPIRED
+}
+
+model Referral {
+  id String @id @default(cuid())
+
+  referrerId String
+  referrer   User   @relation("ReferralsMade", fields: [referrerId], references: [id])
+
+  refereeId String @unique
+  referee   User   @relation("ReferralReceived", fields: [refereeId], references: [id])
+
+  code String
+
+  status      ReferralStatus @default(PENDING)
+  completedAt DateTime?
+
+  rewardPromotionId String?    @unique
+  rewardPromotion   Promotion? @relation(fields: [rewardPromotionId], references: [id])
+
+  createdAt DateTime @default(now())
+}

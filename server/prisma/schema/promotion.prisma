@@ -1,0 +1,90 @@
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum PromotionScope {
+  GENERAL // anyone can use it (subject to usage limits)
+  PERSONAL // issued to one specific user only
+}
+
+model Campaign {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+
+  startsAt DateTime?
+  endsAt   DateTime?
+  isActive Boolean   @default(true)
+
+  promotions Promotion[]
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Promotion {
+  id          String    @id @default(cuid())
+  code        String    @unique // "WELCOME10"
+  description String?
+  campaignId  String?
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+
+  discountType  DiscountType
+  discountValue Decimal      @db.Decimal(10, 2) // 10 (%) or 10.00 (currency)
+  maxDiscount   Decimal?     @db.Decimal(10, 2) // cap for percentage discounts
+
+  minOrderValue      Decimal?           @db.Decimal(10, 2) // order must be at least this much
+  applicableServices PromotionService[] // empty = applies to ALL services
+
+  usageLimit        Int? // total redemptions allowed across all users, null = unlimited
+  usageLimitPerUser Int?           @default(1)
+  usedCount         Int            @default(0)
+  scope             PromotionScope @default(GENERAL)
+
+  targetUserId     String?
+  targetUser       User?   @relation(fields: [targetUserId], references: [id])
+  isReferralReward Boolean @default(false)
+
+  startsAt    DateTime?
+  expiresAt   DateTime?
+  isActive    Boolean               @default(false)
+  referral    Referral?
+  redemptions PromotionRedemption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PromotionRedemption {
+  id String @id @default(cuid())
+
+  promotionId String
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  orderId          String  @unique
+  order            Order   @relation(fields: [orderId], references: [id])
+  isReferralReward Boolean @default(false)
+
+  discountApplied Decimal @db.Decimal(10, 2) // snapshot — actual amount discounted
+
+  createdAt DateTime @default(now())
+}
+
+model PromotionService {
+  id String @id @default(cuid())
+
+  promotionId String
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  @@unique([promotionId, serviceId])
+}

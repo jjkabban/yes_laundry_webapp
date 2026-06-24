@@ -1,0 +1,128 @@
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PICKED_UP
+  IN_PROGRESS
+  READY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id          String @id @default(cuid())
+  orderNumber String @unique
+
+  customerId String
+  customer   User   @relation("CustomerOrders", fields: [customerId], references: [id])
+
+  assignedStaffId String?
+  assignedStaff   User?         @relation("StaffOrders", fields: [assignedStaffId], references: [id])
+  conversation    Conversation?
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  status OrderStatus @default(PENDING)
+
+  // Only used when service.priceModel is PER_BAG or BY_WEIGHT
+  bagCount Int?
+  weightKg Decimal? @db.Decimal(5, 2)
+
+  // Only used when service.priceModel is PER_ITEM
+  items            OrderItem[]
+  recurringOrderId String?
+  recurringOrder   RecurringOrder? @relation(fields: [recurringOrderId], references: [id])
+
+  pickupAddress String
+  pickupWindow  DateTime
+  pickedUpAt    DateTime?
+
+  deliveryAddress String
+  deliveryWindow  DateTime?
+  deliveredAt     DateTime?
+
+  subtotal    Decimal @db.Decimal(10, 2)
+  deliveryFee Decimal @db.Decimal(10, 2)
+  discount    Decimal @default(0) @db.Decimal(10, 2)
+  total       Decimal @db.Decimal(10, 2)
+
+  transactions        Transaction[]
+  events              LiveOrder[]
+  notifications       Notification[]
+  promotionRedemption PromotionRedemption?
+  loyaltyTransactions LoyaltyTransaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  serviceItemId String
+  serviceItem   ServiceItem @relation(fields: [serviceItemId], references: [id])
+
+  quantity         Int
+  unitPriceAtOrder Decimal @db.Decimal(10, 2)
+  notes            String?
+}
+
+enum RecurrenceFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+model RecurringOrder {
+  id String @id @default(cuid())
+
+  customerId String
+  customer   User   @relation(fields: [customerId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  frequency     RecurrenceFrequency
+  dayOfWeek     Int? // 0–6, relevant for WEEKLY/BIWEEKLY
+  dayOfMonth    Int? // 1–31, relevant for MONTHLY
+  preferredTime String // e.g. "09:00", a time-of-day slot
+
+  pickupAddress   String
+  deliveryAddress String
+
+  isActive  Boolean   @default(true)
+  nextRunAt DateTime // when the next Order should be auto-generated
+  lastRunAt DateTime?
+
+  generatedOrders Order[] // history of orders this recurrence has produced
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderDraft {
+  id String @id @default(cuid())
+
+  customerId String
+  customer   User   @relation(fields: [customerId], references: [id])
+
+  serviceId String?
+  service   Service? @relation(fields: [serviceId], references: [id])
+
+  bagCount Int?
+  weightKg Decimal? @db.Decimal(5, 2)
+  items    Json?
+
+  pickupAddress   String?
+  pickupWindow    DateTime?
+  deliveryAddress String?
+  deliveryWindow  DateTime?
+
+  currentStep String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

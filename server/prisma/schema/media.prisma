@@ -1,0 +1,16 @@
+enum MediaType {
+  PICTURE
+  FILE
+  VIDEO
+}
+
+model Media {
+  id           String         @id @default(uuid())
+  url          String
+  type         MediaType
+  mimeType     String
+  size         String
+  userProfile  User?
+  serviceMedia ServiceMedia[]
+  createdAt    DateTime       @default(now())
+}

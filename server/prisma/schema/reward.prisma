@@ -1,0 +1,51 @@
+enum RewardType {
+  DISCOUNT_VOUCHER
+  FREE_SERVICE
+  POINTS_BONUS
+}
+
+model Reward {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  type        RewardType
+
+  pointsCost Int // how many loyalty points to redeem this
+
+  // Type-specific payload — what the reward actually grants
+  discountValue Decimal? @db.Decimal(10, 2)
+  freeServiceId String?
+  freeService   Service? @relation(fields: [freeServiceId], references: [id])
+
+  isActive   Boolean @default(true)
+  stockLimit Int? // null = unlimited
+
+  redemptions RewardRedemption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RedemptionStatus {
+  PENDING
+  FULFILLED
+  EXPIRED
+  CANCELLED
+}
+
+model RewardRedemption {
+  id String @id @default(cuid())
+
+  rewardId String
+  reward   Reward @relation(fields: [rewardId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  status RedemptionStatus @default(PENDING)
+
+  loyaltyTransactions LoyaltyTransaction[] // the points-deduction ledger entry
+
+  createdAt   DateTime  @default(now())
+  fulfilledAt DateTime?
+}

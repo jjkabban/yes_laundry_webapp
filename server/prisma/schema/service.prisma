@@ -1,0 +1,63 @@
+enum ServicePriceModel {
+  PER_ITEM
+  PER_BAG
+  BY_WEIGHT
+}
+
+model Service {
+  id                String             @id @default(ulid())
+  title             String
+  description       String
+  serviceMedia      ServiceMedia[]
+  turnaroundTime    String
+  basePrice         Decimal            @db.Decimal(10, 2)
+  priceModel        ServicePriceModel
+  isActive          Boolean            @default(true)
+  icon              String?
+  items             ServiceItem[]
+  createdById       String
+  createdBy         User               @relation("ServiceCreatedBy", fields: [createdById], references: [id])
+  updatedById       String
+  updatedBy         User               @relation("ServiceUpdatedBy", fields: [updatedById], references: [id])
+  orders            Order[]
+  promotionServices PromotionService[]
+
+  recentByUsers     RecentService[]
+  recurringOrders   RecurringOrder[]
+  orderDrafts       OrderDraft[]
+  loyaltyPointsRate Decimal?         @db.Decimal(5, 2)
+  rewards           Reward[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ServiceMediaType {
+  COVER_IMAGE
+  WORK
+}
+
+model ServiceMedia {
+  id        String           @id @default(uuid())
+  type      ServiceMediaType
+  mediaId   String
+  media     Media            @relation(fields: [mediaId], references: [id])
+  serviceId String // ← foreign key lives HERE
+  service   Service          @relation(fields: [serviceId], references: [id])
+  createdAt DateTime         @default(now())
+}
+
+model RecentService {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  lastUsedAt DateTime @default(now())
+  useCount   Int      @default(1) // optional — lets you show "most used" too, not just "most recent"
+
+  @@unique([userId, serviceId]) // one row per user-service pair, just update it on reuse
+}

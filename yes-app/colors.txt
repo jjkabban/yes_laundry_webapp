@@ -1,0 +1,8 @@
+blue color = #004a94
+services = Stain Removal
+Dry Cleaning
+Ironing /Pressing
+Personal Laundry
+Commercial Laundry
+
+mission = Our mission is simple - to provide you with a hassle-free and impeccable laundry experience that exceeds your expectations..
