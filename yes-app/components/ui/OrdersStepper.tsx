@@ -9,23 +9,29 @@ import {
   OrderStatus,
 } from "@/context/types/order";
 import { formatOrderTime } from "@/utils/datetime";
+import Icon from "../icons/LucideIcons";
 
-type DisplayStep = 1 | 2 | 3 | 4 | 5;
+type DisplayStep = 1 | 2 | 3 | 4;
 
-const ORDER_STEPS: { step: DisplayStep; label: string }[] = [
-  { step: 1, label: "Submitted" },
-  { step: 2, label: "Picked up" },
-  { step: 3, label: "Cleaning" },
-  { step: 4, label: "Ready" },
-  { step: 5, label: "Delivered" },
+const ORDER_STEPS: { step: DisplayStep; label: string; icon: string }[] = [
+  { step: 1, label: "Picked up", icon: "Truck" },
+  { step: 2, label: "Washing", icon: "WashingMachine" },
+  { step: 3, label: "Ready", icon: "Shirt" },
+  { step: 4, label: "Delivered", icon: "Home" },
 ];
 
+const STEPS_ICON: Record<number, string> = {
+  1: "Truck",
+  2: "WashingMachine",
+  3: "Shirt",
+  4: "Building2",
+};
+
 const STEP_EVENTS: Record<DisplayStep, OrderEventType[]> = {
-  1: ["CREATED", "CONFIRMED", "ASSIGNED", "REASSIGNED"],
-  2: ["PICKED_UP"],
-  3: ["PROCESSING_STARTED", "PROFESSIONAL_CLEANING"],
-  4: ["READY"],
-  5: ["OUT_FOR_DELIVERY", "DELIVERED", "PAYMENT_RECEIVED"],
+  1: ["PICKED_UP"],
+  2: ["PROCESSING_STARTED", "PROFESSIONAL_CLEANING"],
+  3: ["READY"],
+  4: ["OUT_FOR_DELIVERY", "DELIVERED", "PAYMENT_RECEIVED"],
 };
 
 const EVENT_LABELS: Partial<Record<OrderEventType, string>> = {
@@ -45,18 +51,15 @@ const EVENT_LABELS: Partial<Record<OrderEventType, string>> = {
 
 export function getDisplayStep(status: OrderStatus): DisplayStep {
   switch (status) {
-    case "PENDING":
-    case "CONFIRMED":
-      return 1;
     case "PICKED_UP":
-      return 2;
+      return 1;
     case "IN_PROGRESS":
-      return 3;
+      return 2;
     case "READY":
       return 4;
     case "OUT_FOR_DELIVERY":
     case "DELIVERED":
-      return 5;
+      return 4;
     default:
       return 1;
   }
@@ -76,22 +79,27 @@ function StepDot({
   state: "done" | "active" | "pending";
   number: number;
 }) {
+  const iconName = STEPS_ICON[number];
+
   return (
     <div
       className={cn(
-        "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-all duration-300",
+        "flex h-10 w-10 relative shrink-0 items-center justify-center rounded-full text-sm font-medium transition-all duration-300",
         state === "done" && "bg-emerald-600 text-white",
-        state === "active" && "bg-blue-600 text-white  ring-blue-200",
-        state === "pending" &&
-          "border border-zinc-200 bg-zinc-100 text-zinc-500",
+        (state === "pending" || state === "active") &&
+          "border border-zinc-200 bg-zinc-100 text-black/70",
       )}
     >
-      {state === "done" ? (
-        <Check className="h-3 w-3" strokeWidth={2.5} />
-      ) : state === "active" ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
-      ) : (
-        number
+      <div className="flex items-center justify-center w-full h-full">
+        <Icon
+          name={iconName as keyof typeof Icon}
+          size={20}
+          strokeWidth={2.4}
+        />
+      </div>
+
+      {state === "active" && (
+        <div className="absolute inset-0 rounded-full border-2 border-brand border-t-transparent animate-spin" />
       )}
     </div>
   );
@@ -285,7 +293,7 @@ function HorizontalStepper({
             <Fragment key={step}>
               {/* Connecting line — lives between steps, not inside them */}
               {index > 0 && (
-                <div className="mt-3 h-0.5 min-w-0 flex-1 self-start">
+                <div className="mt-5 h-0.5 min-w-0 flex-1 self-start">
                   <div
                     className={cn(
                       "h-full w-full transition-colors duration-300",
@@ -295,14 +303,13 @@ function HorizontalStepper({
                 </div>
               )}
 
-              {/* Step column — fixed width, no flex, always centered */}
               <div className="flex w-14 flex-col items-center">
                 <StepDot state={state} number={step} />
 
-                <div className="mt-2 flex w-full flex-col items-center text-center">
+                <div className="mt-1.5 flex w-full flex-col items-center text-center">
                   <p
                     className={cn(
-                      "w-full text-[11px] font-medium leading-tight",
+                      "w-full text-[11px] font-semibold leading-tight",
                       isDone || isActive ? "text-zinc-900" : "text-zinc-400",
                     )}
                   >

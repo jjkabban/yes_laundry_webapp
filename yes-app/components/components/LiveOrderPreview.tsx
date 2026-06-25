@@ -1,7 +1,7 @@
 "use client";
 import { Order } from "@/context/types/order";
 import OrdersStepper from "../ui/OrdersStepper";
-import { formatOrderTime } from "@/utils/datetime";
+import { formatDate, formatOrderTime } from "@/utils/datetime";
 import { ORDER_STATUS_CONFIG } from "@/helpers/status";
 import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
@@ -78,17 +78,14 @@ export default function LiveOrderPreview({ orders }: Props) {
           [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none px-5 ml-4"
       >
         {displayOrders.toDisplay.map((ord, index) => {
-          const timestamp = formatOrderTime(
-            ord.createdAt ?? new Date().toISOString(),
-            false,
-          );
+          const timestamp = formatDate(ord.createdAt);
           const orderType = ord.bagCount
             ? `${ord.bagCount} bag${ord.bagCount > 1 ? "s" : ""}`
             : ord.items.length > 0
-              ? `${ord.items.length} item${ord.items.length > 1 ? "s" : ""}`
+              ? `${ord.items.length} item${ord.items.length > 1 ? "s" : ""} picked`
               : null;
           const isCancelled = ord.status === "CANCELLED";
-          const config = ORDER_STATUS_CONFIG[ord.status];
+          const status = ORDER_STATUS_CONFIG[ord.status];
 
           return (
             <div
@@ -97,8 +94,8 @@ export default function LiveOrderPreview({ orders }: Props) {
                 w-[85vw] sm:w-[70vw] md:w-[340] snap-start"
             >
               <div>
-                <div className="flex-row flex items-start justify-between">
-                  <div className="flex-row flex items-center gap-2">
+                <div className="flex-row flex items-start justify-between border-b-[1] py-2 border-paragraph/10">
+                  <div className="flex-row flex items-center gap-2 ">
                     <div className="relative h-10 w-10 overflow-hidden rounded-sm">
                       <Image
                         src={"/images/order_img.jpg"}
@@ -108,45 +105,52 @@ export default function LiveOrderPreview({ orders }: Props) {
                       />
                     </div>
                     <div className="leading-5">
-                      <h3 className="font-semibold text-[14px] leading-tight">
+                      <h3 className="font-medium text-[15px] leading-tight">
                         {ord.service?.name ?? "Standard wash"}
                       </h3>
-                      <span className="text-[12px]">GHS {ord.total}</span>
+                      <div className="flex flex-col leading-4">
+                        <span className="text-[13px]">
+                          {orderType} &middot; {timestamp}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
                   <div
-                    className={`flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-medium ${config.text} ${config.bg}`}
+                    className={`flex flex-col items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-medium ${status.text}`}
                   >
-                    <span
-                      className={`h-1.5 w-1.5 ${config.dot} rounded-full`}
-                    />
-                    <span>{config.label}</span>
+                    <span className="text-yellow-700">
+                      Order #{ord.orderNumber}
+                    </span>
+                    {ord.status === "CANCELLED" && <span>Cancelled</span>}
                   </div>
                 </div>
 
-                <div className="py-2">
-                  <span className="text-[13px] text-paragraph/80">
-                    {timestamp} &middot; {orderType} picked up
+                <div className="pt-4 pb-2 flex flex-col leading-6">
+                  <span className="text-[18px] font-medium">
+                    {status.title}
                   </span>
-                </div>
-
-                <div className="py-2 flex flex-row justify-between">
-                  <span className="text-[14px]">
-                    {ORDER_STATUS_CONFIG[ord.status ?? "CONFIRMED"].label}
-                  </span>
-                  <span className="text-sm text-brand">
-                    {formatOrderTime(new Date().toISOString(), false)}
+                  <span className="text-[14px] text-paragraph/80">
+                    {status.extraInfo}
                   </span>
                 </div>
               </div>
 
-              <OrdersStepper
-                status={ord.status}
-                cancelled={isCancelled}
-                isPast={false}
-                orientation="horizontal"
-              />
+              <div className="py-2">
+                <OrdersStepper
+                  status={ord.status}
+                  cancelled={isCancelled}
+                  isPast={false}
+                  orientation="horizontal"
+                />
+              </div>
+
+              {/* <div className="flex gap-2 justify-between items-center pt-2 px-2 border-t-[1] border-paragraph/30 mt-2">
+                <span className="text-[13px]">{status.pastInfo}</span>
+                <span className="text-[13px]">
+                  {formatOrderTime(ord.createdAt, false)}
+                </span>
+              </div> */}
             </div>
           );
         })}

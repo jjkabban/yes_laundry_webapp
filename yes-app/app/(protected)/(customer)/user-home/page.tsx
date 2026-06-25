@@ -24,7 +24,6 @@ const mockOrder: Order[] = [
   {
     id: "clx9k2m3n0002abc123def456",
     orderNumber: "YL-002",
-
     customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
     customer: {
       id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
@@ -51,7 +50,7 @@ const mockOrder: Order[] = [
       priceModel: "PER_ITEM",
     },
 
-    status: "CANCELLED",
+    status: "DELIVERED",
 
     bagCount: null,
     weightKg: null,
@@ -186,7 +185,7 @@ const mockOrder: Order[] = [
       priceModel: "PER_ITEM",
     },
 
-    status: "IN_PROGRESS",
+    status: "READY",
 
     bagCount: null,
     weightKg: null,
