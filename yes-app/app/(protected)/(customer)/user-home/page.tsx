@@ -934,7 +934,7 @@ export default function CustomerHomePage() {
       </div>
 
       <div className="mt-[-26]">
-        <div className="flex flex-row  bg-background md:max-w-6xl  mx-3 md:mx-auto  justify-between px-4 py-3 border-[0.1] shadow-sm border-paragraph/40 rounded-2xl ">
+        <div className="flex flex-row bg-background md:max-w-4xl xl:max-w-6xl md:mx-5  mx-3 xl:mx-auto justify-between px-4 py-3 border border-paragraph/40 shadow-sm rounded-2xl">
           <div className="flex flex-row gap-3 items-center">
             <div className="bg-brand/10 flex items-center px-3 py-3 rounded-3xl">
               <Icon name="ShoppingBag" className="" color="#004a94" />

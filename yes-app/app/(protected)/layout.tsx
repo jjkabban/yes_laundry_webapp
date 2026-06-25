@@ -21,9 +21,6 @@ export default async function ProtectedLayout({
           </OrderContextProvider>
         </SocketContextProvider>
       </AuthContextProvider>
-      <div className="md:pl-12 ">
-        <Footer />
-      </div>
     </div>
   );
 }

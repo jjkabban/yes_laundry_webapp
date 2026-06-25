@@ -9,6 +9,7 @@ import {
   NotificationScreen,
   OrderScreen,
 } from "@/components/screens";
+import { Footer } from "@/components/navigation";
 
 type SliderContentType = "messages" | "notifications";
 export default function CustomerLayout({
@@ -16,49 +17,46 @@ export default function CustomerLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isMobile, isTablet } = useWindow();
-  const isSmallerScreen = isTablet || isMobile;
   const { panel, openPanel } = usePanel();
 
   return (
     <div className="bg-foreground">
-      {isSmallerScreen ? (
-        <main>
-          <CustomerTabs />
-          <main className="transition-all  duration-300">{children}</main>
-        </main>
-      ) : (
-        <div className="flex md:pl-15">
-          <div>
-            <CustomerSideBar />
+      <div className="md:hidden">
+        <CustomerTabs />
+        <main>{children}</main>
+      </div>
+
+      <div className="hidden md:flex">
+        <CustomerSideBar />
+
+        <div className="w-16 shrink-0" />
+
+        {openPanel && panel && (
+          <div className="w-2/5 h-screen overflow-y-auto border-r border-r-black/10">
+            <AnimatePresence>
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {panel === "messages" ? (
+                  <MessageScreen />
+                ) : panel === "notifications" ? (
+                  <NotificationScreen />
+                ) : panel === "orders" ? (
+                  <OrderScreen />
+                ) : null}
+              </motion.div>
+            </AnimatePresence>
           </div>
+        )}
 
-          {openPanel && panel && (
-            <div className="w-2/5 h-screen overflow-hidden border-r-2 border-r-black/10">
-              <AnimatePresence>
-                <motion.div
-                  initial={{ x: "-100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "-100%" }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                >
-                  <div>
-                    {panel === "messages" ? (
-                      <MessageScreen />
-                    ) : panel === "notifications" ? (
-                      <NotificationScreen />
-                    ) : panel === "orders" ? (
-                      <OrderScreen />
-                    ) : null}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          )}
-
-          <main className="flex-1 transition-all duration-300">{children}</main>
-        </div>
-      )}
+        <main className="flex-1 min-w-0 transition-all duration-300">
+          {children}
+          <Footer />
+        </main>
+      </div>
     </div>
   );
 }

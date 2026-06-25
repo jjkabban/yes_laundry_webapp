@@ -67,8 +67,8 @@ export default function CustomerSideBar({}: Props) {
     [activeTab],
   );
   return (
-    <div className="min-h-screen fixed left-0 z-30 bg-white border-r-[0.6] border-r-black/50">
-      <div className="flex flex-col min-h-screen  items-center justify-between px-2 pt-3 pb-3">
+    <div className="fixed top-0 left-0 h-screen w-16 bg-white border-r border-r-black/10 z-30">
+      <div className="flex flex-col h-full items-center justify-between px-2 pt-3 pb-3">
         <button onClick={() => onTabSelect("logo")}>
           <Image
             src={"/images/logo_icon.png"}

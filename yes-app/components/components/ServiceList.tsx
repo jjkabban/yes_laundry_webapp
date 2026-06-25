@@ -15,7 +15,7 @@ export default function ServiceList({ services }: Props) {
         </h3>
       </div>
 
-      <div className="mx-4 flex flex-col md:flex-row md:flex-wrap gap-5 md:gap-8 md:grid md:grid-cols-3">
+      <div className="mx-4 flex flex-col gap-5 xl:gap-8 md:grid md:grid-cols-3 xl:grid-cols-3 ">
         {services.map((service, index) => {
           const priceModel = service.priceModel;
           const price =
@@ -27,8 +27,8 @@ export default function ServiceList({ services }: Props) {
 
           return (
             <div
-              key={service.id}
-              className="md:grow md:shrink bg-white shadow-sm rounded-md"
+              key={service.id + index}
+              className="bg-white shadow-sm rounded-md min-w-0"
             >
               <div className="relative h-[160] w-full overflow-hidden rounded-t-md">
                 <Image
