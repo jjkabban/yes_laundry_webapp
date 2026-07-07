@@ -7,7 +7,10 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { uploadToCloudinary } from "../src/lib/cloudary";
 import { getMediaType } from "../src/helpers/mediaType";
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
 const prisma = new PrismaClient({ adapter });
 
 async function uploadSeedImage(relativePath: string, folder: string) {
