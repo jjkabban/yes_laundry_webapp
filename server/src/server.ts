@@ -17,6 +17,7 @@ const httpServer = createServer(app);
 const allowedOrigins = [
   "http://localhost:3000",
   "https://yes-laundry-webapp-x46y.vercel.app",
+  "https://yes-laundry-webapp-x46y-bkdshgvef-jjkabbans-projects.vercel.app",
 ];
 
 const corsOptions = {
