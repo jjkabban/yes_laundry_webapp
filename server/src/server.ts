@@ -16,9 +16,7 @@ app.set("trust proxy", 1);
 const httpServer = createServer(app);
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://10.158.13.177:3000",
-  "http://10.249.76.177:3000",
-  "http://10.249.76.177:3000",
+  "https://yes-laundry-webapp-x46y.vercel.app",
 ];
 
 const corsOptions = {
