@@ -31,7 +31,6 @@ export async function generateStaticParams() {
       id: service.id.toString(),
     }));
   } catch (err) {
-    console.error("generateStaticParams: failed to fetch services", err);
     return [];
   }
 }
