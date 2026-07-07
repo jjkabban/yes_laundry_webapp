@@ -15,8 +15,6 @@ import { AnimatePresence } from "framer-motion";
 import { Suspense, useEffect, useState } from "react";
 import { SERVICES } from "../../data/objects/services";
 
-export const dynamic = "force-dynamic";
-
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
   const { data, isLoading, isError } = useServices();

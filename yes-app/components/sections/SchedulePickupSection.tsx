@@ -1,6 +1,6 @@
 "use client";
 import { motion, useInView } from "motion/react";
-import { useCallback, useRef, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
 import { CalendarCheck } from "lucide-react";
 import { BottomSheet } from "../components";
 import BookingForm from "../form/BookingForm";
@@ -52,7 +52,9 @@ export default function SchedulePickupSection() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         >
-          <BookingForm />
+          <Suspense fallback={null}>
+            <BookingForm />
+          </Suspense>
         </motion.div>
       </div>
     </section>
