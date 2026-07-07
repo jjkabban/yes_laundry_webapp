@@ -18,6 +18,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://yes-laundry-webapp-x46y.vercel.app",
   "https://yes-laundry-webapp-x46y-bkdshgvef-jjkabbans-projects.vercel.app",
+  "http://192.168.1.121:3000",
 ];
 
 const corsOptions = {

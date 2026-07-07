@@ -65,6 +65,7 @@ export const ModelName = {
   ChatMessage: 'ChatMessage',
   Notification: 'Notification',
   Order: 'Order',
+  RecurringOrderItem: 'RecurringOrderItem',
   OrderAddOn: 'OrderAddOn',
   OrderDraftAddOn: 'OrderDraftAddOn',
   RecurringOrderAddOn: 'RecurringOrderAddOn',
@@ -305,6 +306,20 @@ export const OrderScalarFieldEnum = {
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+export const RecurringOrderItemScalarFieldEnum = {
+  id: 'id',
+  recurringOrderId: 'recurringOrderId',
+  serviceItemId: 'serviceItemId',
+  quantity: 'quantity',
+  priceAtOrder: 'priceAtOrder',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RecurringOrderItemScalarFieldEnum = (typeof RecurringOrderItemScalarFieldEnum)[keyof typeof RecurringOrderItemScalarFieldEnum]
 
 
 export const OrderAddOnScalarFieldEnum = {

@@ -398,6 +398,7 @@ export const ModelName = {
   ChatMessage: 'ChatMessage',
   Notification: 'Notification',
   Order: 'Order',
+  RecurringOrderItem: 'RecurringOrderItem',
   OrderAddOn: 'OrderAddOn',
   OrderDraftAddOn: 'OrderDraftAddOn',
   RecurringOrderAddOn: 'RecurringOrderAddOn',
@@ -442,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "addOn" | "serviceAddOn" | "itemCategory" | "item" | "serviceItem" | "liveOrder" | "loyaltyAccount" | "loyaltyTransaction" | "media" | "conversation" | "conversationParticipant" | "chatMessage" | "notification" | "order" | "orderAddOn" | "orderDraftAddOn" | "recurringOrderAddOn" | "orderItem" | "recurringOrder" | "orderDraft" | "otp" | "campaign" | "promotion" | "promotionRedemption" | "promotionService" | "referral" | "reward" | "rewardRedemption" | "serviceAvailability" | "careAndHandling" | "howItWorks" | "inclusions" | "policy" | "service" | "serviceMedia" | "recentService" | "serviceTimeSlotDefault" | "serviceTimeSlotOverride" | "timeSlot" | "transaction" | "location" | "provider" | "user"
+    modelProps: "addOn" | "serviceAddOn" | "itemCategory" | "item" | "serviceItem" | "liveOrder" | "loyaltyAccount" | "loyaltyTransaction" | "media" | "conversation" | "conversationParticipant" | "chatMessage" | "notification" | "order" | "recurringOrderItem" | "orderAddOn" | "orderDraftAddOn" | "recurringOrderAddOn" | "orderItem" | "recurringOrder" | "orderDraft" | "otp" | "campaign" | "promotion" | "promotionRedemption" | "promotionService" | "referral" | "reward" | "rewardRedemption" | "serviceAvailability" | "careAndHandling" | "howItWorks" | "inclusions" | "policy" | "service" | "serviceMedia" | "recentService" | "serviceTimeSlotDefault" | "serviceTimeSlotOverride" | "timeSlot" | "transaction" | "location" | "provider" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1479,6 +1480,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OrderCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OrderCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecurringOrderItem: {
+      payload: Prisma.$RecurringOrderItemPayload<ExtArgs>
+      fields: Prisma.RecurringOrderItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecurringOrderItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecurringOrderItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        findFirst: {
+          args: Prisma.RecurringOrderItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecurringOrderItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        findMany: {
+          args: Prisma.RecurringOrderItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>[]
+        }
+        create: {
+          args: Prisma.RecurringOrderItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        createMany: {
+          args: Prisma.RecurringOrderItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RecurringOrderItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>[]
+        }
+        delete: {
+          args: Prisma.RecurringOrderItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        update: {
+          args: Prisma.RecurringOrderItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecurringOrderItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecurringOrderItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RecurringOrderItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.RecurringOrderItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringOrderItemPayload>
+        }
+        aggregate: {
+          args: Prisma.RecurringOrderItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecurringOrderItem>
+        }
+        groupBy: {
+          args: Prisma.RecurringOrderItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecurringOrderItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecurringOrderItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecurringOrderItemCountAggregateOutputType> | number
         }
       }
     }
@@ -3862,6 +3937,20 @@ export const OrderScalarFieldEnum = {
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
+export const RecurringOrderItemScalarFieldEnum = {
+  id: 'id',
+  recurringOrderId: 'recurringOrderId',
+  serviceItemId: 'serviceItemId',
+  quantity: 'quantity',
+  priceAtOrder: 'priceAtOrder',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RecurringOrderItemScalarFieldEnum = (typeof RecurringOrderItemScalarFieldEnum)[keyof typeof RecurringOrderItemScalarFieldEnum]
+
+
 export const OrderAddOnScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
@@ -4833,6 +4922,7 @@ export type GlobalOmitConfig = {
   chatMessage?: Prisma.ChatMessageOmit
   notification?: Prisma.NotificationOmit
   order?: Prisma.OrderOmit
+  recurringOrderItem?: Prisma.RecurringOrderItemOmit
   orderAddOn?: Prisma.OrderAddOnOmit
   orderDraftAddOn?: Prisma.OrderDraftAddOnOmit
   recurringOrderAddOn?: Prisma.RecurringOrderAddOnOmit

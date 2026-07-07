@@ -88,6 +88,11 @@ export type Notification = Prisma.NotificationModel
  */
 export type Order = Prisma.OrderModel
 /**
+ * Model RecurringOrderItem
+ * 
+ */
+export type RecurringOrderItem = Prisma.RecurringOrderItemModel
+/**
  * Model OrderAddOn
  * 
  */

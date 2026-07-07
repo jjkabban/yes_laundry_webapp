@@ -9,7 +9,7 @@ import { getMediaType } from "../src/helpers/mediaType";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+  // ssl: { rejectUnauthorized: false },
 });
 const prisma = new PrismaClient({ adapter });
 
