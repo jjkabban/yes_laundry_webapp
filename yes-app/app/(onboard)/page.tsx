@@ -46,7 +46,6 @@ export default function HomePage() {
       <SchedulePickupSection />
       <FinalCTASection />
       <AnimatePresence>{scrollY > 500 && <FormFAB />}</AnimatePresence>
-      <Footer />
     </div>
   );
 }
