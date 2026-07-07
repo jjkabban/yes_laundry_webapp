@@ -24,8 +24,13 @@ import Icon from "@/components/icons/LucideIcons";
 
 export async function generateStaticParams() {
   const res = await getServices();
-  const services = res.data;
-  return services?.map((service) => ({ id: service.id }));
+  const services = res.data ?? [];
+
+  if (!services) return notFound();
+
+  return services.map((service) => ({
+    id: service.id.toString(),
+  }));
 }
 
 const whatsIncluded = [
