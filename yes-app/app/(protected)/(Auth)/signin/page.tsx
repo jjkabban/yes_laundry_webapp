@@ -100,6 +100,7 @@ export default function SigninPage() {
         err?.message ??
         "Invalid code. Please try again.";
 
+      console.log(serverError);
       showToast(serverError, "error", 3000);
       if (Array.isArray(err?.error)) {
         err.error.forEach(
@@ -160,9 +161,12 @@ export default function SigninPage() {
             </div>
             <span className="text-sm text-paragraph/70">Remember me</span>
           </div>
-          <button className="text-sm text-brand font-medium">
+          <Link
+            href={"forgot-password"}
+            className="text-sm text-brand font-medium"
+          >
             Forgot password?
-          </button>
+          </Link>
         </div>
 
         <div className="mx-5 md:mx-0 md:flex flex-col md:items-center  justify-center">

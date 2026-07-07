@@ -1,0 +1,36 @@
+model ServiceTimeSlotDefault {
+  id String @id @default(cuid())
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  timeSlotId String
+  timeSlot   TimeSlot @relation(fields: [timeSlotId], references: [id])
+
+  startTime String // default time rang
+  endTime   String
+
+  isActive Boolean @default(true)
+
+  @@unique([serviceId, timeSlotId])
+}
+
+model ServiceTimeSlotOverride {
+  id String @id @default(cuid())
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  date DateTime
+
+  timeSlotId String
+  timeSlot   TimeSlot @relation(fields: [timeSlotId], references: [id])
+
+  startTime String
+  endTime   String
+
+  isActive Boolean @default(true)
+
+  @@unique([serviceId, date, timeSlotId])
+  @@index([serviceId, date])
+}

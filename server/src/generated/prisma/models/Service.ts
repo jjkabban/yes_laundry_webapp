@@ -40,6 +40,8 @@ export type ServiceMinAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  coverImageId: string | null
+  contextDescription: string | null
   turnaroundTime: string | null
   basePrice: runtime.Decimal | null
   priceModel: $Enums.ServicePriceModel | null
@@ -48,6 +50,7 @@ export type ServiceMinAggregateOutputType = {
   createdById: string | null
   updatedById: string | null
   loyaltyPointsRate: runtime.Decimal | null
+  availabilityId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +59,8 @@ export type ServiceMaxAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  coverImageId: string | null
+  contextDescription: string | null
   turnaroundTime: string | null
   basePrice: runtime.Decimal | null
   priceModel: $Enums.ServicePriceModel | null
@@ -64,6 +69,7 @@ export type ServiceMaxAggregateOutputType = {
   createdById: string | null
   updatedById: string | null
   loyaltyPointsRate: runtime.Decimal | null
+  availabilityId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +78,8 @@ export type ServiceCountAggregateOutputType = {
   id: number
   title: number
   description: number
+  coverImageId: number
+  contextDescription: number
   turnaroundTime: number
   basePrice: number
   priceModel: number
@@ -80,6 +88,7 @@ export type ServiceCountAggregateOutputType = {
   createdById: number
   updatedById: number
   loyaltyPointsRate: number
+  availabilityId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -100,6 +109,8 @@ export type ServiceMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  coverImageId?: true
+  contextDescription?: true
   turnaroundTime?: true
   basePrice?: true
   priceModel?: true
@@ -108,6 +119,7 @@ export type ServiceMinAggregateInputType = {
   createdById?: true
   updatedById?: true
   loyaltyPointsRate?: true
+  availabilityId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -116,6 +128,8 @@ export type ServiceMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  coverImageId?: true
+  contextDescription?: true
   turnaroundTime?: true
   basePrice?: true
   priceModel?: true
@@ -124,6 +138,7 @@ export type ServiceMaxAggregateInputType = {
   createdById?: true
   updatedById?: true
   loyaltyPointsRate?: true
+  availabilityId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -132,6 +147,8 @@ export type ServiceCountAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  coverImageId?: true
+  contextDescription?: true
   turnaroundTime?: true
   basePrice?: true
   priceModel?: true
@@ -140,6 +157,7 @@ export type ServiceCountAggregateInputType = {
   createdById?: true
   updatedById?: true
   loyaltyPointsRate?: true
+  availabilityId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -235,14 +253,17 @@ export type ServiceGroupByOutputType = {
   id: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal
   priceModel: $Enums.ServicePriceModel
   isActive: boolean
-  icon: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate: runtime.Decimal | null
+  availabilityId: string
   createdAt: Date
   updatedAt: Date
   _count: ServiceCountAggregateOutputType | null
@@ -274,95 +295,134 @@ export type ServiceWhereInput = {
   id?: Prisma.StringFilter<"Service"> | string
   title?: Prisma.StringFilter<"Service"> | string
   description?: Prisma.StringFilter<"Service"> | string
+  coverImageId?: Prisma.StringFilter<"Service"> | string
+  contextDescription?: Prisma.StringFilter<"Service"> | string
   turnaroundTime?: Prisma.StringFilter<"Service"> | string
   basePrice?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFilter<"Service"> | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFilter<"Service"> | boolean
-  icon?: Prisma.StringNullableFilter<"Service"> | string | null
+  icon?: Prisma.StringFilter<"Service"> | string
   createdById?: Prisma.StringFilter<"Service"> | string
   updatedById?: Prisma.StringFilter<"Service"> | string
   loyaltyPointsRate?: Prisma.DecimalNullableFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFilter<"Service"> | string
   createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
+  coverImage?: Prisma.XOR<Prisma.MediaScalarRelationFilter, Prisma.MediaWhereInput>
   serviceMedia?: Prisma.ServiceMediaListRelationFilter
   items?: Prisma.ServiceItemListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   orders?: Prisma.OrderListRelationFilter
+  careAndHandling?: Prisma.CareAndHandlingListRelationFilter
+  policies?: Prisma.PolicyListRelationFilter
+  inclusions?: Prisma.InclusionsListRelationFilter
   promotionServices?: Prisma.PromotionServiceListRelationFilter
   recentByUsers?: Prisma.RecentServiceListRelationFilter
   recurringOrders?: Prisma.RecurringOrderListRelationFilter
   orderDrafts?: Prisma.OrderDraftListRelationFilter
   rewards?: Prisma.RewardListRelationFilter
+  availability?: Prisma.XOR<Prisma.ServiceAvailabilityScalarRelationFilter, Prisma.ServiceAvailabilityWhereInput>
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultListRelationFilter
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideListRelationFilter
+  howItWorks?: Prisma.HowItWorksListRelationFilter
+  addOns?: Prisma.ServiceAddOnListRelationFilter
 }
 
 export type ServiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  coverImageId?: Prisma.SortOrder
+  contextDescription?: Prisma.SortOrder
   turnaroundTime?: Prisma.SortOrder
   basePrice?: Prisma.SortOrder
   priceModel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
+  icon?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   loyaltyPointsRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  availabilityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  coverImage?: Prisma.MediaOrderByWithRelationInput
   serviceMedia?: Prisma.ServiceMediaOrderByRelationAggregateInput
   items?: Prisma.ServiceItemOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
+  careAndHandling?: Prisma.CareAndHandlingOrderByRelationAggregateInput
+  policies?: Prisma.PolicyOrderByRelationAggregateInput
+  inclusions?: Prisma.InclusionsOrderByRelationAggregateInput
   promotionServices?: Prisma.PromotionServiceOrderByRelationAggregateInput
   recentByUsers?: Prisma.RecentServiceOrderByRelationAggregateInput
   recurringOrders?: Prisma.RecurringOrderOrderByRelationAggregateInput
   orderDrafts?: Prisma.OrderDraftOrderByRelationAggregateInput
   rewards?: Prisma.RewardOrderByRelationAggregateInput
+  availability?: Prisma.ServiceAvailabilityOrderByWithRelationInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultOrderByRelationAggregateInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideOrderByRelationAggregateInput
+  howItWorks?: Prisma.HowItWorksOrderByRelationAggregateInput
+  addOns?: Prisma.ServiceAddOnOrderByRelationAggregateInput
 }
 
 export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  coverImageId?: string
+  availabilityId?: string
   AND?: Prisma.ServiceWhereInput | Prisma.ServiceWhereInput[]
   OR?: Prisma.ServiceWhereInput[]
   NOT?: Prisma.ServiceWhereInput | Prisma.ServiceWhereInput[]
   title?: Prisma.StringFilter<"Service"> | string
   description?: Prisma.StringFilter<"Service"> | string
+  contextDescription?: Prisma.StringFilter<"Service"> | string
   turnaroundTime?: Prisma.StringFilter<"Service"> | string
   basePrice?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFilter<"Service"> | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFilter<"Service"> | boolean
-  icon?: Prisma.StringNullableFilter<"Service"> | string | null
+  icon?: Prisma.StringFilter<"Service"> | string
   createdById?: Prisma.StringFilter<"Service"> | string
   updatedById?: Prisma.StringFilter<"Service"> | string
   loyaltyPointsRate?: Prisma.DecimalNullableFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
+  coverImage?: Prisma.XOR<Prisma.MediaScalarRelationFilter, Prisma.MediaWhereInput>
   serviceMedia?: Prisma.ServiceMediaListRelationFilter
   items?: Prisma.ServiceItemListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   orders?: Prisma.OrderListRelationFilter
+  careAndHandling?: Prisma.CareAndHandlingListRelationFilter
+  policies?: Prisma.PolicyListRelationFilter
+  inclusions?: Prisma.InclusionsListRelationFilter
   promotionServices?: Prisma.PromotionServiceListRelationFilter
   recentByUsers?: Prisma.RecentServiceListRelationFilter
   recurringOrders?: Prisma.RecurringOrderListRelationFilter
   orderDrafts?: Prisma.OrderDraftListRelationFilter
   rewards?: Prisma.RewardListRelationFilter
-}, "id">
+  availability?: Prisma.XOR<Prisma.ServiceAvailabilityScalarRelationFilter, Prisma.ServiceAvailabilityWhereInput>
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultListRelationFilter
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideListRelationFilter
+  howItWorks?: Prisma.HowItWorksListRelationFilter
+  addOns?: Prisma.ServiceAddOnListRelationFilter
+}, "id" | "coverImageId" | "availabilityId">
 
 export type ServiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  coverImageId?: Prisma.SortOrder
+  contextDescription?: Prisma.SortOrder
   turnaroundTime?: Prisma.SortOrder
   basePrice?: Prisma.SortOrder
   priceModel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
+  icon?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   loyaltyPointsRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  availabilityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ServiceCountOrderByAggregateInput
@@ -379,14 +439,17 @@ export type ServiceScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Service"> | string
   title?: Prisma.StringWithAggregatesFilter<"Service"> | string
   description?: Prisma.StringWithAggregatesFilter<"Service"> | string
+  coverImageId?: Prisma.StringWithAggregatesFilter<"Service"> | string
+  contextDescription?: Prisma.StringWithAggregatesFilter<"Service"> | string
   turnaroundTime?: Prisma.StringWithAggregatesFilter<"Service"> | string
   basePrice?: Prisma.DecimalWithAggregatesFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelWithAggregatesFilter<"Service"> | $Enums.ServicePriceModel
   isActive?: Prisma.BoolWithAggregatesFilter<"Service"> | boolean
-  icon?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
+  icon?: Prisma.StringWithAggregatesFilter<"Service"> | string
   createdById?: Prisma.StringWithAggregatesFilter<"Service"> | string
   updatedById?: Prisma.StringWithAggregatesFilter<"Service"> | string
   loyaltyPointsRate?: Prisma.DecimalNullableWithAggregatesFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringWithAggregatesFilter<"Service"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Service"> | Date | string
 }
@@ -395,110 +458,153 @@ export type ServiceCreateInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -507,11 +613,12 @@ export type ServiceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -521,14 +628,17 @@ export type ServiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -543,10 +653,22 @@ export type ServiceNullableScalarRelationFilter = {
   isNot?: Prisma.ServiceWhereInput | null
 }
 
+export type ServiceListRelationFilter = {
+  every?: Prisma.ServiceWhereInput
+  some?: Prisma.ServiceWhereInput
+  none?: Prisma.ServiceWhereInput
+}
+
+export type ServiceOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type ServiceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  coverImageId?: Prisma.SortOrder
+  contextDescription?: Prisma.SortOrder
   turnaroundTime?: Prisma.SortOrder
   basePrice?: Prisma.SortOrder
   priceModel?: Prisma.SortOrder
@@ -555,6 +677,7 @@ export type ServiceCountOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   loyaltyPointsRate?: Prisma.SortOrder
+  availabilityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -568,6 +691,8 @@ export type ServiceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  coverImageId?: Prisma.SortOrder
+  contextDescription?: Prisma.SortOrder
   turnaroundTime?: Prisma.SortOrder
   basePrice?: Prisma.SortOrder
   priceModel?: Prisma.SortOrder
@@ -576,6 +701,7 @@ export type ServiceMaxOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   loyaltyPointsRate?: Prisma.SortOrder
+  availabilityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -584,6 +710,8 @@ export type ServiceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  coverImageId?: Prisma.SortOrder
+  contextDescription?: Prisma.SortOrder
   turnaroundTime?: Prisma.SortOrder
   basePrice?: Prisma.SortOrder
   priceModel?: Prisma.SortOrder
@@ -592,6 +720,7 @@ export type ServiceMinOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   loyaltyPointsRate?: Prisma.SortOrder
+  availabilityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -601,14 +730,18 @@ export type ServiceSumOrderByAggregateInput = {
   loyaltyPointsRate?: Prisma.SortOrder
 }
 
-export type ServiceListRelationFilter = {
-  every?: Prisma.ServiceWhereInput
-  some?: Prisma.ServiceWhereInput
-  none?: Prisma.ServiceWhereInput
+export type ServiceCreateNestedOneWithoutAddOnsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAddOnsInput, Prisma.ServiceUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAddOnsInput
+  connect?: Prisma.ServiceWhereUniqueInput
 }
 
-export type ServiceOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type ServiceUpdateOneRequiredWithoutAddOnsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAddOnsInput, Prisma.ServiceUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAddOnsInput
+  upsert?: Prisma.ServiceUpsertWithoutAddOnsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutAddOnsInput, Prisma.ServiceUpdateWithoutAddOnsInput>, Prisma.ServiceUncheckedUpdateWithoutAddOnsInput>
 }
 
 export type ServiceCreateNestedOneWithoutItemsInput = {
@@ -623,6 +756,38 @@ export type ServiceUpdateOneRequiredWithoutItemsNestedInput = {
   upsert?: Prisma.ServiceUpsertWithoutItemsInput
   connect?: Prisma.ServiceWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutItemsInput, Prisma.ServiceUpdateWithoutItemsInput>, Prisma.ServiceUncheckedUpdateWithoutItemsInput>
+}
+
+export type ServiceCreateNestedOneWithoutCoverImageInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCoverImageInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUncheckedCreateNestedOneWithoutCoverImageInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCoverImageInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneWithoutCoverImageNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCoverImageInput
+  upsert?: Prisma.ServiceUpsertWithoutCoverImageInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutCoverImageInput, Prisma.ServiceUpdateWithoutCoverImageInput>, Prisma.ServiceUncheckedUpdateWithoutCoverImageInput>
+}
+
+export type ServiceUncheckedUpdateOneWithoutCoverImageNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCoverImageInput
+  upsert?: Prisma.ServiceUpsertWithoutCoverImageInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutCoverImageInput, Prisma.ServiceUpdateWithoutCoverImageInput>, Prisma.ServiceUncheckedUpdateWithoutCoverImageInput>
 }
 
 export type ServiceCreateNestedOneWithoutOrdersInput = {
@@ -699,6 +864,166 @@ export type ServiceUpdateOneWithoutRewardsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutRewardsInput, Prisma.ServiceUpdateWithoutRewardsInput>, Prisma.ServiceUncheckedUpdateWithoutRewardsInput>
 }
 
+export type ServiceCreateNestedOneWithoutAvailabilityInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAvailabilityInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUncheckedCreateNestedOneWithoutAvailabilityInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAvailabilityInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneWithoutAvailabilityNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAvailabilityInput
+  upsert?: Prisma.ServiceUpsertWithoutAvailabilityInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutAvailabilityInput, Prisma.ServiceUpdateWithoutAvailabilityInput>, Prisma.ServiceUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type ServiceUncheckedUpdateOneWithoutAvailabilityNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutAvailabilityInput
+  upsert?: Prisma.ServiceUpsertWithoutAvailabilityInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutAvailabilityInput, Prisma.ServiceUpdateWithoutAvailabilityInput>, Prisma.ServiceUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type ServiceCreateNestedManyWithoutCareAndHandlingInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput> | Prisma.ServiceCreateWithoutCareAndHandlingInput[] | Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput | Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUncheckedCreateNestedManyWithoutCareAndHandlingInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput> | Prisma.ServiceCreateWithoutCareAndHandlingInput[] | Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput | Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUpdateManyWithoutCareAndHandlingNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput> | Prisma.ServiceCreateWithoutCareAndHandlingInput[] | Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput | Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutCareAndHandlingInput | Prisma.ServiceUpsertWithWhereUniqueWithoutCareAndHandlingInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutCareAndHandlingInput | Prisma.ServiceUpdateWithWhereUniqueWithoutCareAndHandlingInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutCareAndHandlingInput | Prisma.ServiceUpdateManyWithWhereWithoutCareAndHandlingInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceUncheckedUpdateManyWithoutCareAndHandlingNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput> | Prisma.ServiceCreateWithoutCareAndHandlingInput[] | Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput | Prisma.ServiceCreateOrConnectWithoutCareAndHandlingInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutCareAndHandlingInput | Prisma.ServiceUpsertWithWhereUniqueWithoutCareAndHandlingInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutCareAndHandlingInput | Prisma.ServiceUpdateWithWhereUniqueWithoutCareAndHandlingInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutCareAndHandlingInput | Prisma.ServiceUpdateManyWithWhereWithoutCareAndHandlingInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceCreateNestedOneWithoutHowItWorksInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutHowItWorksInput, Prisma.ServiceUncheckedCreateWithoutHowItWorksInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutHowItWorksInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutHowItWorksNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutHowItWorksInput, Prisma.ServiceUncheckedCreateWithoutHowItWorksInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutHowItWorksInput
+  upsert?: Prisma.ServiceUpsertWithoutHowItWorksInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutHowItWorksInput, Prisma.ServiceUpdateWithoutHowItWorksInput>, Prisma.ServiceUncheckedUpdateWithoutHowItWorksInput>
+}
+
+export type ServiceCreateNestedManyWithoutInclusionsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput> | Prisma.ServiceCreateWithoutInclusionsInput[] | Prisma.ServiceUncheckedCreateWithoutInclusionsInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutInclusionsInput | Prisma.ServiceCreateOrConnectWithoutInclusionsInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUncheckedCreateNestedManyWithoutInclusionsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput> | Prisma.ServiceCreateWithoutInclusionsInput[] | Prisma.ServiceUncheckedCreateWithoutInclusionsInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutInclusionsInput | Prisma.ServiceCreateOrConnectWithoutInclusionsInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUpdateManyWithoutInclusionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput> | Prisma.ServiceCreateWithoutInclusionsInput[] | Prisma.ServiceUncheckedCreateWithoutInclusionsInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutInclusionsInput | Prisma.ServiceCreateOrConnectWithoutInclusionsInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutInclusionsInput | Prisma.ServiceUpsertWithWhereUniqueWithoutInclusionsInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutInclusionsInput | Prisma.ServiceUpdateWithWhereUniqueWithoutInclusionsInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutInclusionsInput | Prisma.ServiceUpdateManyWithWhereWithoutInclusionsInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceUncheckedUpdateManyWithoutInclusionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput> | Prisma.ServiceCreateWithoutInclusionsInput[] | Prisma.ServiceUncheckedCreateWithoutInclusionsInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutInclusionsInput | Prisma.ServiceCreateOrConnectWithoutInclusionsInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutInclusionsInput | Prisma.ServiceUpsertWithWhereUniqueWithoutInclusionsInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutInclusionsInput | Prisma.ServiceUpdateWithWhereUniqueWithoutInclusionsInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutInclusionsInput | Prisma.ServiceUpdateManyWithWhereWithoutInclusionsInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceCreateNestedManyWithoutPoliciesInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput> | Prisma.ServiceCreateWithoutPoliciesInput[] | Prisma.ServiceUncheckedCreateWithoutPoliciesInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutPoliciesInput | Prisma.ServiceCreateOrConnectWithoutPoliciesInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUncheckedCreateNestedManyWithoutPoliciesInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput> | Prisma.ServiceCreateWithoutPoliciesInput[] | Prisma.ServiceUncheckedCreateWithoutPoliciesInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutPoliciesInput | Prisma.ServiceCreateOrConnectWithoutPoliciesInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUpdateManyWithoutPoliciesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput> | Prisma.ServiceCreateWithoutPoliciesInput[] | Prisma.ServiceUncheckedCreateWithoutPoliciesInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutPoliciesInput | Prisma.ServiceCreateOrConnectWithoutPoliciesInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutPoliciesInput | Prisma.ServiceUpsertWithWhereUniqueWithoutPoliciesInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutPoliciesInput | Prisma.ServiceUpdateWithWhereUniqueWithoutPoliciesInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutPoliciesInput | Prisma.ServiceUpdateManyWithWhereWithoutPoliciesInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceUncheckedUpdateManyWithoutPoliciesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput> | Prisma.ServiceCreateWithoutPoliciesInput[] | Prisma.ServiceUncheckedCreateWithoutPoliciesInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutPoliciesInput | Prisma.ServiceCreateOrConnectWithoutPoliciesInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutPoliciesInput | Prisma.ServiceUpsertWithWhereUniqueWithoutPoliciesInput[]
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutPoliciesInput | Prisma.ServiceUpdateWithWhereUniqueWithoutPoliciesInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutPoliciesInput | Prisma.ServiceUpdateManyWithWhereWithoutPoliciesInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
 export type EnumServicePriceModelFieldUpdateOperationsInput = {
   set?: $Enums.ServicePriceModel
 }
@@ -729,6 +1054,34 @@ export type ServiceUpdateOneRequiredWithoutRecentByUsersNestedInput = {
   upsert?: Prisma.ServiceUpsertWithoutRecentByUsersInput
   connect?: Prisma.ServiceWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutRecentByUsersInput, Prisma.ServiceUpdateWithoutRecentByUsersInput>, Prisma.ServiceUncheckedUpdateWithoutRecentByUsersInput>
+}
+
+export type ServiceCreateNestedOneWithoutTimeSlotDefaultsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotDefaultsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutTimeSlotDefaultsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutTimeSlotDefaultsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotDefaultsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutTimeSlotDefaultsInput
+  upsert?: Prisma.ServiceUpsertWithoutTimeSlotDefaultsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutTimeSlotDefaultsInput, Prisma.ServiceUpdateWithoutTimeSlotDefaultsInput>, Prisma.ServiceUncheckedUpdateWithoutTimeSlotDefaultsInput>
+}
+
+export type ServiceCreateNestedOneWithoutTimeSlotOverridesInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotOverridesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutTimeSlotOverridesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutTimeSlotOverridesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotOverridesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutTimeSlotOverridesInput
+  upsert?: Prisma.ServiceUpsertWithoutTimeSlotOverridesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutTimeSlotOverridesInput, Prisma.ServiceUpdateWithoutTimeSlotOverridesInput>, Prisma.ServiceUncheckedUpdateWithoutTimeSlotOverridesInput>
 }
 
 export type ServiceCreateNestedManyWithoutCreatedByInput = {
@@ -815,50 +1168,218 @@ export type ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
 }
 
-export type ServiceCreateWithoutItemsInput = {
+export type ServiceCreateWithoutAddOnsInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutAddOnsInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutAddOnsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutAddOnsInput, Prisma.ServiceUncheckedCreateWithoutAddOnsInput>
+}
+
+export type ServiceUpsertWithoutAddOnsInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutAddOnsInput, Prisma.ServiceUncheckedUpdateWithoutAddOnsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutAddOnsInput, Prisma.ServiceUncheckedCreateWithoutAddOnsInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutAddOnsInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutAddOnsInput, Prisma.ServiceUncheckedUpdateWithoutAddOnsInput>
+}
+
+export type ServiceUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutItemsInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutItemsInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutItemsInput = {
@@ -881,57 +1402,78 @@ export type ServiceUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
-export type ServiceCreateWithoutOrdersInput = {
+export type ServiceCreateWithoutCoverImageInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -939,34 +1481,201 @@ export type ServiceCreateWithoutOrdersInput = {
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutCoverImageInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutCoverImageInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+}
+
+export type ServiceUpsertWithoutCoverImageInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutCoverImageInput, Prisma.ServiceUncheckedUpdateWithoutCoverImageInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutCoverImageInput, Prisma.ServiceUncheckedCreateWithoutCoverImageInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutCoverImageInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutCoverImageInput, Prisma.ServiceUncheckedUpdateWithoutCoverImageInput>
+}
+
+export type ServiceUpdateWithoutCoverImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutCoverImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutOrdersInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutOrdersInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutOrdersInput = {
@@ -989,92 +1698,132 @@ export type ServiceUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutRecurringOrdersInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutRecurringOrdersInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRecurringOrdersInput = {
@@ -1097,92 +1846,132 @@ export type ServiceUpdateWithoutRecurringOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRecurringOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutOrderDraftsInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutOrderDraftsInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutOrderDraftsInput = {
@@ -1205,92 +1994,132 @@ export type ServiceUpdateWithoutOrderDraftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutOrderDraftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutPromotionServicesInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutPromotionServicesInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutPromotionServicesInput = {
@@ -1313,92 +2142,132 @@ export type ServiceUpdateWithoutPromotionServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutPromotionServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutRewardsInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutRewardsInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRewardsInput = {
@@ -1421,34 +2290,194 @@ export type ServiceUpdateWithoutRewardsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRewardsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutAvailabilityInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutAvailabilityInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutAvailabilityInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+}
+
+export type ServiceUpsertWithoutAvailabilityInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutAvailabilityInput, Prisma.ServiceUncheckedUpdateWithoutAvailabilityInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutAvailabilityInput, Prisma.ServiceUncheckedCreateWithoutAvailabilityInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutAvailabilityInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutAvailabilityInput, Prisma.ServiceUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type ServiceUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1457,56 +2486,515 @@ export type ServiceUncheckedUpdateWithoutRewardsInput = {
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutCareAndHandlingInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutCareAndHandlingInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutCareAndHandlingInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput>
+}
+
+export type ServiceUpsertWithWhereUniqueWithoutCareAndHandlingInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedUpdateWithoutCareAndHandlingInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedCreateWithoutCareAndHandlingInput>
+}
+
+export type ServiceUpdateWithWhereUniqueWithoutCareAndHandlingInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutCareAndHandlingInput, Prisma.ServiceUncheckedUpdateWithoutCareAndHandlingInput>
+}
+
+export type ServiceUpdateManyWithWhereWithoutCareAndHandlingInput = {
+  where: Prisma.ServiceScalarWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutCareAndHandlingInput>
+}
+
+export type ServiceScalarWhereInput = {
+  AND?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+  OR?: Prisma.ServiceScalarWhereInput[]
+  NOT?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+  id?: Prisma.StringFilter<"Service"> | string
+  title?: Prisma.StringFilter<"Service"> | string
+  description?: Prisma.StringFilter<"Service"> | string
+  coverImageId?: Prisma.StringFilter<"Service"> | string
+  contextDescription?: Prisma.StringFilter<"Service"> | string
+  turnaroundTime?: Prisma.StringFilter<"Service"> | string
+  basePrice?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFilter<"Service"> | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFilter<"Service"> | boolean
+  icon?: Prisma.StringFilter<"Service"> | string
+  createdById?: Prisma.StringFilter<"Service"> | string
+  updatedById?: Prisma.StringFilter<"Service"> | string
+  loyaltyPointsRate?: Prisma.DecimalNullableFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFilter<"Service"> | string
+  createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
+}
+
+export type ServiceCreateWithoutHowItWorksInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutHowItWorksInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutHowItWorksInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutHowItWorksInput, Prisma.ServiceUncheckedCreateWithoutHowItWorksInput>
+}
+
+export type ServiceUpsertWithoutHowItWorksInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutHowItWorksInput, Prisma.ServiceUncheckedUpdateWithoutHowItWorksInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutHowItWorksInput, Prisma.ServiceUncheckedCreateWithoutHowItWorksInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutHowItWorksInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutHowItWorksInput, Prisma.ServiceUncheckedUpdateWithoutHowItWorksInput>
+}
+
+export type ServiceUpdateWithoutHowItWorksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutHowItWorksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutInclusionsInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutInclusionsInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutInclusionsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput>
+}
+
+export type ServiceUpsertWithWhereUniqueWithoutInclusionsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutInclusionsInput, Prisma.ServiceUncheckedUpdateWithoutInclusionsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutInclusionsInput, Prisma.ServiceUncheckedCreateWithoutInclusionsInput>
+}
+
+export type ServiceUpdateWithWhereUniqueWithoutInclusionsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutInclusionsInput, Prisma.ServiceUncheckedUpdateWithoutInclusionsInput>
+}
+
+export type ServiceUpdateManyWithWhereWithoutInclusionsInput = {
+  where: Prisma.ServiceScalarWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutInclusionsInput>
+}
+
+export type ServiceCreateWithoutPoliciesInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutPoliciesInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutPoliciesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput>
+}
+
+export type ServiceUpsertWithWhereUniqueWithoutPoliciesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutPoliciesInput, Prisma.ServiceUncheckedUpdateWithoutPoliciesInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutPoliciesInput, Prisma.ServiceUncheckedCreateWithoutPoliciesInput>
+}
+
+export type ServiceUpdateWithWhereUniqueWithoutPoliciesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutPoliciesInput, Prisma.ServiceUncheckedUpdateWithoutPoliciesInput>
+}
+
+export type ServiceUpdateManyWithWhereWithoutPoliciesInput = {
+  where: Prisma.ServiceScalarWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutPoliciesInput>
 }
 
 export type ServiceCreateWithoutServiceMediaInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutServiceMediaInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutServiceMediaInput = {
@@ -1529,92 +3017,132 @@ export type ServiceUpdateWithoutServiceMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutServiceMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutRecentByUsersInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutRecentByUsersInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRecentByUsersInput = {
@@ -1637,92 +3165,428 @@ export type ServiceUpdateWithoutRecentByUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRecentByUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutTimeSlotDefaultsInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutTimeSlotDefaultsInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutTimeSlotDefaultsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotDefaultsInput>
+}
+
+export type ServiceUpsertWithoutTimeSlotDefaultsInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedUpdateWithoutTimeSlotDefaultsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotDefaultsInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutTimeSlotDefaultsInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutTimeSlotDefaultsInput, Prisma.ServiceUncheckedUpdateWithoutTimeSlotDefaultsInput>
+}
+
+export type ServiceUpdateWithoutTimeSlotDefaultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutTimeSlotDefaultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutTimeSlotOverridesInput = {
+  id?: string
+  title: string
+  description: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutTimeSlotOverridesInput = {
+  id?: string
+  title: string
+  description: string
+  coverImageId: string
+  contextDescription: string
+  turnaroundTime: string
+  basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel: $Enums.ServicePriceModel
+  isActive?: boolean
+  icon: string
+  createdById: string
+  updatedById: string
+  loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
+  items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
+  promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
+  recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
+  orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
+  rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutTimeSlotOverridesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotOverridesInput>
+}
+
+export type ServiceUpsertWithoutTimeSlotOverridesInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedUpdateWithoutTimeSlotOverridesInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedCreateWithoutTimeSlotOverridesInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutTimeSlotOverridesInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutTimeSlotOverridesInput, Prisma.ServiceUncheckedUpdateWithoutTimeSlotOverridesInput>
+}
+
+export type ServiceUpdateWithoutTimeSlotOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutTimeSlotOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutCreatedByInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutCreatedByInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutCreatedByInput = {
@@ -1739,46 +3603,66 @@ export type ServiceCreateWithoutUpdatedByInput = {
   id?: string
   title: string
   description: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coverImage: Prisma.MediaCreateNestedOneWithoutServiceCoverInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemCreateNestedManyWithoutServiceInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedServicesInput
   orders?: Prisma.OrderCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardCreateNestedManyWithoutFreeServiceInput
+  availability: Prisma.ServiceAvailabilityCreateNestedOneWithoutServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutUpdatedByInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutServiceInput
   items?: Prisma.ServiceItemUncheckedCreateNestedManyWithoutServiceInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutServiceInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedCreateNestedManyWithoutServiceInput
+  policies?: Prisma.PolicyUncheckedCreateNestedManyWithoutServiceInput
+  inclusions?: Prisma.InclusionsUncheckedCreateNestedManyWithoutServicesInput
   promotionServices?: Prisma.PromotionServiceUncheckedCreateNestedManyWithoutServiceInput
   recentByUsers?: Prisma.RecentServiceUncheckedCreateNestedManyWithoutServiceInput
   recurringOrders?: Prisma.RecurringOrderUncheckedCreateNestedManyWithoutServiceInput
   orderDrafts?: Prisma.OrderDraftUncheckedCreateNestedManyWithoutServiceInput
   rewards?: Prisma.RewardUncheckedCreateNestedManyWithoutFreeServiceInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedCreateNestedManyWithoutServiceInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedCreateNestedManyWithoutServiceInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutServiceInput
+  addOns?: Prisma.ServiceAddOnUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutUpdatedByInput = {
@@ -1807,25 +3691,6 @@ export type ServiceUpdateManyWithWhereWithoutCreatedByInput = {
   data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutCreatedByInput>
 }
 
-export type ServiceScalarWhereInput = {
-  AND?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
-  OR?: Prisma.ServiceScalarWhereInput[]
-  NOT?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
-  id?: Prisma.StringFilter<"Service"> | string
-  title?: Prisma.StringFilter<"Service"> | string
-  description?: Prisma.StringFilter<"Service"> | string
-  turnaroundTime?: Prisma.StringFilter<"Service"> | string
-  basePrice?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  priceModel?: Prisma.EnumServicePriceModelFilter<"Service"> | $Enums.ServicePriceModel
-  isActive?: Prisma.BoolFilter<"Service"> | boolean
-  icon?: Prisma.StringNullableFilter<"Service"> | string | null
-  createdById?: Prisma.StringFilter<"Service"> | string
-  updatedById?: Prisma.StringFilter<"Service"> | string
-  loyaltyPointsRate?: Prisma.DecimalNullableFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
-}
-
 export type ServiceUpsertWithWhereUniqueWithoutUpdatedByInput = {
   where: Prisma.ServiceWhereUniqueInput
   update: Prisma.XOR<Prisma.ServiceUpdateWithoutUpdatedByInput, Prisma.ServiceUncheckedUpdateWithoutUpdatedByInput>
@@ -1842,17 +3707,275 @@ export type ServiceUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
+export type ServiceUpdateWithoutCareAndHandlingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutCareAndHandlingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateManyWithoutCareAndHandlingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ServiceUpdateWithoutInclusionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutInclusionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateManyWithoutInclusionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ServiceUpdateWithoutPoliciesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutPoliciesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
+  items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
+  promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
+  recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
+  orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
+  rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateManyWithoutPoliciesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
+  basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ServiceCreateManyCreatedByInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   updatedById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1861,13 +3984,16 @@ export type ServiceCreateManyUpdatedByInput = {
   id?: string
   title: string
   description: string
+  coverImageId: string
+  contextDescription: string
   turnaroundTime: string
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel: $Enums.ServicePriceModel
   isActive?: boolean
-  icon?: string | null
+  icon: string
   createdById: string
   loyaltyPointsRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1876,59 +4002,82 @@ export type ServiceUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1937,59 +4086,82 @@ export type ServiceUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImage?: Prisma.MediaUpdateOneRequiredWithoutServiceCoverNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUpdateManyWithoutServiceNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedServicesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUpdateManyWithoutFreeServiceNestedInput
+  availability?: Prisma.ServiceAvailabilityUpdateOneRequiredWithoutServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutServiceNestedInput
   items?: Prisma.ServiceItemUncheckedUpdateManyWithoutServiceNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutServiceNestedInput
+  careAndHandling?: Prisma.CareAndHandlingUncheckedUpdateManyWithoutServiceNestedInput
+  policies?: Prisma.PolicyUncheckedUpdateManyWithoutServiceNestedInput
+  inclusions?: Prisma.InclusionsUncheckedUpdateManyWithoutServicesNestedInput
   promotionServices?: Prisma.PromotionServiceUncheckedUpdateManyWithoutServiceNestedInput
   recentByUsers?: Prisma.RecentServiceUncheckedUpdateManyWithoutServiceNestedInput
   recurringOrders?: Prisma.RecurringOrderUncheckedUpdateManyWithoutServiceNestedInput
   orderDrafts?: Prisma.OrderDraftUncheckedUpdateManyWithoutServiceNestedInput
   rewards?: Prisma.RewardUncheckedUpdateManyWithoutFreeServiceNestedInput
+  timeSlotDefaults?: Prisma.ServiceTimeSlotDefaultUncheckedUpdateManyWithoutServiceNestedInput
+  timeSlotOverrides?: Prisma.ServiceTimeSlotOverrideUncheckedUpdateManyWithoutServiceNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutServiceNestedInput
+  addOns?: Prisma.ServiceAddOnUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageId?: Prisma.StringFieldUpdateOperationsInput | string
+  contextDescription?: Prisma.StringFieldUpdateOperationsInput | string
   turnaroundTime?: Prisma.StringFieldUpdateOperationsInput | string
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   priceModel?: Prisma.EnumServicePriceModelFieldUpdateOperationsInput | $Enums.ServicePriceModel
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   loyaltyPointsRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availabilityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2003,22 +4175,36 @@ export type ServiceCountOutputType = {
   serviceMedia: number
   items: number
   orders: number
+  careAndHandling: number
+  policies: number
+  inclusions: number
   promotionServices: number
   recentByUsers: number
   recurringOrders: number
   orderDrafts: number
   rewards: number
+  timeSlotDefaults: number
+  timeSlotOverrides: number
+  howItWorks: number
+  addOns: number
 }
 
 export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   serviceMedia?: boolean | ServiceCountOutputTypeCountServiceMediaArgs
   items?: boolean | ServiceCountOutputTypeCountItemsArgs
   orders?: boolean | ServiceCountOutputTypeCountOrdersArgs
+  careAndHandling?: boolean | ServiceCountOutputTypeCountCareAndHandlingArgs
+  policies?: boolean | ServiceCountOutputTypeCountPoliciesArgs
+  inclusions?: boolean | ServiceCountOutputTypeCountInclusionsArgs
   promotionServices?: boolean | ServiceCountOutputTypeCountPromotionServicesArgs
   recentByUsers?: boolean | ServiceCountOutputTypeCountRecentByUsersArgs
   recurringOrders?: boolean | ServiceCountOutputTypeCountRecurringOrdersArgs
   orderDrafts?: boolean | ServiceCountOutputTypeCountOrderDraftsArgs
   rewards?: boolean | ServiceCountOutputTypeCountRewardsArgs
+  timeSlotDefaults?: boolean | ServiceCountOutputTypeCountTimeSlotDefaultsArgs
+  timeSlotOverrides?: boolean | ServiceCountOutputTypeCountTimeSlotOverridesArgs
+  howItWorks?: boolean | ServiceCountOutputTypeCountHowItWorksArgs
+  addOns?: boolean | ServiceCountOutputTypeCountAddOnsArgs
 }
 
 /**
@@ -2050,6 +4236,27 @@ export type ServiceCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.E
  */
 export type ServiceCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrderWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountCareAndHandlingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CareAndHandlingWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountPoliciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PolicyWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountInclusionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InclusionsWhereInput
 }
 
 /**
@@ -2087,11 +4294,41 @@ export type ServiceCountOutputTypeCountRewardsArgs<ExtArgs extends runtime.Types
   where?: Prisma.RewardWhereInput
 }
 
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountTimeSlotDefaultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceTimeSlotDefaultWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountTimeSlotOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceTimeSlotOverrideWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountHowItWorksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HowItWorksWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountAddOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAddOnWhereInput
+}
+
 
 export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   description?: boolean
+  coverImageId?: boolean
+  contextDescription?: boolean
   turnaroundTime?: boolean
   basePrice?: boolean
   priceModel?: boolean
@@ -2100,18 +4337,28 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdById?: boolean
   updatedById?: boolean
   loyaltyPointsRate?: boolean
+  availabilityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   serviceMedia?: boolean | Prisma.Service$serviceMediaArgs<ExtArgs>
   items?: boolean | Prisma.Service$itemsArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   orders?: boolean | Prisma.Service$ordersArgs<ExtArgs>
+  careAndHandling?: boolean | Prisma.Service$careAndHandlingArgs<ExtArgs>
+  policies?: boolean | Prisma.Service$policiesArgs<ExtArgs>
+  inclusions?: boolean | Prisma.Service$inclusionsArgs<ExtArgs>
   promotionServices?: boolean | Prisma.Service$promotionServicesArgs<ExtArgs>
   recentByUsers?: boolean | Prisma.Service$recentByUsersArgs<ExtArgs>
   recurringOrders?: boolean | Prisma.Service$recurringOrdersArgs<ExtArgs>
   orderDrafts?: boolean | Prisma.Service$orderDraftsArgs<ExtArgs>
   rewards?: boolean | Prisma.Service$rewardsArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
+  timeSlotDefaults?: boolean | Prisma.Service$timeSlotDefaultsArgs<ExtArgs>
+  timeSlotOverrides?: boolean | Prisma.Service$timeSlotOverridesArgs<ExtArgs>
+  howItWorks?: boolean | Prisma.Service$howItWorksArgs<ExtArgs>
+  addOns?: boolean | Prisma.Service$addOnsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
@@ -2119,6 +4366,8 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
+  coverImageId?: boolean
+  contextDescription?: boolean
   turnaroundTime?: boolean
   basePrice?: boolean
   priceModel?: boolean
@@ -2127,16 +4376,21 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdById?: boolean
   updatedById?: boolean
   loyaltyPointsRate?: boolean
+  availabilityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   description?: boolean
+  coverImageId?: boolean
+  contextDescription?: boolean
   turnaroundTime?: boolean
   basePrice?: boolean
   priceModel?: boolean
@@ -2145,16 +4399,21 @@ export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdById?: boolean
   updatedById?: boolean
   loyaltyPointsRate?: boolean
+  availabilityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectScalar = {
   id?: boolean
   title?: boolean
   description?: boolean
+  coverImageId?: boolean
+  contextDescription?: boolean
   turnaroundTime?: boolean
   basePrice?: boolean
   priceModel?: boolean
@@ -2163,59 +4422,85 @@ export type ServiceSelectScalar = {
   createdById?: boolean
   updatedById?: boolean
   loyaltyPointsRate?: boolean
+  availabilityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "turnaroundTime" | "basePrice" | "priceModel" | "isActive" | "icon" | "createdById" | "updatedById" | "loyaltyPointsRate" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
+export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "coverImageId" | "contextDescription" | "turnaroundTime" | "basePrice" | "priceModel" | "isActive" | "icon" | "createdById" | "updatedById" | "loyaltyPointsRate" | "availabilityId" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
 export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   serviceMedia?: boolean | Prisma.Service$serviceMediaArgs<ExtArgs>
   items?: boolean | Prisma.Service$itemsArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   orders?: boolean | Prisma.Service$ordersArgs<ExtArgs>
+  careAndHandling?: boolean | Prisma.Service$careAndHandlingArgs<ExtArgs>
+  policies?: boolean | Prisma.Service$policiesArgs<ExtArgs>
+  inclusions?: boolean | Prisma.Service$inclusionsArgs<ExtArgs>
   promotionServices?: boolean | Prisma.Service$promotionServicesArgs<ExtArgs>
   recentByUsers?: boolean | Prisma.Service$recentByUsersArgs<ExtArgs>
   recurringOrders?: boolean | Prisma.Service$recurringOrdersArgs<ExtArgs>
   orderDrafts?: boolean | Prisma.Service$orderDraftsArgs<ExtArgs>
   rewards?: boolean | Prisma.Service$rewardsArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
+  timeSlotDefaults?: boolean | Prisma.Service$timeSlotDefaultsArgs<ExtArgs>
+  timeSlotOverrides?: boolean | Prisma.Service$timeSlotOverridesArgs<ExtArgs>
+  howItWorks?: boolean | Prisma.Service$howItWorksArgs<ExtArgs>
+  addOns?: boolean | Prisma.Service$addOnsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coverImage?: boolean | Prisma.MediaDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  availability?: boolean | Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>
 }
 
 export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Service"
   objects: {
+    coverImage: Prisma.$MediaPayload<ExtArgs>
     serviceMedia: Prisma.$ServiceMediaPayload<ExtArgs>[]
     items: Prisma.$ServiceItemPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs>
     orders: Prisma.$OrderPayload<ExtArgs>[]
+    careAndHandling: Prisma.$CareAndHandlingPayload<ExtArgs>[]
+    policies: Prisma.$PolicyPayload<ExtArgs>[]
+    inclusions: Prisma.$InclusionsPayload<ExtArgs>[]
     promotionServices: Prisma.$PromotionServicePayload<ExtArgs>[]
     recentByUsers: Prisma.$RecentServicePayload<ExtArgs>[]
     recurringOrders: Prisma.$RecurringOrderPayload<ExtArgs>[]
     orderDrafts: Prisma.$OrderDraftPayload<ExtArgs>[]
     rewards: Prisma.$RewardPayload<ExtArgs>[]
+    availability: Prisma.$ServiceAvailabilityPayload<ExtArgs>
+    timeSlotDefaults: Prisma.$ServiceTimeSlotDefaultPayload<ExtArgs>[]
+    timeSlotOverrides: Prisma.$ServiceTimeSlotOverridePayload<ExtArgs>[]
+    howItWorks: Prisma.$HowItWorksPayload<ExtArgs>[]
+    addOns: Prisma.$ServiceAddOnPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
     description: string
+    coverImageId: string
+    contextDescription: string
     turnaroundTime: string
     basePrice: runtime.Decimal
     priceModel: $Enums.ServicePriceModel
     isActive: boolean
-    icon: string | null
+    icon: string
     createdById: string
     updatedById: string
     loyaltyPointsRate: runtime.Decimal | null
+    availabilityId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["service"]>
@@ -2612,16 +4897,25 @@ readonly fields: ServiceFieldRefs;
  */
 export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  coverImage<T extends Prisma.MediaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaDefaultArgs<ExtArgs>>): Prisma.Prisma__MediaClient<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   serviceMedia<T extends Prisma.Service$serviceMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$serviceMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   items<T extends Prisma.Service$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.Service$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  careAndHandling<T extends Prisma.Service$careAndHandlingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$careAndHandlingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CareAndHandlingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  policies<T extends Prisma.Service$policiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$policiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  inclusions<T extends Prisma.Service$inclusionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$inclusionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InclusionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   promotionServices<T extends Prisma.Service$promotionServicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$promotionServicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PromotionServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recentByUsers<T extends Prisma.Service$recentByUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$recentByUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecentServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recurringOrders<T extends Prisma.Service$recurringOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$recurringOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecurringOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderDrafts<T extends Prisma.Service$orderDraftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$orderDraftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderDraftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rewards<T extends Prisma.Service$rewardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RewardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  availability<T extends Prisma.ServiceAvailabilityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceAvailabilityDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceAvailabilityClient<runtime.Types.Result.GetResult<Prisma.$ServiceAvailabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  timeSlotDefaults<T extends Prisma.Service$timeSlotDefaultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$timeSlotDefaultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTimeSlotDefaultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  timeSlotOverrides<T extends Prisma.Service$timeSlotOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$timeSlotOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTimeSlotOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  howItWorks<T extends Prisma.Service$howItWorksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$howItWorksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HowItWorksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  addOns<T extends Prisma.Service$addOnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$addOnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAddOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2654,6 +4948,8 @@ export interface ServiceFieldRefs {
   readonly id: Prisma.FieldRef<"Service", 'String'>
   readonly title: Prisma.FieldRef<"Service", 'String'>
   readonly description: Prisma.FieldRef<"Service", 'String'>
+  readonly coverImageId: Prisma.FieldRef<"Service", 'String'>
+  readonly contextDescription: Prisma.FieldRef<"Service", 'String'>
   readonly turnaroundTime: Prisma.FieldRef<"Service", 'String'>
   readonly basePrice: Prisma.FieldRef<"Service", 'Decimal'>
   readonly priceModel: Prisma.FieldRef<"Service", 'ServicePriceModel'>
@@ -2662,6 +4958,7 @@ export interface ServiceFieldRefs {
   readonly createdById: Prisma.FieldRef<"Service", 'String'>
   readonly updatedById: Prisma.FieldRef<"Service", 'String'>
   readonly loyaltyPointsRate: Prisma.FieldRef<"Service", 'Decimal'>
+  readonly availabilityId: Prisma.FieldRef<"Service", 'String'>
   readonly createdAt: Prisma.FieldRef<"Service", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Service", 'DateTime'>
 }
@@ -3137,6 +5434,78 @@ export type Service$ordersArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Service.careAndHandling
+ */
+export type Service$careAndHandlingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CareAndHandling
+   */
+  select?: Prisma.CareAndHandlingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CareAndHandling
+   */
+  omit?: Prisma.CareAndHandlingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CareAndHandlingInclude<ExtArgs> | null
+  where?: Prisma.CareAndHandlingWhereInput
+  orderBy?: Prisma.CareAndHandlingOrderByWithRelationInput | Prisma.CareAndHandlingOrderByWithRelationInput[]
+  cursor?: Prisma.CareAndHandlingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CareAndHandlingScalarFieldEnum | Prisma.CareAndHandlingScalarFieldEnum[]
+}
+
+/**
+ * Service.policies
+ */
+export type Service$policiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Policy
+   */
+  select?: Prisma.PolicySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Policy
+   */
+  omit?: Prisma.PolicyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PolicyInclude<ExtArgs> | null
+  where?: Prisma.PolicyWhereInput
+  orderBy?: Prisma.PolicyOrderByWithRelationInput | Prisma.PolicyOrderByWithRelationInput[]
+  cursor?: Prisma.PolicyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PolicyScalarFieldEnum | Prisma.PolicyScalarFieldEnum[]
+}
+
+/**
+ * Service.inclusions
+ */
+export type Service$inclusionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Inclusions
+   */
+  select?: Prisma.InclusionsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Inclusions
+   */
+  omit?: Prisma.InclusionsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InclusionsInclude<ExtArgs> | null
+  where?: Prisma.InclusionsWhereInput
+  orderBy?: Prisma.InclusionsOrderByWithRelationInput | Prisma.InclusionsOrderByWithRelationInput[]
+  cursor?: Prisma.InclusionsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InclusionsScalarFieldEnum | Prisma.InclusionsScalarFieldEnum[]
+}
+
+/**
  * Service.promotionServices
  */
 export type Service$promotionServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3254,6 +5623,102 @@ export type Service$rewardsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.RewardScalarFieldEnum | Prisma.RewardScalarFieldEnum[]
+}
+
+/**
+ * Service.timeSlotDefaults
+ */
+export type Service$timeSlotDefaultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceTimeSlotDefault
+   */
+  select?: Prisma.ServiceTimeSlotDefaultSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceTimeSlotDefault
+   */
+  omit?: Prisma.ServiceTimeSlotDefaultOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceTimeSlotDefaultInclude<ExtArgs> | null
+  where?: Prisma.ServiceTimeSlotDefaultWhereInput
+  orderBy?: Prisma.ServiceTimeSlotDefaultOrderByWithRelationInput | Prisma.ServiceTimeSlotDefaultOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceTimeSlotDefaultWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceTimeSlotDefaultScalarFieldEnum | Prisma.ServiceTimeSlotDefaultScalarFieldEnum[]
+}
+
+/**
+ * Service.timeSlotOverrides
+ */
+export type Service$timeSlotOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceTimeSlotOverride
+   */
+  select?: Prisma.ServiceTimeSlotOverrideSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceTimeSlotOverride
+   */
+  omit?: Prisma.ServiceTimeSlotOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceTimeSlotOverrideInclude<ExtArgs> | null
+  where?: Prisma.ServiceTimeSlotOverrideWhereInput
+  orderBy?: Prisma.ServiceTimeSlotOverrideOrderByWithRelationInput | Prisma.ServiceTimeSlotOverrideOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceTimeSlotOverrideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceTimeSlotOverrideScalarFieldEnum | Prisma.ServiceTimeSlotOverrideScalarFieldEnum[]
+}
+
+/**
+ * Service.howItWorks
+ */
+export type Service$howItWorksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HowItWorks
+   */
+  select?: Prisma.HowItWorksSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HowItWorks
+   */
+  omit?: Prisma.HowItWorksOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HowItWorksInclude<ExtArgs> | null
+  where?: Prisma.HowItWorksWhereInput
+  orderBy?: Prisma.HowItWorksOrderByWithRelationInput | Prisma.HowItWorksOrderByWithRelationInput[]
+  cursor?: Prisma.HowItWorksWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HowItWorksScalarFieldEnum | Prisma.HowItWorksScalarFieldEnum[]
+}
+
+/**
+ * Service.addOns
+ */
+export type Service$addOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAddOn
+   */
+  select?: Prisma.ServiceAddOnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAddOn
+   */
+  omit?: Prisma.ServiceAddOnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAddOnInclude<ExtArgs> | null
+  where?: Prisma.ServiceAddOnWhereInput
+  orderBy?: Prisma.ServiceAddOnOrderByWithRelationInput | Prisma.ServiceAddOnOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAddOnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAddOnScalarFieldEnum | Prisma.ServiceAddOnScalarFieldEnum[]
 }
 
 /**

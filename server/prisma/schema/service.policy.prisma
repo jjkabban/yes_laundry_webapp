@@ -1,0 +1,18 @@
+enum PolicyTitle {
+  CANCELLATION
+  DAMAGED_AND_LOST_ITEMS
+  SPECIAL_CARE_ITEMS
+  REWASH_GUARANTEE
+}
+
+model Policy {
+  id          String      @id @default(uuid())
+  type        PolicyTitle
+  title       String
+  description String
+  icon       String? 
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  service     Service[]
+  @@unique([title])
+}

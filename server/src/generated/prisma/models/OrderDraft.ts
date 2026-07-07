@@ -282,6 +282,7 @@ export type OrderDraftWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"OrderDraft"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceNullableScalarRelationFilter, Prisma.ServiceWhereInput> | null
+  addOns?: Prisma.OrderDraftAddOnListRelationFilter
 }
 
 export type OrderDraftOrderByWithRelationInput = {
@@ -300,6 +301,7 @@ export type OrderDraftOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.UserOrderByWithRelationInput
   service?: Prisma.ServiceOrderByWithRelationInput
+  addOns?: Prisma.OrderDraftAddOnOrderByRelationAggregateInput
 }
 
 export type OrderDraftWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +323,7 @@ export type OrderDraftWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"OrderDraft"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceNullableScalarRelationFilter, Prisma.ServiceWhereInput> | null
+  addOns?: Prisma.OrderDraftAddOnListRelationFilter
 }, "id">
 
 export type OrderDraftOrderByWithAggregationInput = {
@@ -377,6 +380,7 @@ export type OrderDraftCreateInput = {
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutOrderDraftsInput
   service?: Prisma.ServiceCreateNestedOneWithoutOrderDraftsInput
+  addOns?: Prisma.OrderDraftAddOnCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftUncheckedCreateInput = {
@@ -393,6 +397,7 @@ export type OrderDraftUncheckedCreateInput = {
   currentStep?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftUpdateInput = {
@@ -409,6 +414,7 @@ export type OrderDraftUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutOrderDraftsNestedInput
   service?: Prisma.ServiceUpdateOneWithoutOrderDraftsNestedInput
+  addOns?: Prisma.OrderDraftAddOnUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftUncheckedUpdateInput = {
@@ -425,6 +431,7 @@ export type OrderDraftUncheckedUpdateInput = {
   currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftCreateManyInput = {
@@ -471,6 +478,11 @@ export type OrderDraftUncheckedUpdateManyInput = {
   currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderDraftScalarRelationFilter = {
+  is?: Prisma.OrderDraftWhereInput
+  isNot?: Prisma.OrderDraftWhereInput
 }
 
 export type OrderDraftCountOrderByAggregateInput = {
@@ -537,6 +549,20 @@ export type OrderDraftListRelationFilter = {
 
 export type OrderDraftOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type OrderDraftCreateNestedOneWithoutAddOnsInput = {
+  create?: Prisma.XOR<Prisma.OrderDraftCreateWithoutAddOnsInput, Prisma.OrderDraftUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.OrderDraftCreateOrConnectWithoutAddOnsInput
+  connect?: Prisma.OrderDraftWhereUniqueInput
+}
+
+export type OrderDraftUpdateOneRequiredWithoutAddOnsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderDraftCreateWithoutAddOnsInput, Prisma.OrderDraftUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.OrderDraftCreateOrConnectWithoutAddOnsInput
+  upsert?: Prisma.OrderDraftUpsertWithoutAddOnsInput
+  connect?: Prisma.OrderDraftWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderDraftUpdateToOneWithWhereWithoutAddOnsInput, Prisma.OrderDraftUpdateWithoutAddOnsInput>, Prisma.OrderDraftUncheckedUpdateWithoutAddOnsInput>
 }
 
 export type OrderDraftCreateNestedManyWithoutServiceInput = {
@@ -623,6 +649,86 @@ export type OrderDraftUncheckedUpdateManyWithoutCustomerNestedInput = {
   deleteMany?: Prisma.OrderDraftScalarWhereInput | Prisma.OrderDraftScalarWhereInput[]
 }
 
+export type OrderDraftCreateWithoutAddOnsInput = {
+  id?: string
+  bagCount?: number | null
+  weightKg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  items?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  pickupAddress?: string | null
+  pickupWindow?: Date | string | null
+  deliveryAddress?: string | null
+  deliveryWindow?: Date | string | null
+  currentStep?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.UserCreateNestedOneWithoutOrderDraftsInput
+  service?: Prisma.ServiceCreateNestedOneWithoutOrderDraftsInput
+}
+
+export type OrderDraftUncheckedCreateWithoutAddOnsInput = {
+  id?: string
+  customerId: string
+  serviceId?: string | null
+  bagCount?: number | null
+  weightKg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  items?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  pickupAddress?: string | null
+  pickupWindow?: Date | string | null
+  deliveryAddress?: string | null
+  deliveryWindow?: Date | string | null
+  currentStep?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderDraftCreateOrConnectWithoutAddOnsInput = {
+  where: Prisma.OrderDraftWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderDraftCreateWithoutAddOnsInput, Prisma.OrderDraftUncheckedCreateWithoutAddOnsInput>
+}
+
+export type OrderDraftUpsertWithoutAddOnsInput = {
+  update: Prisma.XOR<Prisma.OrderDraftUpdateWithoutAddOnsInput, Prisma.OrderDraftUncheckedUpdateWithoutAddOnsInput>
+  create: Prisma.XOR<Prisma.OrderDraftCreateWithoutAddOnsInput, Prisma.OrderDraftUncheckedCreateWithoutAddOnsInput>
+  where?: Prisma.OrderDraftWhereInput
+}
+
+export type OrderDraftUpdateToOneWithWhereWithoutAddOnsInput = {
+  where?: Prisma.OrderDraftWhereInput
+  data: Prisma.XOR<Prisma.OrderDraftUpdateWithoutAddOnsInput, Prisma.OrderDraftUncheckedUpdateWithoutAddOnsInput>
+}
+
+export type OrderDraftUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bagCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weightKg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  items?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  pickupAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.UserUpdateOneRequiredWithoutOrderDraftsNestedInput
+  service?: Prisma.ServiceUpdateOneWithoutOrderDraftsNestedInput
+}
+
+export type OrderDraftUncheckedUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bagCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weightKg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  items?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  pickupAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type OrderDraftCreateWithoutServiceInput = {
   id?: string
   bagCount?: number | null
@@ -636,6 +742,7 @@ export type OrderDraftCreateWithoutServiceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutOrderDraftsInput
+  addOns?: Prisma.OrderDraftAddOnCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftUncheckedCreateWithoutServiceInput = {
@@ -651,6 +758,7 @@ export type OrderDraftUncheckedCreateWithoutServiceInput = {
   currentStep?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftCreateOrConnectWithoutServiceInput = {
@@ -711,6 +819,7 @@ export type OrderDraftCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   service?: Prisma.ServiceCreateNestedOneWithoutOrderDraftsInput
+  addOns?: Prisma.OrderDraftAddOnCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftUncheckedCreateWithoutCustomerInput = {
@@ -726,6 +835,7 @@ export type OrderDraftUncheckedCreateWithoutCustomerInput = {
   currentStep?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedCreateNestedManyWithoutOrderDraftInput
 }
 
 export type OrderDraftCreateOrConnectWithoutCustomerInput = {
@@ -782,6 +892,7 @@ export type OrderDraftUpdateWithoutServiceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutOrderDraftsNestedInput
+  addOns?: Prisma.OrderDraftAddOnUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftUncheckedUpdateWithoutServiceInput = {
@@ -797,6 +908,7 @@ export type OrderDraftUncheckedUpdateWithoutServiceInput = {
   currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftUncheckedUpdateManyWithoutServiceInput = {
@@ -842,6 +954,7 @@ export type OrderDraftUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   service?: Prisma.ServiceUpdateOneWithoutOrderDraftsNestedInput
+  addOns?: Prisma.OrderDraftAddOnUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftUncheckedUpdateWithoutCustomerInput = {
@@ -857,6 +970,7 @@ export type OrderDraftUncheckedUpdateWithoutCustomerInput = {
   currentStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.OrderDraftAddOnUncheckedUpdateManyWithoutOrderDraftNestedInput
 }
 
 export type OrderDraftUncheckedUpdateManyWithoutCustomerInput = {
@@ -875,6 +989,35 @@ export type OrderDraftUncheckedUpdateManyWithoutCustomerInput = {
 }
 
 
+/**
+ * Count Type OrderDraftCountOutputType
+ */
+
+export type OrderDraftCountOutputType = {
+  addOns: number
+}
+
+export type OrderDraftCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  addOns?: boolean | OrderDraftCountOutputTypeCountAddOnsArgs
+}
+
+/**
+ * OrderDraftCountOutputType without action
+ */
+export type OrderDraftCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderDraftCountOutputType
+   */
+  select?: Prisma.OrderDraftCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * OrderDraftCountOutputType without action
+ */
+export type OrderDraftCountOutputTypeCountAddOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderDraftAddOnWhereInput
+}
+
 
 export type OrderDraftSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -892,6 +1035,8 @@ export type OrderDraftSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedAt?: boolean
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.OrderDraft$serviceArgs<ExtArgs>
+  addOns?: boolean | Prisma.OrderDraft$addOnsArgs<ExtArgs>
+  _count?: boolean | Prisma.OrderDraftCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orderDraft"]>
 
 export type OrderDraftSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -950,6 +1095,8 @@ export type OrderDraftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type OrderDraftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.OrderDraft$serviceArgs<ExtArgs>
+  addOns?: boolean | Prisma.OrderDraft$addOnsArgs<ExtArgs>
+  _count?: boolean | Prisma.OrderDraftCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderDraftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -965,6 +1112,7 @@ export type $OrderDraftPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     customer: Prisma.$UserPayload<ExtArgs>
     service: Prisma.$ServicePayload<ExtArgs> | null
+    addOns: Prisma.$OrderDraftAddOnPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1376,6 +1524,7 @@ export interface Prisma__OrderDraftClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   service<T extends Prisma.OrderDraft$serviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDraft$serviceArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  addOns<T extends Prisma.OrderDraft$addOnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDraft$addOnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderDraftAddOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1835,6 +1984,30 @@ export type OrderDraft$serviceArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.ServiceInclude<ExtArgs> | null
   where?: Prisma.ServiceWhereInput
+}
+
+/**
+ * OrderDraft.addOns
+ */
+export type OrderDraft$addOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderDraftAddOn
+   */
+  select?: Prisma.OrderDraftAddOnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrderDraftAddOn
+   */
+  omit?: Prisma.OrderDraftAddOnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderDraftAddOnInclude<ExtArgs> | null
+  where?: Prisma.OrderDraftAddOnWhereInput
+  orderBy?: Prisma.OrderDraftAddOnOrderByWithRelationInput | Prisma.OrderDraftAddOnOrderByWithRelationInput[]
+  cursor?: Prisma.OrderDraftAddOnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderDraftAddOnScalarFieldEnum | Prisma.OrderDraftAddOnScalarFieldEnum[]
 }
 
 /**

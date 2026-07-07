@@ -1,0 +1,12 @@
+model HowItWorks {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String
+  imageId     String
+  image       Media    @relation(fields: [imageId], references: [id])
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -36,6 +36,7 @@ model ServiceItem {
 
   unitPrice Decimal @db.Decimal(10, 2)
   isActive  Boolean @default(true)
+  recurringOrderItems  RecurringOrderItem[]
 
   orderItems OrderItem[]
 

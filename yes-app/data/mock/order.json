@@ -1,0 +1,598 @@
+[
+  {
+    "id": "clx9k2m3n0001abc123def001",
+    "orderNumber": "YL-001",
+    "customerId": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+    "customer": {
+      "id": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+      "firstName": "Justice",
+      "lastName": "Abban",
+      "email": "abbanjustice134@gmail.com",
+      "phoneNumber": "0241234567",
+      "profileImage": null
+    },
+    "assignedStaffId": "clx9k2m3n0003staff789",
+    "assignedStaff": {
+      "id": "clx9k2m3n0003staff789",
+      "firstName": "Kwame",
+      "lastName": "Mensah",
+      "phoneNumber": "0551234567",
+      "profileImage": null
+    },
+    "serviceId": "clx9k2m3n0004service",
+    "service": {
+      "id": "clx9k2m3n0004service",
+      "name": "Standard Wash",
+      "priceModel": "PER_ITEM"
+    },
+    "status": "DELIVERED",
+    "bagCount": null,
+    "weightKg": null,
+    "items": [
+      {
+        "id": "ev001-item1",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "serviceItemId": "clx9k2m3n0006si1",
+        "serviceItem": {
+          "id": "clx9k2m3n0006si1",
+          "name": "Shirt",
+          "price": 5.0
+        },
+        "quantity": 3,
+        "unitPriceAtOrder": 5.0,
+        "notes": null
+      },
+      {
+        "id": "ev001-item2",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "serviceItemId": "clx9k2m3n0008si2",
+        "serviceItem": {
+          "id": "clx9k2m3n0008si2",
+          "name": "Trousers",
+          "price": 8.0
+        },
+        "quantity": 2,
+        "unitPriceAtOrder": 8.0,
+        "notes": "Handle with care"
+      },
+      {
+        "id": "ev001-item3",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "serviceItemId": "clx9k2m3n0010si3",
+        "serviceItem": {
+          "id": "clx9k2m3n0010si3",
+          "name": "Bedsheet",
+          "price": 12.0
+        },
+        "quantity": 1,
+        "unitPriceAtOrder": 12.0,
+        "notes": null
+      }
+    ],
+    "recurringOrderId": null,
+    "pickupAddress": "14 Spintex Road, Accra",
+    "pickupWindow": "2026-06-24T09:00:00.000Z",
+    "pickedUpAt": "2026-06-24T09:20:00.000Z",
+    "deliveryAddress": "14 Spintex Road, Accra",
+    "deliveryWindow": "2026-06-25T17:00:00.000Z",
+    "deliveredAt": "2026-06-25T16:45:00.000Z",
+    "subtotal": 43.0,
+    "deliveryFee": 5.0,
+    "discount": 0.0,
+    "total": 48.0,
+    "transactions": [
+      {
+        "id": "ev001-tx1",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "amount": 48.0,
+        "status": "SUCCESS",
+        "method": "MOBILE_MONEY",
+        "reference": "MM-20260624-00121",
+        "failureReason": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "updatedAt": "2026-06-24T08:55:00.000Z"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev001-ev1",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "eventType": "CREATED",
+        "status": "PENDING",
+        "notes": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev001-ev2",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "eventType": "CONFIRMED",
+        "status": "CONFIRMED",
+        "notes": null,
+        "createdAt": "2026-06-24T09:00:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev001-ev3",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "eventType": "PICKED_UP",
+        "status": "PICKED_UP",
+        "notes": "Items collected from customer",
+        "createdAt": "2026-06-24T09:20:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev001-ev4",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "eventType": "PROCESSING_STARTED",
+        "status": "IN_PROGRESS",
+        "notes": null,
+        "createdAt": "2026-06-24T11:00:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev001-ev5",
+        "orderId": "clx9k2m3n0001abc123def001",
+        "eventType": "DELIVERED",
+        "status": "DELIVERED",
+        "notes": null,
+        "createdAt": "2026-06-25T16:45:00.000Z",
+        "workedOnById": ""
+      }
+    ],
+    "createdAt": "2026-06-24T08:55:00.000Z",
+    "updatedAt": "2026-06-25T16:45:00.000Z"
+  },
+  {
+    "id": "clx9k2m3n0002abc123def002",
+    "orderNumber": "YL-002",
+    "customerId": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+    "customer": {
+      "id": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+      "firstName": "Justice",
+      "lastName": "Abban",
+      "email": "abbanjustice134@gmail.com",
+      "phoneNumber": "0241234567",
+      "profileImage": null
+    },
+    "assignedStaffId": "clx9k2m3n0003staff789",
+    "assignedStaff": {
+      "id": "clx9k2m3n0003staff789",
+      "firstName": "Kwame",
+      "lastName": "Mensah",
+      "phoneNumber": "0551234567",
+      "profileImage": null
+    },
+    "serviceId": "clx9k2m3n0004service",
+    "service": {
+      "id": "clx9k2m3n0004service",
+      "name": "Standard Wash",
+      "priceModel": "PER_ITEM"
+    },
+    "status": "READY",
+    "bagCount": null,
+    "weightKg": null,
+    "items": [
+      {
+        "id": "ev002-item1",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "serviceItemId": "clx9k2m3n0006si1",
+        "serviceItem": {
+          "id": "clx9k2m3n0006si1",
+          "name": "Shirt",
+          "price": 5.0
+        },
+        "quantity": 3,
+        "unitPriceAtOrder": 5.0,
+        "notes": null
+      },
+      {
+        "id": "ev002-item2",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "serviceItemId": "clx9k2m3n0008si2",
+        "serviceItem": {
+          "id": "clx9k2m3n0008si2",
+          "name": "Trousers",
+          "price": 8.0
+        },
+        "quantity": 2,
+        "unitPriceAtOrder": 8.0,
+        "notes": "Handle with care"
+      },
+      {
+        "id": "ev002-item3",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "serviceItemId": "clx9k2m3n0010si3",
+        "serviceItem": {
+          "id": "clx9k2m3n0010si3",
+          "name": "Bedsheet",
+          "price": 12.0
+        },
+        "quantity": 1,
+        "unitPriceAtOrder": 12.0,
+        "notes": null
+      }
+    ],
+    "recurringOrderId": null,
+    "pickupAddress": "14 Spintex Road, Accra",
+    "pickupWindow": "2026-06-24T09:00:00.000Z",
+    "pickedUpAt": "2026-06-24T09:20:00.000Z",
+    "deliveryAddress": "14 Spintex Road, Accra",
+    "deliveryWindow": "2026-06-25T17:00:00.000Z",
+    "deliveredAt": null,
+    "subtotal": 43.0,
+    "deliveryFee": 5.0,
+    "discount": 0.0,
+    "total": 48.0,
+    "transactions": [
+      {
+        "id": "ev002-tx1",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "amount": 48.0,
+        "status": "SUCCESS",
+        "method": "MOBILE_MONEY",
+        "reference": "MM-20260624-00122",
+        "failureReason": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "updatedAt": "2026-06-24T08:55:00.000Z"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev002-ev1",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "eventType": "CREATED",
+        "status": "PENDING",
+        "notes": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev002-ev2",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "eventType": "CONFIRMED",
+        "status": "CONFIRMED",
+        "notes": null,
+        "createdAt": "2026-06-24T09:00:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev002-ev3",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "eventType": "PICKED_UP",
+        "status": "PICKED_UP",
+        "notes": "Items collected from customer",
+        "createdAt": "2026-06-24T09:20:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev002-ev4",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "eventType": "PROCESSING_STARTED",
+        "status": "IN_PROGRESS",
+        "notes": null,
+        "createdAt": "2026-06-24T11:00:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev002-ev5",
+        "orderId": "clx9k2m3n0002abc123def002",
+        "eventType": "PROCESSING_COMPLETE",
+        "status": "READY",
+        "notes": null,
+        "createdAt": "2026-06-25T08:00:00.000Z",
+        "workedOnById": ""
+      }
+    ],
+    "createdAt": "2026-06-24T08:55:00.000Z",
+    "updatedAt": "2026-06-25T08:00:00.000Z"
+  },
+  {
+    "id": "clx9k2m3n0003abc123def003",
+    "orderNumber": "YL-003",
+    "customerId": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+    "customer": {
+      "id": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+      "firstName": "Justice",
+      "lastName": "Abban",
+      "email": "abbanjustice134@gmail.com",
+      "phoneNumber": "0241234567",
+      "profileImage": null
+    },
+    "assignedStaffId": "clx9k2m3n0003staff789",
+    "assignedStaff": {
+      "id": "clx9k2m3n0003staff789",
+      "firstName": "Kwame",
+      "lastName": "Mensah",
+      "phoneNumber": "0551234567",
+      "profileImage": null
+    },
+    "serviceId": "clx9k2m3n0004service",
+    "service": {
+      "id": "clx9k2m3n0004service",
+      "name": "Standard Wash",
+      "priceModel": "PER_ITEM"
+    },
+    "status": "IN_PROGRESS",
+    "bagCount": null,
+    "weightKg": null,
+    "items": [
+      {
+        "id": "ev003-item1",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "serviceItemId": "clx9k2m3n0006si1",
+        "serviceItem": {
+          "id": "clx9k2m3n0006si1",
+          "name": "Shirt",
+          "price": 5.0
+        },
+        "quantity": 3,
+        "unitPriceAtOrder": 5.0,
+        "notes": null
+      },
+      {
+        "id": "ev003-item2",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "serviceItemId": "clx9k2m3n0008si2",
+        "serviceItem": {
+          "id": "clx9k2m3n0008si2",
+          "name": "Trousers",
+          "price": 8.0
+        },
+        "quantity": 2,
+        "unitPriceAtOrder": 8.0,
+        "notes": "Handle with care"
+      }
+    ],
+    "recurringOrderId": null,
+    "pickupAddress": "14 Spintex Road, Accra",
+    "pickupWindow": "2026-06-24T09:00:00.000Z",
+    "pickedUpAt": "2026-06-24T09:20:00.000Z",
+    "deliveryAddress": "14 Spintex Road, Accra",
+    "deliveryWindow": "2026-06-27T17:00:00.000Z",
+    "deliveredAt": null,
+    "subtotal": 31.0,
+    "deliveryFee": 5.0,
+    "discount": 0.0,
+    "total": 36.0,
+    "transactions": [
+      {
+        "id": "ev003-tx1",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "amount": 36.0,
+        "status": "PENDING",
+        "method": "MOBILE_MONEY",
+        "reference": "MM-20260624-00123",
+        "failureReason": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "updatedAt": "2026-06-24T08:55:00.000Z"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev003-ev1",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "eventType": "CREATED",
+        "status": "PENDING",
+        "notes": null,
+        "createdAt": "2026-06-24T08:55:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev003-ev2",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "eventType": "CONFIRMED",
+        "status": "CONFIRMED",
+        "notes": null,
+        "createdAt": "2026-06-24T09:00:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev003-ev3",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "eventType": "PICKED_UP",
+        "status": "PICKED_UP",
+        "notes": "Items collected from customer",
+        "createdAt": "2026-06-24T09:20:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev003-ev4",
+        "orderId": "clx9k2m3n0003abc123def003",
+        "eventType": "PROCESSING_STARTED",
+        "status": "IN_PROGRESS",
+        "notes": null,
+        "createdAt": "2026-06-24T11:00:00.000Z",
+        "workedOnById": ""
+      }
+    ],
+    "createdAt": "2026-06-24T08:55:00.000Z",
+    "updatedAt": "2026-06-24T11:00:00.000Z"
+  },
+  {
+    "id": "clx9k2m3n0004abc123def004",
+    "orderNumber": "YL-004",
+    "customerId": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+    "customer": {
+      "id": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+      "firstName": "Justice",
+      "lastName": "Abban",
+      "email": "abbanjustice134@gmail.com",
+      "phoneNumber": "0241234567",
+      "profileImage": null
+    },
+    "assignedStaffId": "clx9k2m3n0003staff789",
+    "assignedStaff": {
+      "id": "clx9k2m3n0003staff789",
+      "firstName": "Kwame",
+      "lastName": "Mensah",
+      "phoneNumber": "0551234567",
+      "profileImage": null
+    },
+    "serviceId": "clx9k2m3n0004service",
+    "service": {
+      "id": "clx9k2m3n0004service",
+      "name": "Standard Wash",
+      "priceModel": "PER_ITEM"
+    },
+    "status": "CANCELLED",
+    "bagCount": null,
+    "weightKg": null,
+    "items": [
+      {
+        "id": "ev004-item1",
+        "orderId": "clx9k2m3n0004abc123def004",
+        "serviceItemId": "clx9k2m3n0006si1",
+        "serviceItem": {
+          "id": "clx9k2m3n0006si1",
+          "name": "Shirt",
+          "price": 5.0
+        },
+        "quantity": 2,
+        "unitPriceAtOrder": 5.0,
+        "notes": null
+      }
+    ],
+    "recurringOrderId": null,
+    "pickupAddress": "East Legon, Accra",
+    "pickupWindow": "2026-06-23T10:00:00.000Z",
+    "pickedUpAt": null,
+    "deliveryAddress": "East Legon, Accra",
+    "deliveryWindow": "2026-06-24T17:00:00.000Z",
+    "deliveredAt": null,
+    "subtotal": 10.0,
+    "deliveryFee": 5.0,
+    "discount": 0.0,
+    "total": 15.0,
+    "transactions": [
+      {
+        "id": "ev004-tx1",
+        "orderId": "clx9k2m3n0004abc123def004",
+        "amount": 15.0,
+        "status": "PENDING",
+        "method": "MOBILE_MONEY",
+        "reference": "MM-20260623-00124",
+        "failureReason": null,
+        "createdAt": "2026-06-23T09:50:00.000Z",
+        "updatedAt": "2026-06-23T09:50:00.000Z"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev004-ev1",
+        "orderId": "clx9k2m3n0004abc123def004",
+        "eventType": "CREATED",
+        "status": "PENDING",
+        "notes": null,
+        "createdAt": "2026-06-23T09:50:00.000Z",
+        "workedOnById": ""
+      },
+      {
+        "id": "ev004-ev2",
+        "orderId": "clx9k2m3n0004abc123def004",
+        "eventType": "CANCELLED",
+        "status": "CANCELLED",
+        "notes": "Customer requested cancellation",
+        "createdAt": "2026-06-23T10:30:00.000Z",
+        "workedOnById": ""
+      }
+    ],
+    "createdAt": "2026-06-23T09:50:00.000Z",
+    "updatedAt": "2026-06-23T10:30:00.000Z"
+  },
+  {
+    "id": "clx9k2m3n0005abc123def005",
+    "orderNumber": "YL-005",
+    "customerId": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+    "customer": {
+      "id": "d179a4cc-b611-4793-a065-bb2fadc12e4d",
+      "firstName": "Justice",
+      "lastName": "Abban",
+      "email": "abbanjustice134@gmail.com",
+      "phoneNumber": "0241234567",
+      "profileImage": null
+    },
+    "assignedStaffId": "clx9k2m3n0003staff789",
+    "assignedStaff": {
+      "id": "clx9k2m3n0003staff789",
+      "firstName": "Kwame",
+      "lastName": "Mensah",
+      "phoneNumber": "0551234567",
+      "profileImage": null
+    },
+    "serviceId": "clx9k2m3n0004service",
+    "service": {
+      "id": "clx9k2m3n0004service",
+      "name": "Standard Wash",
+      "priceModel": "PER_ITEM"
+    },
+    "status": "PENDING",
+    "bagCount": null,
+    "weightKg": null,
+    "items": [
+      {
+        "id": "ev005-item1",
+        "orderId": "clx9k2m3n0005abc123def005",
+        "serviceItemId": "clx9k2m3n0006si1",
+        "serviceItem": {
+          "id": "clx9k2m3n0006si1",
+          "name": "Shirt",
+          "price": 5.0
+        },
+        "quantity": 4,
+        "unitPriceAtOrder": 5.0,
+        "notes": null
+      },
+      {
+        "id": "ev005-item2",
+        "orderId": "clx9k2m3n0005abc123def005",
+        "serviceItemId": "clx9k2m3n0010si3",
+        "serviceItem": {
+          "id": "clx9k2m3n0010si3",
+          "name": "Bedsheet",
+          "price": 12.0
+        },
+        "quantity": 1,
+        "unitPriceAtOrder": 12.0,
+        "notes": null
+      }
+    ],
+    "recurringOrderId": null,
+    "pickupAddress": "Osu, Accra",
+    "pickupWindow": "2026-06-28T09:00:00.000Z",
+    "pickedUpAt": null,
+    "deliveryAddress": "Osu, Accra",
+    "deliveryWindow": "2026-06-29T17:00:00.000Z",
+    "deliveredAt": null,
+    "subtotal": 32.0,
+    "deliveryFee": 5.0,
+    "discount": 0.0,
+    "total": 37.0,
+    "transactions": [
+      {
+        "id": "ev005-tx1",
+        "orderId": "clx9k2m3n0005abc123def005",
+        "amount": 37.0,
+        "status": "PENDING",
+        "method": "MOBILE_MONEY",
+        "reference": "MM-20260627-00125",
+        "failureReason": null,
+        "createdAt": "2026-06-27T08:00:00.000Z",
+        "updatedAt": "2026-06-27T08:00:00.000Z"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev005-ev1",
+        "orderId": "clx9k2m3n0005abc123def005",
+        "eventType": "CREATED",
+        "status": "PENDING",
+        "notes": null,
+        "createdAt": "2026-06-27T08:00:00.000Z",
+        "workedOnById": ""
+      }
+    ],
+    "createdAt": "2026-06-27T08:00:00.000Z",
+    "updatedAt": "2026-06-27T08:00:00.000Z"
+  }
+]

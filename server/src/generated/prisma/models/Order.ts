@@ -57,6 +57,9 @@ export type OrderMinAggregateOutputType = {
   pickupAddress: string | null
   pickupWindow: Date | null
   pickedUpAt: Date | null
+  timeSlot: $Enums.SlotName | null
+  startTime: string | null
+  endTime: string | null
   deliveryAddress: string | null
   deliveryWindow: Date | null
   deliveredAt: Date | null
@@ -81,6 +84,9 @@ export type OrderMaxAggregateOutputType = {
   pickupAddress: string | null
   pickupWindow: Date | null
   pickedUpAt: Date | null
+  timeSlot: $Enums.SlotName | null
+  startTime: string | null
+  endTime: string | null
   deliveryAddress: string | null
   deliveryWindow: Date | null
   deliveredAt: Date | null
@@ -105,6 +111,9 @@ export type OrderCountAggregateOutputType = {
   pickupAddress: number
   pickupWindow: number
   pickedUpAt: number
+  timeSlot: number
+  startTime: number
+  endTime: number
   deliveryAddress: number
   deliveryWindow: number
   deliveredAt: number
@@ -149,6 +158,9 @@ export type OrderMinAggregateInputType = {
   pickupAddress?: true
   pickupWindow?: true
   pickedUpAt?: true
+  timeSlot?: true
+  startTime?: true
+  endTime?: true
   deliveryAddress?: true
   deliveryWindow?: true
   deliveredAt?: true
@@ -173,6 +185,9 @@ export type OrderMaxAggregateInputType = {
   pickupAddress?: true
   pickupWindow?: true
   pickedUpAt?: true
+  timeSlot?: true
+  startTime?: true
+  endTime?: true
   deliveryAddress?: true
   deliveryWindow?: true
   deliveredAt?: true
@@ -197,6 +212,9 @@ export type OrderCountAggregateInputType = {
   pickupAddress?: true
   pickupWindow?: true
   pickedUpAt?: true
+  timeSlot?: true
+  startTime?: true
+  endTime?: true
   deliveryAddress?: true
   deliveryWindow?: true
   deliveredAt?: true
@@ -308,6 +326,9 @@ export type OrderGroupByOutputType = {
   pickupAddress: string
   pickupWindow: Date
   pickedUpAt: Date | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow: Date | null
   deliveredAt: Date | null
@@ -355,6 +376,9 @@ export type OrderWhereInput = {
   pickupAddress?: Prisma.StringFilter<"Order"> | string
   pickupWindow?: Prisma.DateTimeFilter<"Order"> | Date | string
   pickedUpAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFilter<"Order"> | $Enums.SlotName
+  startTime?: Prisma.StringFilter<"Order"> | string
+  endTime?: Prisma.StringFilter<"Order"> | string
   deliveryAddress?: Prisma.StringFilter<"Order"> | string
   deliveryWindow?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveredAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -370,6 +394,7 @@ export type OrderWhereInput = {
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   items?: Prisma.OrderItemListRelationFilter
   recurringOrder?: Prisma.XOR<Prisma.RecurringOrderNullableScalarRelationFilter, Prisma.RecurringOrderWhereInput> | null
+  addOns?: Prisma.OrderAddOnListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   events?: Prisma.LiveOrderListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
@@ -390,6 +415,9 @@ export type OrderOrderByWithRelationInput = {
   pickupAddress?: Prisma.SortOrder
   pickupWindow?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeSlot?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryWindow?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -405,6 +433,7 @@ export type OrderOrderByWithRelationInput = {
   service?: Prisma.ServiceOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
   recurringOrder?: Prisma.RecurringOrderOrderByWithRelationInput
+  addOns?: Prisma.OrderAddOnOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   events?: Prisma.LiveOrderOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
@@ -428,6 +457,9 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   pickupAddress?: Prisma.StringFilter<"Order"> | string
   pickupWindow?: Prisma.DateTimeFilter<"Order"> | Date | string
   pickedUpAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFilter<"Order"> | $Enums.SlotName
+  startTime?: Prisma.StringFilter<"Order"> | string
+  endTime?: Prisma.StringFilter<"Order"> | string
   deliveryAddress?: Prisma.StringFilter<"Order"> | string
   deliveryWindow?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveredAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -443,6 +475,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   items?: Prisma.OrderItemListRelationFilter
   recurringOrder?: Prisma.XOR<Prisma.RecurringOrderNullableScalarRelationFilter, Prisma.RecurringOrderWhereInput> | null
+  addOns?: Prisma.OrderAddOnListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   events?: Prisma.LiveOrderListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
@@ -463,6 +496,9 @@ export type OrderOrderByWithAggregationInput = {
   pickupAddress?: Prisma.SortOrder
   pickupWindow?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeSlot?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryWindow?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -495,6 +531,9 @@ export type OrderScalarWhereWithAggregatesInput = {
   pickupAddress?: Prisma.StringWithAggregatesFilter<"Order"> | string
   pickupWindow?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameWithAggregatesFilter<"Order"> | $Enums.SlotName
+  startTime?: Prisma.StringWithAggregatesFilter<"Order"> | string
+  endTime?: Prisma.StringWithAggregatesFilter<"Order"> | string
   deliveryAddress?: Prisma.StringWithAggregatesFilter<"Order"> | string
   deliveryWindow?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   deliveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
@@ -515,6 +554,9 @@ export type OrderCreateInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -530,6 +572,7 @@ export type OrderCreateInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -550,6 +593,9 @@ export type OrderUncheckedCreateInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -561,6 +607,7 @@ export type OrderUncheckedCreateInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -577,6 +624,9 @@ export type OrderUpdateInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -592,6 +642,7 @@ export type OrderUpdateInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -612,6 +663,9 @@ export type OrderUncheckedUpdateInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -623,6 +677,7 @@ export type OrderUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -643,6 +698,9 @@ export type OrderCreateManyInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -663,6 +721,9 @@ export type OrderUpdateManyMutationInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -687,6 +748,9 @@ export type OrderUncheckedUpdateManyInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -721,6 +785,9 @@ export type OrderCountOrderByAggregateInput = {
   pickupAddress?: Prisma.SortOrder
   pickupWindow?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  timeSlot?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryWindow?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
@@ -754,6 +821,9 @@ export type OrderMaxOrderByAggregateInput = {
   pickupAddress?: Prisma.SortOrder
   pickupWindow?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  timeSlot?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryWindow?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
@@ -778,6 +848,9 @@ export type OrderMinOrderByAggregateInput = {
   pickupAddress?: Prisma.SortOrder
   pickupWindow?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  timeSlot?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryWindow?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
@@ -886,6 +959,24 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type EnumSlotNameFieldUpdateOperationsInput = {
+  set?: $Enums.SlotName
+}
+
+export type OrderCreateNestedOneWithoutAddOnsInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAddOnsInput, Prisma.OrderUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAddOnsInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneRequiredWithoutAddOnsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutAddOnsInput, Prisma.OrderUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAddOnsInput
+  upsert?: Prisma.OrderUpsertWithoutAddOnsInput
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutAddOnsInput, Prisma.OrderUpdateWithoutAddOnsInput>, Prisma.OrderUncheckedUpdateWithoutAddOnsInput>
 }
 
 export type OrderCreateNestedOneWithoutItemsInput = {
@@ -1107,6 +1198,9 @@ export type OrderCreateWithoutEventsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1122,6 +1216,7 @@ export type OrderCreateWithoutEventsInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionCreateNestedOneWithoutOrderInput
@@ -1141,6 +1236,9 @@ export type OrderUncheckedCreateWithoutEventsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1152,6 +1250,7 @@ export type OrderUncheckedCreateWithoutEventsInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedCreateNestedOneWithoutOrderInput
@@ -1183,6 +1282,9 @@ export type OrderUpdateWithoutEventsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1198,6 +1300,7 @@ export type OrderUpdateWithoutEventsInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUpdateOneWithoutOrderNestedInput
@@ -1217,6 +1320,9 @@ export type OrderUncheckedUpdateWithoutEventsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1228,6 +1334,7 @@ export type OrderUncheckedUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedUpdateOneWithoutOrderNestedInput
@@ -1243,6 +1350,9 @@ export type OrderCreateWithoutLoyaltyTransactionsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1258,6 +1368,7 @@ export type OrderCreateWithoutLoyaltyTransactionsInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -1277,6 +1388,9 @@ export type OrderUncheckedCreateWithoutLoyaltyTransactionsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1288,6 +1402,7 @@ export type OrderUncheckedCreateWithoutLoyaltyTransactionsInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -1319,6 +1434,9 @@ export type OrderUpdateWithoutLoyaltyTransactionsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1334,6 +1452,7 @@ export type OrderUpdateWithoutLoyaltyTransactionsInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -1353,6 +1472,9 @@ export type OrderUncheckedUpdateWithoutLoyaltyTransactionsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1364,6 +1486,7 @@ export type OrderUncheckedUpdateWithoutLoyaltyTransactionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -1379,6 +1502,9 @@ export type OrderCreateWithoutConversationInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1393,6 +1519,7 @@ export type OrderCreateWithoutConversationInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -1413,6 +1540,9 @@ export type OrderUncheckedCreateWithoutConversationInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1423,6 +1553,7 @@ export type OrderUncheckedCreateWithoutConversationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -1455,6 +1586,9 @@ export type OrderUpdateWithoutConversationInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1469,6 +1603,7 @@ export type OrderUpdateWithoutConversationInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -1489,6 +1624,9 @@ export type OrderUncheckedUpdateWithoutConversationInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1499,6 +1637,7 @@ export type OrderUncheckedUpdateWithoutConversationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -1515,6 +1654,9 @@ export type OrderCreateWithoutNotificationsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1530,6 +1672,7 @@ export type OrderCreateWithoutNotificationsInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionCreateNestedOneWithoutOrderInput
@@ -1549,6 +1692,9 @@ export type OrderUncheckedCreateWithoutNotificationsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1560,6 +1706,7 @@ export type OrderUncheckedCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedCreateNestedOneWithoutOrderInput
@@ -1591,6 +1738,9 @@ export type OrderUpdateWithoutNotificationsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1606,6 +1756,7 @@ export type OrderUpdateWithoutNotificationsInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUpdateOneWithoutOrderNestedInput
@@ -1625,6 +1776,161 @@ export type OrderUncheckedUpdateWithoutNotificationsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
+  promotionRedemption?: Prisma.PromotionRedemptionUncheckedUpdateOneWithoutOrderNestedInput
+  loyaltyTransactions?: Prisma.LoyaltyTransactionUncheckedUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderCreateWithoutAddOnsInput = {
+  id?: string
+  orderNumber: string
+  status?: $Enums.OrderStatus
+  bagCount?: number | null
+  weightKg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pickupAddress: string
+  pickupWindow: Date | string
+  pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
+  deliveryAddress: string
+  deliveryWindow?: Date | string | null
+  deliveredAt?: Date | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  assignedStaff?: Prisma.UserCreateNestedOneWithoutStaffOrdersInput
+  conversation?: Prisma.ConversationCreateNestedOneWithoutOrderInput
+  service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
+  events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
+  promotionRedemption?: Prisma.PromotionRedemptionCreateNestedOneWithoutOrderInput
+  loyaltyTransactions?: Prisma.LoyaltyTransactionCreateNestedManyWithoutOrderInput
+}
+
+export type OrderUncheckedCreateWithoutAddOnsInput = {
+  id?: string
+  orderNumber: string
+  customerId: string
+  assignedStaffId?: string | null
+  serviceId: string
+  status?: $Enums.OrderStatus
+  bagCount?: number | null
+  weightKg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringOrderId?: string | null
+  pickupAddress: string
+  pickupWindow: Date | string
+  pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
+  deliveryAddress: string
+  deliveryWindow?: Date | string | null
+  deliveredAt?: Date | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
+  promotionRedemption?: Prisma.PromotionRedemptionUncheckedCreateNestedOneWithoutOrderInput
+  loyaltyTransactions?: Prisma.LoyaltyTransactionUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutAddOnsInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutAddOnsInput, Prisma.OrderUncheckedCreateWithoutAddOnsInput>
+}
+
+export type OrderUpsertWithoutAddOnsInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutAddOnsInput, Prisma.OrderUncheckedUpdateWithoutAddOnsInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutAddOnsInput, Prisma.OrderUncheckedCreateWithoutAddOnsInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutAddOnsInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutAddOnsInput, Prisma.OrderUncheckedUpdateWithoutAddOnsInput>
+}
+
+export type OrderUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  bagCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weightKg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  assignedStaff?: Prisma.UserUpdateOneWithoutStaffOrdersNestedInput
+  conversation?: Prisma.ConversationUpdateOneWithoutOrderNestedInput
+  service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
+  events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
+  promotionRedemption?: Prisma.PromotionRedemptionUpdateOneWithoutOrderNestedInput
+  loyaltyTransactions?: Prisma.LoyaltyTransactionUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  bagCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weightKg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1638,6 +1944,7 @@ export type OrderUncheckedUpdateWithoutNotificationsInput = {
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedUpdateOneWithoutOrderNestedInput
   loyaltyTransactions?: Prisma.LoyaltyTransactionUncheckedUpdateManyWithoutOrderNestedInput
 }
@@ -1651,6 +1958,9 @@ export type OrderCreateWithoutItemsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1665,6 +1975,7 @@ export type OrderCreateWithoutItemsInput = {
   conversation?: Prisma.ConversationCreateNestedOneWithoutOrderInput
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -1685,6 +1996,9 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1695,6 +2009,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -1727,6 +2042,9 @@ export type OrderUpdateWithoutItemsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1741,6 +2059,7 @@ export type OrderUpdateWithoutItemsInput = {
   conversation?: Prisma.ConversationUpdateOneWithoutOrderNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -1761,6 +2080,9 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1771,6 +2093,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -1787,6 +2110,9 @@ export type OrderCreateWithoutRecurringOrderInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1801,6 +2127,7 @@ export type OrderCreateWithoutRecurringOrderInput = {
   conversation?: Prisma.ConversationCreateNestedOneWithoutOrderInput
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -1820,6 +2147,9 @@ export type OrderUncheckedCreateWithoutRecurringOrderInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1831,6 +2161,7 @@ export type OrderUncheckedCreateWithoutRecurringOrderInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -1880,6 +2211,9 @@ export type OrderScalarWhereInput = {
   pickupAddress?: Prisma.StringFilter<"Order"> | string
   pickupWindow?: Prisma.DateTimeFilter<"Order"> | Date | string
   pickedUpAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFilter<"Order"> | $Enums.SlotName
+  startTime?: Prisma.StringFilter<"Order"> | string
+  endTime?: Prisma.StringFilter<"Order"> | string
   deliveryAddress?: Prisma.StringFilter<"Order"> | string
   deliveryWindow?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveredAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
@@ -1900,6 +2234,9 @@ export type OrderCreateWithoutPromotionRedemptionInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1915,6 +2252,7 @@ export type OrderCreateWithoutPromotionRedemptionInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -1934,6 +2272,9 @@ export type OrderUncheckedCreateWithoutPromotionRedemptionInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -1945,6 +2286,7 @@ export type OrderUncheckedCreateWithoutPromotionRedemptionInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -1976,6 +2318,9 @@ export type OrderUpdateWithoutPromotionRedemptionInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1991,6 +2336,7 @@ export type OrderUpdateWithoutPromotionRedemptionInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -2010,6 +2356,9 @@ export type OrderUncheckedUpdateWithoutPromotionRedemptionInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2021,6 +2370,7 @@ export type OrderUncheckedUpdateWithoutPromotionRedemptionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -2036,6 +2386,9 @@ export type OrderCreateWithoutServiceInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2050,6 +2403,7 @@ export type OrderCreateWithoutServiceInput = {
   conversation?: Prisma.ConversationCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -2069,6 +2423,9 @@ export type OrderUncheckedCreateWithoutServiceInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2080,6 +2437,7 @@ export type OrderUncheckedCreateWithoutServiceInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -2122,6 +2480,9 @@ export type OrderCreateWithoutTransactionsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2137,6 +2498,7 @@ export type OrderCreateWithoutTransactionsInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionCreateNestedOneWithoutOrderInput
@@ -2156,6 +2518,9 @@ export type OrderUncheckedCreateWithoutTransactionsInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2167,6 +2532,7 @@ export type OrderUncheckedCreateWithoutTransactionsInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedCreateNestedOneWithoutOrderInput
@@ -2198,6 +2564,9 @@ export type OrderUpdateWithoutTransactionsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2213,6 +2582,7 @@ export type OrderUpdateWithoutTransactionsInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUpdateOneWithoutOrderNestedInput
@@ -2232,6 +2602,9 @@ export type OrderUncheckedUpdateWithoutTransactionsInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2243,6 +2616,7 @@ export type OrderUncheckedUpdateWithoutTransactionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
   promotionRedemption?: Prisma.PromotionRedemptionUncheckedUpdateOneWithoutOrderNestedInput
@@ -2258,6 +2632,9 @@ export type OrderCreateWithoutCustomerInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2272,6 +2649,7 @@ export type OrderCreateWithoutCustomerInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -2291,6 +2669,9 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2302,6 +2683,7 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -2328,6 +2710,9 @@ export type OrderCreateWithoutAssignedStaffInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2342,6 +2727,7 @@ export type OrderCreateWithoutAssignedStaffInput = {
   service: Prisma.ServiceCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   recurringOrder?: Prisma.RecurringOrderCreateNestedOneWithoutGeneratedOrdersInput
+  addOns?: Prisma.OrderAddOnCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrderInput
@@ -2361,6 +2747,9 @@ export type OrderUncheckedCreateWithoutAssignedStaffInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2372,6 +2761,7 @@ export type OrderUncheckedCreateWithoutAssignedStaffInput = {
   updatedAt?: Date | string
   conversation?: Prisma.ConversationUncheckedCreateNestedOneWithoutOrderInput
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  addOns?: Prisma.OrderAddOnUncheckedCreateNestedManyWithoutOrderInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrderInput
   events?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutOrderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrderInput
@@ -2433,6 +2823,9 @@ export type OrderCreateManyRecurringOrderInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2453,6 +2846,9 @@ export type OrderUpdateWithoutRecurringOrderInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2467,6 +2863,7 @@ export type OrderUpdateWithoutRecurringOrderInput = {
   conversation?: Prisma.ConversationUpdateOneWithoutOrderNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -2486,6 +2883,9 @@ export type OrderUncheckedUpdateWithoutRecurringOrderInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2497,6 +2897,7 @@ export type OrderUncheckedUpdateWithoutRecurringOrderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -2516,6 +2917,9 @@ export type OrderUncheckedUpdateManyWithoutRecurringOrderInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2539,6 +2943,9 @@ export type OrderCreateManyServiceInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2559,6 +2966,9 @@ export type OrderUpdateWithoutServiceInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2573,6 +2983,7 @@ export type OrderUpdateWithoutServiceInput = {
   conversation?: Prisma.ConversationUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -2592,6 +3003,9 @@ export type OrderUncheckedUpdateWithoutServiceInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2603,6 +3017,7 @@ export type OrderUncheckedUpdateWithoutServiceInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -2622,6 +3037,9 @@ export type OrderUncheckedUpdateManyWithoutServiceInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2645,6 +3063,9 @@ export type OrderCreateManyCustomerInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2668,6 +3089,9 @@ export type OrderCreateManyAssignedStaffInput = {
   pickupAddress: string
   pickupWindow: Date | string
   pickedUpAt?: Date | string | null
+  timeSlot: $Enums.SlotName
+  startTime: string
+  endTime: string
   deliveryAddress: string
   deliveryWindow?: Date | string | null
   deliveredAt?: Date | string | null
@@ -2688,6 +3112,9 @@ export type OrderUpdateWithoutCustomerInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2702,6 +3129,7 @@ export type OrderUpdateWithoutCustomerInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -2721,6 +3149,9 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2732,6 +3163,7 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -2751,6 +3183,9 @@ export type OrderUncheckedUpdateManyWithoutCustomerInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2771,6 +3206,9 @@ export type OrderUpdateWithoutAssignedStaffInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2785,6 +3223,7 @@ export type OrderUpdateWithoutAssignedStaffInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   recurringOrder?: Prisma.RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput
+  addOns?: Prisma.OrderAddOnUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrderNestedInput
@@ -2804,6 +3243,9 @@ export type OrderUncheckedUpdateWithoutAssignedStaffInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2815,6 +3257,7 @@ export type OrderUncheckedUpdateWithoutAssignedStaffInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversation?: Prisma.ConversationUncheckedUpdateOneWithoutOrderNestedInput
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  addOns?: Prisma.OrderAddOnUncheckedUpdateManyWithoutOrderNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrderNestedInput
   events?: Prisma.LiveOrderUncheckedUpdateManyWithoutOrderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrderNestedInput
@@ -2834,6 +3277,9 @@ export type OrderUncheckedUpdateManyWithoutAssignedStaffInput = {
   pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
   pickupWindow?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timeSlot?: Prisma.EnumSlotNameFieldUpdateOperationsInput | $Enums.SlotName
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
   deliveryWindow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2852,6 +3298,7 @@ export type OrderUncheckedUpdateManyWithoutAssignedStaffInput = {
 
 export type OrderCountOutputType = {
   items: number
+  addOns: number
   transactions: number
   events: number
   notifications: number
@@ -2860,6 +3307,7 @@ export type OrderCountOutputType = {
 
 export type OrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | OrderCountOutputTypeCountItemsArgs
+  addOns?: boolean | OrderCountOutputTypeCountAddOnsArgs
   transactions?: boolean | OrderCountOutputTypeCountTransactionsArgs
   events?: boolean | OrderCountOutputTypeCountEventsArgs
   notifications?: boolean | OrderCountOutputTypeCountNotificationsArgs
@@ -2881,6 +3329,13 @@ export type OrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  */
 export type OrderCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrderItemWhereInput
+}
+
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeCountAddOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderAddOnWhereInput
 }
 
 /**
@@ -2925,6 +3380,9 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   pickupAddress?: boolean
   pickupWindow?: boolean
   pickedUpAt?: boolean
+  timeSlot?: boolean
+  startTime?: boolean
+  endTime?: boolean
   deliveryAddress?: boolean
   deliveryWindow?: boolean
   deliveredAt?: boolean
@@ -2940,6 +3398,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   recurringOrder?: boolean | Prisma.Order$recurringOrderArgs<ExtArgs>
+  addOns?: boolean | Prisma.Order$addOnsArgs<ExtArgs>
   transactions?: boolean | Prisma.Order$transactionsArgs<ExtArgs>
   events?: boolean | Prisma.Order$eventsArgs<ExtArgs>
   notifications?: boolean | Prisma.Order$notificationsArgs<ExtArgs>
@@ -2961,6 +3420,9 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   pickupAddress?: boolean
   pickupWindow?: boolean
   pickedUpAt?: boolean
+  timeSlot?: boolean
+  startTime?: boolean
+  endTime?: boolean
   deliveryAddress?: boolean
   deliveryWindow?: boolean
   deliveredAt?: boolean
@@ -2989,6 +3451,9 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   pickupAddress?: boolean
   pickupWindow?: boolean
   pickedUpAt?: boolean
+  timeSlot?: boolean
+  startTime?: boolean
+  endTime?: boolean
   deliveryAddress?: boolean
   deliveryWindow?: boolean
   deliveredAt?: boolean
@@ -3017,6 +3482,9 @@ export type OrderSelectScalar = {
   pickupAddress?: boolean
   pickupWindow?: boolean
   pickedUpAt?: boolean
+  timeSlot?: boolean
+  startTime?: boolean
+  endTime?: boolean
   deliveryAddress?: boolean
   deliveryWindow?: boolean
   deliveredAt?: boolean
@@ -3028,7 +3496,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "customerId" | "assignedStaffId" | "serviceId" | "status" | "bagCount" | "weightKg" | "recurringOrderId" | "pickupAddress" | "pickupWindow" | "pickedUpAt" | "deliveryAddress" | "deliveryWindow" | "deliveredAt" | "subtotal" | "deliveryFee" | "discount" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "customerId" | "assignedStaffId" | "serviceId" | "status" | "bagCount" | "weightKg" | "recurringOrderId" | "pickupAddress" | "pickupWindow" | "pickedUpAt" | "timeSlot" | "startTime" | "endTime" | "deliveryAddress" | "deliveryWindow" | "deliveredAt" | "subtotal" | "deliveryFee" | "discount" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assignedStaff?: boolean | Prisma.Order$assignedStaffArgs<ExtArgs>
@@ -3036,6 +3504,7 @@ export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   recurringOrder?: boolean | Prisma.Order$recurringOrderArgs<ExtArgs>
+  addOns?: boolean | Prisma.Order$addOnsArgs<ExtArgs>
   transactions?: boolean | Prisma.Order$transactionsArgs<ExtArgs>
   events?: boolean | Prisma.Order$eventsArgs<ExtArgs>
   notifications?: boolean | Prisma.Order$notificationsArgs<ExtArgs>
@@ -3065,6 +3534,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     service: Prisma.$ServicePayload<ExtArgs>
     items: Prisma.$OrderItemPayload<ExtArgs>[]
     recurringOrder: Prisma.$RecurringOrderPayload<ExtArgs> | null
+    addOns: Prisma.$OrderAddOnPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
     events: Prisma.$LiveOrderPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
@@ -3084,6 +3554,9 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     pickupAddress: string
     pickupWindow: Date
     pickedUpAt: Date | null
+    timeSlot: $Enums.SlotName
+    startTime: string
+    endTime: string
     deliveryAddress: string
     deliveryWindow: Date | null
     deliveredAt: Date | null
@@ -3493,6 +3966,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   service<T extends Prisma.ServiceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recurringOrder<T extends Prisma.Order$recurringOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$recurringOrderArgs<ExtArgs>>): Prisma.Prisma__RecurringOrderClient<runtime.Types.Result.GetResult<Prisma.$RecurringOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  addOns<T extends Prisma.Order$addOnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$addOnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderAddOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.Order$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Order$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.Order$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3539,6 +4013,9 @@ export interface OrderFieldRefs {
   readonly pickupAddress: Prisma.FieldRef<"Order", 'String'>
   readonly pickupWindow: Prisma.FieldRef<"Order", 'DateTime'>
   readonly pickedUpAt: Prisma.FieldRef<"Order", 'DateTime'>
+  readonly timeSlot: Prisma.FieldRef<"Order", 'SlotName'>
+  readonly startTime: Prisma.FieldRef<"Order", 'String'>
+  readonly endTime: Prisma.FieldRef<"Order", 'String'>
   readonly deliveryAddress: Prisma.FieldRef<"Order", 'String'>
   readonly deliveryWindow: Prisma.FieldRef<"Order", 'DateTime'>
   readonly deliveredAt: Prisma.FieldRef<"Order", 'DateTime'>
@@ -4027,6 +4504,30 @@ export type Order$recurringOrderArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.RecurringOrderInclude<ExtArgs> | null
   where?: Prisma.RecurringOrderWhereInput
+}
+
+/**
+ * Order.addOns
+ */
+export type Order$addOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderAddOn
+   */
+  select?: Prisma.OrderAddOnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrderAddOn
+   */
+  omit?: Prisma.OrderAddOnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderAddOnInclude<ExtArgs> | null
+  where?: Prisma.OrderAddOnWhereInput
+  orderBy?: Prisma.OrderAddOnOrderByWithRelationInput | Prisma.OrderAddOnOrderByWithRelationInput[]
+  cursor?: Prisma.OrderAddOnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderAddOnScalarFieldEnum | Prisma.OrderAddOnScalarFieldEnum[]
 }
 
 /**

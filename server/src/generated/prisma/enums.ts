@@ -122,6 +122,16 @@ export const RedemptionStatus = {
 export type RedemptionStatus = (typeof RedemptionStatus)[keyof typeof RedemptionStatus]
 
 
+export const PolicyTitle = {
+  CANCELLATION: 'CANCELLATION',
+  DAMAGED_AND_LOST_ITEMS: 'DAMAGED_AND_LOST_ITEMS',
+  SPECIAL_CARE_ITEMS: 'SPECIAL_CARE_ITEMS',
+  REWASH_GUARANTEE: 'REWASH_GUARANTEE'
+} as const
+
+export type PolicyTitle = (typeof PolicyTitle)[keyof typeof PolicyTitle]
+
+
 export const ServicePriceModel = {
   PER_ITEM: 'PER_ITEM',
   PER_BAG: 'PER_BAG',
@@ -137,6 +147,15 @@ export const ServiceMediaType = {
 } as const
 
 export type ServiceMediaType = (typeof ServiceMediaType)[keyof typeof ServiceMediaType]
+
+
+export const SlotName = {
+  MORNING: 'MORNING',
+  AFTERNOON: 'AFTERNOON',
+  EVENING: 'EVENING'
+} as const
+
+export type SlotName = (typeof SlotName)[keyof typeof SlotName]
 
 
 export const PaymentStatus = {
@@ -157,6 +176,24 @@ export const PaymentMethod = {
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const PaymentProvider = {
+  MTN: 'MTN',
+  TELECEL: 'TELECEL',
+  AIRTELTIGO: 'AIRTELTIGO'
+} as const
+
+export type PaymentProvider = (typeof PaymentProvider)[keyof typeof PaymentProvider]
+
+
+export const LocationSource = {
+  GPS: 'GPS',
+  IP: 'IP',
+  MANUAL: 'MANUAL'
+} as const
+
+export type LocationSource = (typeof LocationSource)[keyof typeof LocationSource]
 
 
 export const Role = {

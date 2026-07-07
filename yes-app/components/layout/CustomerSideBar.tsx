@@ -10,38 +10,31 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { usePanel } from "@/context/DashboardContext";
+import useActiveTab from "@/hooks/useActiveTab";
+import { ActiveTabType } from "@/hooks/useActiveTab";
 
-type ActiveTabType =
-  | "home"
-  | "orders"
-  | "track"
-  | "profile"
-  | "settings"
-  | "logo";
 const Tabs: { name: ActiveTabType; label: string; icon: string }[] = [
   { name: "home", label: "Home", icon: "Home" },
   { name: "orders", label: "Orders", icon: "ShoppingBag" },
-  { name: "track", label: "Track", icon: "Navigation2" },
   { name: "profile", label: "Profile", icon: "UserCircle" },
 ];
 type SliderContentType = "messages" | "notifications";
 type Props = {};
 
 export default function CustomerSideBar({}: Props) {
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("home");
   const router = useRouter();
   const pathName = usePathname();
   const { onPanelSelect } = usePanel();
+  const { activeTab, onTabChange } = useActiveTab();
 
   useEffect(() => {
     const tab = pathName.split("-")[1];
-    setActiveTab(tab as ActiveTabType);
+    onTabChange(tab as ActiveTabType);
   }, [pathName]);
 
   const onTabSelect = useCallback(
     (tab: ActiveTabType) => {
-      console.log("method called");
-      setActiveTab(tab);
+      onTabChange(tab);
       switch (tab) {
         case "home":
           router.push("/user-home");
@@ -52,14 +45,11 @@ export default function CustomerSideBar({}: Props) {
         case "orders":
           onPanelSelect("orders");
           break;
-        case "profile":
-          router.push("/user-profile");
-          break;
-        case "settings":
+        case "logout":
           router.push("/user-settings");
           break;
-        case "track":
-          onPanelSelect("track");
+        case "profile":
+          onPanelSelect("profile");
           break;
         default:
       }
@@ -102,14 +92,14 @@ export default function CustomerSideBar({}: Props) {
           <button
             className=" hover:bg-foreground p-2 cursor-pointer rounded-md"
             onClick={() => {
-              onTabSelect("settings");
+              onTabSelect("logout");
             }}
           >
             <Icon
-              name={"Settings"}
-              color={activeTab === "settings" ? "#004a94" : "#666"}
+              name={"LogOut"}
+              color={activeTab === "logout" ? "#004a94" : "#666"}
               size={24}
-              strokeWidth={activeTab === "settings" ? 2.8 : 1.8}
+              strokeWidth={activeTab === "logout" ? 2.8 : 1.8}
             />
           </button>
         </div>

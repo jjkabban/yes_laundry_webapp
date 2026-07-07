@@ -9,6 +9,8 @@ import {
   VerifyRequestPayload,
   VerifyResponsePayload,
   Role,
+  LocationResponsePayload,
+  LocationRequestPayload,
 } from "./types/auth";
 import { ApiResponse } from "./types/auth.response";
 import bcrypt from "bcrypt";
@@ -19,6 +21,7 @@ import { oauth2Client } from "../lib/oauth";
 import { SESSION_DURATION } from "../constants/session";
 import { google } from "googleapis";
 import { sendEmailOtp } from "../services/mail";
+import { authRouter } from "../routes";
 
 export const signin = async (
   req: Request<{}, {}, LoginRequestPayload>,
@@ -26,7 +29,6 @@ export const signin = async (
   next: NextFunction,
 ) => {
   try {
-    console.log("method reaching server");
     const { phoneNumber, password, rememberMe, email } = req.body;
     const findUser = await prisma.user.findFirst({
       where: { OR: [{ phoneNumber: phoneNumber }, { email: email }] },
@@ -39,6 +41,15 @@ export const signin = async (
         phoneNumber: true,
         email: true,
         role: true,
+        locations: {
+          select: {
+            isDefault: true,
+            address: true,
+            label: true,
+            city: true,
+            neighborhood: true,
+          },
+        },
       },
     });
     if (!findUser) {
@@ -69,25 +80,21 @@ export const signin = async (
       });
     }
 
-    // create a session and set the cookie — same as signin
-    const sessionExpiresAt = getSessionDuration(findUser.role, rememberMe);
-    const session = await prisma.session.create({
-      data: {
-        userId: findUser.id,
-        expiresAt: new Date(Date.now() + sessionExpiresAt),
-      },
-    });
-
-    res.cookie("session_id", session.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: sessionExpiresAt,
-    });
     const user: User = {
       ...findUser,
       profileImage: findUser.profileImage?.url,
+      address: findUser.locations,
     };
+
+    // populate the session — express-session persists this to the session
+    // table and sets the cookie on the response automatically
+    req.session.user = { id: user.id, role: user.role };
+
+    // "remember me" — extend this session's cookie lifetime specifically
+    if (rememberMe) {
+      req.session.cookie.maxAge = getSessionDuration(findUser.role, rememberMe);
+    }
+
     return res.status(200).json({
       message: "login successfully",
       success: true,
@@ -181,7 +188,7 @@ export const register = async (
         success: false,
       });
 
-    console.log("phoneNumber:", phoneNumber, "email:", email);
+    console.log("the otp sent is ", code);
     if (phoneNumber) {
       await sendSMSOtp(phoneNumber, code);
     } else if (email) {
@@ -284,7 +291,7 @@ export const verify = async (
         error: [
           {
             field: "code",
-            message: `Incorrect code. ${ATTEMPTS_LIMIT - otp.attempts - 1} attempts remaining`,
+            message: `Incorrect code. Please check the code sent`,
           },
         ],
       });
@@ -307,25 +314,25 @@ export const verify = async (
           email: true,
           role: true,
           profileImage: { select: { url: true } },
+          locations: {
+            select: {
+              isDefault: true,
+              neighborhood: true,
+              label: true,
+              city: true,
+              address: true,
+            },
+          },
         },
       }),
     ]);
 
-    // create a session and set the cookie — same as signin
-    const sessionExpiresAt = getSessionDuration("CUSTOMER");
-    const session = await prisma.session.create({
-      data: {
-        userId: id,
-        expiresAt: new Date(Date.now() + sessionExpiresAt),
-      },
-    });
+    // populate the session — no manual cookie or Prisma session row needed
+    req.session.user = {
+      id: updatedUser.id,
 
-    res.cookie("session_id", session.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: sessionExpiresAt,
-    });
+      role: updatedUser.role,
+    };
 
     return res.status(200).json({
       message: "Phone number verified successfully",
@@ -333,6 +340,7 @@ export const verify = async (
       data: {
         ...updatedUser,
         profileImage: updatedUser.profileImage?.url,
+        address: updatedUser.locations,
       },
       error: null,
     });
@@ -457,20 +465,7 @@ export const googleCallback = async (
     }
 
     // create a session for whoever just logged in
-    const session = await prisma.session.create({
-      data: {
-        userId,
-        expiresAt: new Date(Date.now() + SESSION_DURATION.DEFAULT),
-      },
-    });
-
-    //set the session cookie
-    res.cookie("session_id", session.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: SESSION_DURATION.DEFAULT,
-    });
+    req.session.user = { id: userId, role };
 
     //redirect back to the Next.js app using user role
     return res.redirect(
@@ -553,29 +548,9 @@ export const validateSession = async (
   next: NextFunction,
 ) => {
   try {
-    const sessionId = req.cookies["session_id"];
-
-    if (!sessionId) {
+    if (!req.session.user?.id) {
       return res.status(401).json({
         message: "No session found",
-        success: false,
-        error: [{ field: "general", message: "Unauthorized" }],
-      });
-    }
-
-    const session = await prisma.session.findUnique({
-      where: { id: sessionId },
-      select: {
-        expiresAt: true,
-        user: {
-          select: { id: true, role: true },
-        },
-      },
-    });
-
-    if (!session || session.expiresAt < new Date()) {
-      return res.status(401).json({
-        message: "Session expired or invalid",
         success: false,
         error: [{ field: "general", message: "Unauthorized" }],
       });
@@ -585,8 +560,8 @@ export const validateSession = async (
       message: "Session valid",
       success: true,
       data: {
-        id: session.user.id,
-        role: session.user.role,
+        id: req.session.user.id,
+        role: req.session.user.role as Role,
       },
     });
   } catch (err) {
@@ -601,10 +576,7 @@ export const getMe = async (
   next: NextFunction,
 ) => {
   try {
-    const sessionId = req.cookies["session_id"];
-    console.log("getMe called on server");
-
-    if (!sessionId) {
+    if (!req.session.user?.id) {
       return res.status(401).json({
         message: "Unauthorized",
         success: false,
@@ -612,42 +584,244 @@ export const getMe = async (
       });
     }
 
-    const session = await prisma.session.findUnique({
-      where: { id: sessionId },
+    const user = await prisma.user.findUnique({
+      where: { id: req.session.user.id },
       select: {
-        expiresAt: true,
-        user: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phoneNumber: true,
+        role: true,
+        profileImage: { select: { url: true } },
+        locations: {
           select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-            phoneNumber: true,
-            role: true,
-            profileImage: { select: { url: true } },
+            address: true,
+            city: true,
+            neighborhood: true,
+            isDefault: true,
+            label: true,
           },
         },
       },
     });
 
-    if (!session || session.expiresAt < new Date()) {
+    if (!user) {
       return res.status(401).json({
-        message: "Session expired or invalid",
+        message: "Unauthorized",
         success: false,
-        error: [{ field: "general", message: "Unauthorized" }],
+        error: [{ field: "general", message: "User not found" }],
       });
     }
-
-    const user: User = {
-      ...session.user,
-      profileImage: session.user.profileImage?.url,
-    };
 
     return res.status(200).json({
       message: "User fetched successfully",
       success: true,
-      data: user,
+      data: {
+        ...user,
+        profileImage: user.profileImage?.url,
+        address: user.locations,
+      },
       error: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//get users addres from apis
+export const getLocation = async (
+  req: Request,
+  res: Response<ApiResponse<LocationResponsePayload>>,
+  next: NextFunction,
+) => {
+  try {
+    const userId = req.session.user?.id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const rawLat = req.query.lat;
+    const rawLng = req.query.lng;
+
+    let lat: number | null =
+      typeof rawLat === "string" && rawLat.trim() !== ""
+        ? Number(rawLat)
+        : null;
+    let lng: number | null =
+      typeof rawLng === "string" && rawLng.trim() !== ""
+        ? Number(rawLng)
+        : null;
+
+    let source: "GPS" | "IP" = "GPS";
+
+    if (
+      lat === null ||
+      lng === null ||
+      Number.isNaN(lat) ||
+      Number.isNaN(lng)
+    ) {
+      source = "IP";
+
+      const forwardedFor = req.headers["x-forwarded-for"];
+      const ip =
+        (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor)
+          ?.split(",")[0]
+          .trim() || req.ip;
+
+      const ipRes = await fetch(`https://ipwho.is/${ip}`);
+      const ipData = await ipRes.json();
+
+      if (!ipData.success) {
+        return res.status(404).json({
+          success: false,
+          message: "Could not determine location",
+          error: [{ message: "location data not found", field: "location" }],
+        });
+      }
+
+      lat = Number(ipData.latitude);
+      lng = Number(ipData.longitude);
+    }
+
+    const geoRes = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`,
+      {
+        headers: {
+          "User-Agent": "YesLaundryApp/1.0 (yeslaundrygh@gmail.com)",
+        },
+      },
+    );
+    const geoData = await geoRes.json();
+    const addr = geoData.address ?? {};
+    const address = geoData.display_name ?? null;
+    const city = addr.city ?? addr.town ?? addr.county ?? null;
+    const neighborhood =
+      addr.suburb ?? addr.neighbourhood ?? addr.quarter ?? null;
+
+    await prisma.location.create({
+      data: {
+        userId,
+        longitude: lng,
+        latitude: lat,
+        address,
+        neighborhood,
+        city,
+        isDefault: true,
+        source,
+      },
+    });
+
+    return res.json({
+      message: "User location set",
+      success: true,
+      data: {
+        address,
+        city,
+        neighborhood,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  retries = 1,
+): Promise<globalThis.Response> {
+  try {
+    return await fetch(url, { ...options, signal: AbortSignal.timeout(5000) });
+  } catch (err) {
+    if (retries > 0) {
+      return fetchWithRetry(url, options, retries - 1);
+    }
+    throw err;
+  }
+}
+
+export const setManualLocation = async (
+  req: Request<{}, {}, LocationRequestPayload>,
+  res: Response<ApiResponse<LocationResponsePayload>>,
+  next: NextFunction,
+) => {
+  try {
+    console.log("the end point is reached");
+    const userId = req.session.user?.id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const { label, address, isDefault } = req.body;
+
+    if (!address || typeof address !== "string" || !address.trim()) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Address is required" });
+    }
+
+    // Just save if it fails don't blocks the save if it fails
+    let latitude: number | null = null;
+    let longitude: number | null = null;
+    let resolvedCity: string | null = null;
+    let resolvedNeighborhood: string | null = null;
+
+    try {
+      const searchUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+        address,
+      )}&format=json&addressdetails=1&countrycodes=gh&limit=1`;
+
+      const geoRes = await fetchWithRetry(searchUrl, {
+        headers: { "User-Agent": "YesLaundry/1.0 (yeslaundrygh@gmail.com)" },
+      });
+      const geoData = await geoRes.json();
+      const match = geoData?.[0];
+
+      console.log("what is returned is ", geoData);
+
+      if (match) {
+        latitude = Number(match.lat);
+        longitude = Number(match.lon);
+        const addr = match.address ?? {};
+        resolvedCity = addr.city ?? addr.town ?? addr.county ?? null;
+        resolvedNeighborhood =
+          addr.suburb ?? addr.neighbourhood ?? addr.quarter ?? null;
+      }
+    } catch (geoErr) {
+      console.warn("Forward geocode failed for manual address:", geoErr);
+    }
+
+    // If this location is default unset any already existing one
+    if (isDefault) {
+      await prisma.location.updateMany({
+        where: { userId, isDefault: true },
+        data: { isDefault: false },
+      });
+    }
+
+    const location = await prisma.location.create({
+      data: {
+        userId,
+        label: label ?? null,
+        address: address.trim(),
+        city: resolvedCity,
+        neighborhood: resolvedNeighborhood,
+        latitude,
+        longitude,
+        isDefault: Boolean(isDefault),
+        source: "MANUAL",
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Location saved",
+      data: {
+        address: location.address,
+        city: location.city,
+        neighborhood: location.neighborhood,
+      },
     });
   } catch (err) {
     next(err);

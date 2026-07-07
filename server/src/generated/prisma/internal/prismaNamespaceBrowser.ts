@@ -51,6 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  AddOn: 'AddOn',
+  ServiceAddOn: 'ServiceAddOn',
   ItemCategory: 'ItemCategory',
   Item: 'Item',
   ServiceItem: 'ServiceItem',
@@ -63,6 +65,9 @@ export const ModelName = {
   ChatMessage: 'ChatMessage',
   Notification: 'Notification',
   Order: 'Order',
+  OrderAddOn: 'OrderAddOn',
+  OrderDraftAddOn: 'OrderDraftAddOn',
+  RecurringOrderAddOn: 'RecurringOrderAddOn',
   OrderItem: 'OrderItem',
   RecurringOrder: 'RecurringOrder',
   OrderDraft: 'OrderDraft',
@@ -74,11 +79,19 @@ export const ModelName = {
   Referral: 'Referral',
   Reward: 'Reward',
   RewardRedemption: 'RewardRedemption',
+  ServiceAvailability: 'ServiceAvailability',
+  CareAndHandling: 'CareAndHandling',
+  HowItWorks: 'HowItWorks',
+  Inclusions: 'Inclusions',
+  Policy: 'Policy',
   Service: 'Service',
   ServiceMedia: 'ServiceMedia',
   RecentService: 'RecentService',
-  Session: 'Session',
+  ServiceTimeSlotDefault: 'ServiceTimeSlotDefault',
+  ServiceTimeSlotOverride: 'ServiceTimeSlotOverride',
+  TimeSlot: 'TimeSlot',
   Transaction: 'Transaction',
+  Location: 'Location',
   Provider: 'Provider',
   User: 'User'
 } as const
@@ -97,6 +110,33 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const AddOnScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  basePrice: 'basePrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AddOnScalarFieldEnum = (typeof AddOnScalarFieldEnum)[keyof typeof AddOnScalarFieldEnum]
+
+
+export const ServiceAddOnScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  price: 'price',
+  addOnId: 'addOnId',
+  quantity: 'quantity',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceAddOnScalarFieldEnum = (typeof ServiceAddOnScalarFieldEnum)[keyof typeof ServiceAddOnScalarFieldEnum]
 
 
 export const ItemCategoryScalarFieldEnum = {
@@ -250,6 +290,9 @@ export const OrderScalarFieldEnum = {
   pickupAddress: 'pickupAddress',
   pickupWindow: 'pickupWindow',
   pickedUpAt: 'pickedUpAt',
+  timeSlot: 'timeSlot',
+  startTime: 'startTime',
+  endTime: 'endTime',
   deliveryAddress: 'deliveryAddress',
   deliveryWindow: 'deliveryWindow',
   deliveredAt: 'deliveredAt',
@@ -262,6 +305,43 @@ export const OrderScalarFieldEnum = {
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+export const OrderAddOnScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  serviceAddOnId: 'serviceAddOnId',
+  priceAtOrder: 'priceAtOrder',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderAddOnScalarFieldEnum = (typeof OrderAddOnScalarFieldEnum)[keyof typeof OrderAddOnScalarFieldEnum]
+
+
+export const OrderDraftAddOnScalarFieldEnum = {
+  id: 'id',
+  orderDraftId: 'orderDraftId',
+  priceAtOrder: 'priceAtOrder',
+  serviceAddOnId: 'serviceAddOnId',
+  quantity: 'quantity',
+  createdAt: 'createdAt'
+} as const
+
+export type OrderDraftAddOnScalarFieldEnum = (typeof OrderDraftAddOnScalarFieldEnum)[keyof typeof OrderDraftAddOnScalarFieldEnum]
+
+
+export const RecurringOrderAddOnScalarFieldEnum = {
+  id: 'id',
+  recurringOrderId: 'recurringOrderId',
+  serviceAddOnId: 'serviceAddOnId',
+  priceAtOrder: 'priceAtOrder',
+  quantity: 'quantity',
+  createdAt: 'createdAt'
+} as const
+
+export type RecurringOrderAddOnScalarFieldEnum = (typeof RecurringOrderAddOnScalarFieldEnum)[keyof typeof RecurringOrderAddOnScalarFieldEnum]
 
 
 export const OrderItemScalarFieldEnum = {
@@ -436,10 +516,73 @@ export const RewardRedemptionScalarFieldEnum = {
 export type RewardRedemptionScalarFieldEnum = (typeof RewardRedemptionScalarFieldEnum)[keyof typeof RewardRedemptionScalarFieldEnum]
 
 
+export const ServiceAvailabilityScalarFieldEnum = {
+  id: 'id',
+  windowDays: 'windowDays',
+  blockedDays: 'blockedDays',
+  blockedDates: 'blockedDates',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceAvailabilityScalarFieldEnum = (typeof ServiceAvailabilityScalarFieldEnum)[keyof typeof ServiceAvailabilityScalarFieldEnum]
+
+
+export const CareAndHandlingScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CareAndHandlingScalarFieldEnum = (typeof CareAndHandlingScalarFieldEnum)[keyof typeof CareAndHandlingScalarFieldEnum]
+
+
+export const HowItWorksScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
+  imageId: 'imageId',
+  serviceId: 'serviceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HowItWorksScalarFieldEnum = (typeof HowItWorksScalarFieldEnum)[keyof typeof HowItWorksScalarFieldEnum]
+
+
+export const InclusionsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InclusionsScalarFieldEnum = (typeof InclusionsScalarFieldEnum)[keyof typeof InclusionsScalarFieldEnum]
+
+
+export const PolicyScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PolicyScalarFieldEnum = (typeof PolicyScalarFieldEnum)[keyof typeof PolicyScalarFieldEnum]
+
+
 export const ServiceScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  coverImageId: 'coverImageId',
+  contextDescription: 'contextDescription',
   turnaroundTime: 'turnaroundTime',
   basePrice: 'basePrice',
   priceModel: 'priceModel',
@@ -448,6 +591,7 @@ export const ServiceScalarFieldEnum = {
   createdById: 'createdById',
   updatedById: 'updatedById',
   loyaltyPointsRate: 'loyaltyPointsRate',
+  availabilityId: 'availabilityId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -477,14 +621,42 @@ export const RecentServiceScalarFieldEnum = {
 export type RecentServiceScalarFieldEnum = (typeof RecentServiceScalarFieldEnum)[keyof typeof RecentServiceScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const ServiceTimeSlotDefaultScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
+  serviceId: 'serviceId',
+  timeSlotId: 'timeSlotId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive'
 } as const
 
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+export type ServiceTimeSlotDefaultScalarFieldEnum = (typeof ServiceTimeSlotDefaultScalarFieldEnum)[keyof typeof ServiceTimeSlotDefaultScalarFieldEnum]
+
+
+export const ServiceTimeSlotOverrideScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  date: 'date',
+  timeSlotId: 'timeSlotId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive'
+} as const
+
+export type ServiceTimeSlotOverrideScalarFieldEnum = (typeof ServiceTimeSlotOverrideScalarFieldEnum)[keyof typeof ServiceTimeSlotOverrideScalarFieldEnum]
+
+
+export const TimeSlotScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  label: 'label',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TimeSlotScalarFieldEnum = (typeof TimeSlotScalarFieldEnum)[keyof typeof TimeSlotScalarFieldEnum]
 
 
 export const TransactionScalarFieldEnum = {
@@ -495,11 +667,30 @@ export const TransactionScalarFieldEnum = {
   method: 'method',
   reference: 'reference',
   failureReason: 'failureReason',
+  provider: 'provider',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const LocationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  label: 'label',
+  address: 'address',
+  city: 'city',
+  neighborhood: 'neighborhood',
+  isDefault: 'isDefault',
+  source: 'source',
+  longitude: 'longitude',
+  latitude: 'latitude',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
 
 
 export const ProviderScalarFieldEnum = {

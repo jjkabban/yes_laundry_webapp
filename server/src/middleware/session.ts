@@ -5,11 +5,14 @@ import pkg from "pg";
 const { Pool } = pkg;
 const pgPool = new Pool({ connectionString: process.env.DATABASE_URL });
 
+export const sessionStore = new (pgSession(session))({
+  pool: pgPool,
+  tableName: "session",
+  createTableIfMissing: true,
+});
+
 export const sessionMiddleware = session({
-  store: new (pgSession(session))({
-    pool: pgPool,
-    tableName: "session",
-  }),
+  store: sessionStore,
   secret: process.env.SESSION_SECRET!,
   resave: false,
   saveUninitialized: false,

@@ -3,20 +3,22 @@ import express, { NextFunction, Response, Request } from "express";
 import { Server, Socket } from "socket.io";
 import cors from "cors";
 import session from "express-session";
-import { authRouter } from "./routes";
+import { authRouter, serviceRouter, orderRouter } from "./routes";
 import { createServer } from "node:http";
 import { sessionMiddleware } from "./middleware/session";
 import initSocket from "./socket";
 import cookieParser from "cookie-parser";
+import { globalError } from "./middleware/error";
+import { ApiResponse } from "./controllers/types/auth.response";
 
 const app = express();
+app.set("trust proxy", 1);
 const httpServer = createServer(app);
 const allowedOrigins = [
-  "http://10.51.180.177:3000",
-  "http://192.168.110.178:3000",
   "http://localhost:3000",
-  "http://192.168.110.179:3000",
-  "http://192.168.1.121:3000",
+  "http://10.158.13.177:3000",
+  "http://10.249.76.177:3000",
+  "http://10.249.76.177:3000",
 ];
 
 const corsOptions = {
@@ -44,8 +46,26 @@ io.use((socket: Socket, next: (err?: Error) => void) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/service", serviceRouter);
+app.use("/api/order", orderRouter);
 
 initSocket(io);
+
+app.use((req: Request, res: Response<ApiResponse<null>>) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+    data: null,
+    error: [
+      {
+        field: "system",
+        message: `No route found for ${req.method} ${req.originalUrl}`,
+      },
+    ],
+  });
+});
+
+app.use(globalError);
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {

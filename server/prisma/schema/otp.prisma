@@ -5,8 +5,8 @@ enum Purpose {
 
 model Otp {
   id          String   @id @default(uuid())
-  phoneNumber String?  
-  email       String?  
+  phoneNumber String?
+  email       String?
   userId      String?
   user        User?    @relation(fields: [userId], references: [id])
   codeHash    String   @unique

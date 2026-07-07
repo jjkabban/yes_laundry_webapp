@@ -18,6 +18,16 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model AddOn
+ * 
+ */
+export type AddOn = Prisma.AddOnModel
+/**
+ * Model ServiceAddOn
+ * 
+ */
+export type ServiceAddOn = Prisma.ServiceAddOnModel
+/**
  * Model ItemCategory
  * 
  */
@@ -78,6 +88,21 @@ export type Notification = Prisma.NotificationModel
  */
 export type Order = Prisma.OrderModel
 /**
+ * Model OrderAddOn
+ * 
+ */
+export type OrderAddOn = Prisma.OrderAddOnModel
+/**
+ * Model OrderDraftAddOn
+ * 
+ */
+export type OrderDraftAddOn = Prisma.OrderDraftAddOnModel
+/**
+ * Model RecurringOrderAddOn
+ * 
+ */
+export type RecurringOrderAddOn = Prisma.RecurringOrderAddOnModel
+/**
  * Model OrderItem
  * 
  */
@@ -133,6 +158,31 @@ export type Reward = Prisma.RewardModel
  */
 export type RewardRedemption = Prisma.RewardRedemptionModel
 /**
+ * Model ServiceAvailability
+ * 
+ */
+export type ServiceAvailability = Prisma.ServiceAvailabilityModel
+/**
+ * Model CareAndHandling
+ * 
+ */
+export type CareAndHandling = Prisma.CareAndHandlingModel
+/**
+ * Model HowItWorks
+ * 
+ */
+export type HowItWorks = Prisma.HowItWorksModel
+/**
+ * Model Inclusions
+ * 
+ */
+export type Inclusions = Prisma.InclusionsModel
+/**
+ * Model Policy
+ * 
+ */
+export type Policy = Prisma.PolicyModel
+/**
  * Model Service
  * 
  */
@@ -148,15 +198,30 @@ export type ServiceMedia = Prisma.ServiceMediaModel
  */
 export type RecentService = Prisma.RecentServiceModel
 /**
- * Model Session
+ * Model ServiceTimeSlotDefault
  * 
  */
-export type Session = Prisma.SessionModel
+export type ServiceTimeSlotDefault = Prisma.ServiceTimeSlotDefaultModel
+/**
+ * Model ServiceTimeSlotOverride
+ * 
+ */
+export type ServiceTimeSlotOverride = Prisma.ServiceTimeSlotOverrideModel
+/**
+ * Model TimeSlot
+ * 
+ */
+export type TimeSlot = Prisma.TimeSlotModel
 /**
  * Model Transaction
  * 
  */
 export type Transaction = Prisma.TransactionModel
+/**
+ * Model Location
+ * 
+ */
+export type Location = Prisma.LocationModel
 /**
  * Model Provider
  * 

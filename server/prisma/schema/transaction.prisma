@@ -13,6 +13,12 @@ enum PaymentMethod {
   CASH
 }
 
+enum PaymentProvider {
+  MTN 
+  TELECEL
+  AIRTELTIGO
+}
+
 model Transaction {
   id      String @id @default(cuid())
   orderId String
@@ -23,6 +29,7 @@ model Transaction {
   method        PaymentMethod
   reference     String?
   failureReason String?
+  provider    PaymentProvider
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,0 +1,14 @@
+model ServiceAvailability {
+  id String @id @default(cuid())
+
+  service Service?
+
+  windowDays Int @default(90)
+  // rolling booking window (today → +90 days)
+
+  blockedDays  Int[]      @default([]) // e.g. [0] = Sunday
+  blockedDates DateTime[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
+import { useBookingData } from "@/context/BookingDataContext";
 import { useToast } from "@/context/ToastContext";
 import { resendOtp } from "@/lib/api/auth.api";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,6 +27,7 @@ export default function VerifyPage() {
   const [countdown, setCountdown] = useState(RESEND_COOLDOWN);
   const [canResend, setCanResend] = useState(false);
   const { showToast } = useToast();
+  const { clearFormData } = useBookingData();
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -96,6 +98,7 @@ export default function VerifyPage() {
             : user.role === "STAFF"
               ? router.replace("/staff-home")
               : null;
+        clearFormData();
       }
     } catch (err: any) {
       const serverError =
@@ -134,15 +137,10 @@ export default function VerifyPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="flex items-center z-10 flex-row px-5 py-4 gap-6 shadow-sm fixed left-0 right-0 w-full bg-white">
-        <ArrowLeft
-          className="cursor-pointer shrink-0"
-          onClick={() => router.back()}
-        />
-        <h4 className="text-xl sm:text-2xl font-medium">Verify your account</h4>
-      </div>
-
       <div className="flex flex-col md:w-2/5 md:mx-auto items-center min-h-screen relative pt-28 pb-10 px-6">
+        <h4 className="text-2xl sm:text-2xl font-medium mb-4">
+          Verify your account
+        </h4>
         <div className="w-full max-w-md mb-8">
           <p className="text-paragraph/70 text-[14px] leading-relaxed">
             We sent a 6-digit code to your{" "}

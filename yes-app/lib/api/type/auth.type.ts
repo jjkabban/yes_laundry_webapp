@@ -1,4 +1,5 @@
-import { User } from "@/context/types/auth";
+import { User, UserLocation } from "@/types/shared/user.type";
+
 export type LoginPayload = {
   phoneNumber: string;
   password: string;
@@ -26,3 +27,11 @@ export type VerifyUserPayload = {
 };
 
 export type VerifyUserResponse = User;
+
+export type ManualLocationPayload = {
+  address: string;
+  label: string;
+  isDefault: boolean;
+};
+
+export type UserLocationPayload = UserLocation;

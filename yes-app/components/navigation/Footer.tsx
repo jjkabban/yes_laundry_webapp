@@ -1,33 +1,68 @@
 import Link from "next/link";
 import { Logo } from "../ui";
+import {
+  FaWhatsapp,
+  FaFacebook,
+  FaInstagram,
+  FaFacebookF,
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const services = [
-  { label: "Stain treatment", description: "Everyday laundry, sorted." },
+  {
+    label: "Stain treatment",
+    description: "Everyday laundry, sorted.",
+    slug: "stain-treatment",
+  },
   {
     label: "Pressing & Ironing",
     description: "For suits, dresses & delicates.",
+    slug: "pressing-ironing",
   },
-  { label: "Dry cleaning", description: "Crisp, press-ready garments." },
-  { label: "Personal laundry", description: "Duvets, sheets & towels." },
-  { label: "Family laundry", description: "Duvets, sheets & towels." },
-  { label: "Commercial laundry", description: "Duvets, sheets & towels." },
+  {
+    label: "Dry cleaning",
+    description: "Crisp, press-ready garments.",
+    slug: "dry-cleaning",
+  },
+  {
+    label: "Personal laundry",
+    description: "Duvets, sheets & towels.",
+    slug: "personal-laundry",
+  },
+  {
+    label: "Family laundry",
+    description: "Duvets, sheets & towels.",
+    slug: "family-laundry",
+  },
+  {
+    label: "Commercial laundry",
+    description: "Duvets, sheets & towels.",
+    slug: "commercial-laundry",
+  },
 ];
 
 const quickLinks = [
-  { label: "About", href: "https://www.yeslaundrygh.com/about.html" },
-  { label: "Services", href: "https://www.yeslaundrygh.com/services.html" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
   {
     label: "Testimonials",
-    href: "https://www.yeslaundrygh.com/testimonials.html",
+    href: "/testimonials",
   },
-  { label: "Contact", href: "https://www.yeslaundrygh.com/contact.html" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const socials = [
-  { icon: "", href: "#", label: "Facebook" },
-  { icon: "", href: "#", label: "Instagram" },
-  { icon: "", href: "#", label: "Twitter" },
-  { icon: "", href: "#", label: "YouTube" },
+  {
+    icon: FaInstagram,
+    href: "https://www.instagram.com/yes.laundry",
+    label: "Instagram",
+  },
+  {
+    icon: FaWhatsapp,
+    href: "https://api.whatsapp.com/send?phone=233558696943&text=Hello%20Yeslaundry%2C%20I%20just%20visited%20your%20website%20and%20wanted%20to%20you%20a%20message.",
+    label: "Whatsapp",
+  },
+  { icon: MdEmail, href: "mailto:info@yeslaundrygh.com", label: "Email" },
 ];
 
 export default function Footer() {
@@ -49,13 +84,15 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-3 mt-1">
-              {socials.map(({ icon: Icon, href, label }) => (
+              {socials.map(({ icon: Icon, label, href }, index) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
                   className="h-9 w-9 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:border-[#0d6efd] hover:text-[#0d6efd] transition-all duration-200"
-                ></a>
+                >
+                  <Icon />
+                </a>
               ))}
             </div>
           </div>
@@ -66,11 +103,15 @@ export default function Footer() {
             </h4>
             <ul className="flex flex-col gap-3">
               {services.map((s) => (
-                <li key={s.label} className="flex flex-col gap-0.5">
+                <Link
+                  href={`services/${s.slug}`}
+                  key={s.label}
+                  className="flex flex-col gap-0.5"
+                >
                   <span className="text-sm font-medium text-white/80">
                     {s.label}
                   </span>
-                </li>
+                </Link>
               ))}
             </ul>
           </div>
@@ -97,34 +138,47 @@ export default function Footer() {
             <h4 className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#0d6efd]">
               Get in Touch
             </h4>
-            <ul className="flex flex-col gap-3 text-sm text-white">
+            <ul className="flex flex-col gap-8 text-sm text-white/50">
               <li>
-                <span className="block text-[11px] uppercase tracking-wider text-white mb-0.5">
+                <span className="block text-[12px] pb-1 uppercase tracking-wider  mb-0.5">
                   Phone
                 </span>
                 <a
-                  href="tel:+233000000000"
-                  className="hover:text-white transition-colors duration-200"
+                  href="tel:+233558696943"
+                  className="hover:text-white text-white transition-colors duration-200"
                 >
-                  +233 00 000 0000
+                  +233(0) 558 696 943
                 </a>
               </li>
               <li>
-                <span className="block text-[11px] uppercase tracking-wider text-white mb-0.5">
+                <span className="block text-[12px] pb-1 uppercase tracking-wider mb-0.5">
                   Email
                 </span>
-                <a
-                  href="mailto:hello@yeslaundrygh.com"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  hello@yeslaundrygh.com
-                </a>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="mailto:yeslaundrygh@gmail.com"
+                    className="hover:text-white text-white transition-colors duration-200"
+                  >
+                    yeslaundrygh@gmail.com
+                  </a>
+                  <a
+                    href="mailto:info@yeslaundrygh.com"
+                    className="hover:text-white text-white transition-colors duration-200"
+                  >
+                    info@yeslaundrygh.com
+                  </a>
+                </div>
               </li>
               <li>
-                <span className="block text-[11px] uppercase tracking-wider text-white mb-0.5">
+                <span className="block text-[12px] uppercase tracking-wider  mb-0.5">
                   Location
                 </span>
-                Accra, Ghana
+                <div className="flex flex-col py-2">
+                  <span className="text-white">
+                    No. 19, Fifth Link Rd, Cantonements
+                  </span>
+                  <span className="text-white">GPS Address: GL-040-2658</span>
+                </div>
               </li>
             </ul>
           </div>

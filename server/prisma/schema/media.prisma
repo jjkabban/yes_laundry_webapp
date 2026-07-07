@@ -11,6 +11,8 @@ model Media {
   mimeType     String
   size         String
   userProfile  User?
+  howItWorks   HowItWorks[]
+  serviceCover Service? @relation("ServiceCoverImage")
   serviceMedia ServiceMedia[]
   createdAt    DateTime       @default(now())
 }

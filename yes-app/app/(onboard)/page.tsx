@@ -10,12 +10,19 @@ import {
   FinalCTASection,
   SchedulePickupSection,
 } from "@/components/sections";
+import { useServices } from "@/hooks/useServices";
 import { AnimatePresence } from "framer-motion";
 import { handleAction } from "next/dist/server/app-render/action-handler";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { SERVICES } from "../../data/objects/services";
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
+  const { data, isLoading, isError } = useServices();
+  const services =
+    data?.data ?? (process.env.NODE_ENV === "development" ? SERVICES : []);
+
+  console.log("the service data is ", data);
 
   const onPageScroll = () => {
     setScrollY(window.scrollY);
@@ -29,14 +36,16 @@ export default function HomePage() {
     };
   }, []);
   return (
-    <div className="bg-background w-lvw relative">
+    <div className="bg-background relative">
       <HeroSection scrollPosition={scrollY} />
       <TrustSection />
-      <ServiceSection />
+      <Suspense fallback={"getting services...."}>
+        <ServiceSection services={services}/>
+      </Suspense>
+
       <TestimonialSection />
       <SchedulePickupSection />
       <FinalCTASection />
-      <Footer />
       <AnimatePresence>{scrollY > 500 && <FormFAB />}</AnimatePresence>
     </div>
   );

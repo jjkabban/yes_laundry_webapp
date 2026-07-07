@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { parse } from "cookie";
-import { prisma } from "../../lib/prisma";
+import cookieParser from "cookie-parser";
+import { sessionStore } from "../../middleware/session";
 
 export const CheckAuth = async (
   socket: Socket,
@@ -9,22 +10,26 @@ export const CheckAuth = async (
   const cookieHeader = socket.handshake.headers.cookie;
 
   if (!cookieHeader) return next(new Error("Unauthorized"));
-  console.log("1. cookie header:", cookieHeader);
 
   const cookies = parse(cookieHeader);
-  const sessionId = cookies["session_id"];
+  const rawCookie = cookies["connect.sid"];
+
+  if (!rawCookie) return next(new Error("Unauthorized"));
+
+  const sessionId = cookieParser.signedCookie(
+    decodeURIComponent(rawCookie),
+    process.env.SESSION_SECRET!,
+  );
 
   if (!sessionId) return next(new Error("Unauthorized"));
 
-  const session = await prisma.session.findUnique({
-    where: { id: sessionId },
-    include: { user: true },
+  // ask the session store (connect-pg-simple) to load the session data
+  sessionStore.get(sessionId, (err, session) => {
+    if (err || !session || !session.user?.id) {
+      return next(new Error("Unauthorized"));
+    }
+
+    socket.data.user = session.user;
+    return next();
   });
-  console.log("3. session found:", session?.id, "expires:", session?.expiresAt);
-
-  if (!session || session.expiresAt < new Date())
-    return next(new Error("Unauthorized"));
-
-  socket.data.user = session.user;
-  return next();
 };

@@ -1,12 +1,14 @@
 import {
   LiveOrderEvent,
-  Order,
-  OrderStaff,
   OrderStatus,
-  Transaction,
-} from "@/context/types/order";
+  OrderCustomer,
+  OrderStaff,
+  Order,
+  OrderDraft,
+  OrderDraftItemEntry,
+} from "@/types/shared/order.type";
+import { Transaction } from "@/types/shared/transaction.type";
 
-// ─── Socket event payloads ───────────────────────────────────
 export interface OrderStatusChangedPayload {
   orderId: string;
   orderNumber: string;
@@ -23,7 +25,7 @@ export interface OrderAssignedPayload {
 }
 
 export interface NewOrderPayload {
-  order: Order[];
+  order: Order;
 }
 
 export interface PaymentConfirmedPayload {
@@ -32,4 +34,22 @@ export interface PaymentConfirmedPayload {
   transaction: Transaction;
 }
 
-export type UserOrdersResponsePayload = Order[];
+interface OrderDraftEditableFields {
+  serviceId?: string | null;
+  bagCount?: number | null;
+  weightKg?: number | null;
+  items?: OrderDraftItemEntry[] | null;
+  pickupAddress?: string | null;
+  pickupWindow?: string | null;
+  deliveryAddress?: string | null;
+  deliveryWindow?: string | null;
+  currentStep?: string | null;
+}
+
+export type UpdateOrderDraftInputPayload = Partial<OrderDraftEditableFields>;
+export type CreateOrderDraftPayload = UpdateOrderDraftInputPayload & {
+  serviceId: string;
+};
+
+export type UserOrderResponsePayload = Order[];
+export type UserDraftOrderResponsePayload = OrderDraft[];

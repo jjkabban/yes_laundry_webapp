@@ -31,7 +31,7 @@ export default function DashboardContextProvider({
   return (
     <DashboardContext.Provider
       value={{
-        panel: panelState.panel,
+        panel: panelState.panel as ActivePanelType,
         onPanelSelect,
         onPanelClose,
         openPanel: panelState.open,

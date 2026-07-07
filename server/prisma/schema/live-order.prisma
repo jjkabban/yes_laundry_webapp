@@ -1,4 +1,3 @@
-
 enum OrderEventType {
   CREATED
   CONFIRMED

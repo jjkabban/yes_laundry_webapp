@@ -117,7 +117,7 @@ export default function HeroSection({ scrollPosition }: Props) {
 
   return (
     <div
-      className={`relative pt-20 w-full h-[500] xl:h-[600]  overflow-hidden `}
+      className={`relative pt-10  md:pt-20 w-full h-screen md:h-[500] xl:h-[600] overflow-hidden`}
     >
       <AnimatePresence mode="sync">
         <motion.div
@@ -143,21 +143,21 @@ export default function HeroSection({ scrollPosition }: Props) {
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-10 h-full  flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 w-full">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 pb-14 w-full text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.title}
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="flex flex-col gap-2.5"
+            className="flex flex-col items-center gap-1.5 sm:gap-2.5 w-full"
           >
             <motion.span
               initial={{ opacity: 0, letterSpacing: "0.1em" }}
               animate={{ opacity: 1, letterSpacing: "0.25em" }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-[11px] text-center md:text-xs font-bold uppercase tracking-[0.25em] text-amber-300/90"
+              className="text-[13px] text-center md:text-xs font-bold uppercase tracking-[0.25em] text-amber-300/90"
             >
               {current.eyebrow}
             </motion.span>
@@ -165,9 +165,9 @@ export default function HeroSection({ scrollPosition }: Props) {
             <motion.div
               variants={titleVariants[current.titleAnimDir]}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center justify-center gap-3"
+              className="flex flex-col md:flex-row items-center justify-center gap-3"
             >
-              <h1 className="text-3xl md:text-5xl font-semibold text-center tracking-tight text-white leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl font-semibold text-center tracking-tight text-white leading-[1.1]">
                 {current.title}
               </h1>
               {current.titleImage && (
@@ -186,36 +186,50 @@ export default function HeroSection({ scrollPosition }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-              className="text-sm md:text-base pt-6 text-center flex justify-center items-center self-center text-white/90 max-w-md leading-relaxed font-medium line-clamp-2"
+              className="text-[16px]  md:text-base pt-3 sm:pt-6 text-center mx-auto text-white/90 max-w-md leading-relaxed font-semibold line-clamp-2"
             >
               {current.description}
             </motion.p>
-
-            <motion.button
-              onClick={() => router.push("/signup")}
-              className="absolute bottom-12 mt-8 bg-[white]/70 backdrop-blur-md self-center rounded-full items-center max-w-fit flex flex-row gap-5 px-2  py-2"
-            >
-              <div className="flex flex-col px-3">
-                <span className="font-semibold text-black text-sm">
-                  Pick up
-                </span>
-                <span className="text-black/60  text-sm ">Add location</span>
-              </div>
-              <div className="h-full w-[0.1] bg-gray-400" />
-              <div className="flex flex-col">
-                <span className="font-semibold text-black text-sm">Where</span>
-                <span className="text-black/60 text-sm ">Add address</span>
-              </div>
-
-              <div className="bg-brand h-full items-center flex p-2 rounded-full">
-                <ArrowRight className="text-white" />
-              </div>
-            </motion.button>
           </motion.div>
         </AnimatePresence>
+
+        <motion.button
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: "auto", opacity: 1 }}
+          transition={{
+            width: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 },
+            opacity: { duration: 0.4, delay: 0.3 },
+          }}
+          whileTap={{ scale: 1.04 }}
+          whileHover={{ scale: 1.03 }}
+          onClick={() => router.push("/signup")}
+          className="cursor-pointer  md:static absolute bottom-50 mt-10 sm:mt-8 bg-white/70 backdrop-blur-md rounded-full items-center w-[min(94vw,35rem)] sm:min-w[460] sm:min-w-[450] flex flex-row justify-between gap-6 sm:gap-6 px-8 py-4 overflow-hidden"
+        >
+          <div className="flex flex-col px-2 sm:px-3 items-center sm:items-start text-center sm:text-left">
+            <span className="font-semibold text-black text-[14px] sm:text-sm whitespace-nowrap">
+              Pick up
+            </span>
+            <span className="text-black/60 text-[12px] sm:text-sm whitespace-nowrap">
+              Add location
+            </span>
+          </div>
+          <div className="h-8 sm:h-full w-[1] bg-gray-400 shrink-0" />
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <span className="font-semibold text-black text-[14px] sm:text-sm whitespace-nowrap">
+              Where
+            </span>
+            <span className="text-black/60 text-[12px] sm:text-sm whitespace-nowrap">
+              Add address
+            </span>
+          </div>
+
+          <div className="bg-brand items-center flex p-2 rounded-full shrink-0">
+            <ArrowRight size={16} className="text-white" />
+          </div>
+        </motion.button>
       </div>
 
-      <div className="absolute bottom-5   left-0 right-0 z-10 flex gap-2 items-center justify-center max-w-full">
+      <div className="absolute bottom-5 left-0 right-0 z-10 flex gap-2 items-center justify-center max-w-full">
         {heroDescription.map((_, i) => (
           <button
             key={i}

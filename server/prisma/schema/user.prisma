@@ -54,7 +54,7 @@ model User {
   liveOrderWorkedOn        LiveOrder[]               @relation("WorkedOnBy")
   createdServices          Service[]                 @relation("ServiceCreatedBy")
   updatedServices          Service[]                 @relation("ServiceUpdatedBy")
-  sessions                 Session[]
+  locations                Location[]
   createdAt                DateTime                  @default(now())
   updatedAt                DateTime                  @updatedAt
 }

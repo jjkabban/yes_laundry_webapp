@@ -31,3 +31,29 @@ export function formatDate(iso: string) {
     day: "numeric",
   });
 }
+
+export function formatOrderWindowTime(iso: string, isPast: boolean): string {
+  const date = new Date(iso);
+
+  if (isPast) {
+    return date.toLocaleString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  }
+
+  const diffMs = date.getTime() - Date.now();
+  const totalSec = Math.floor(diffMs / 1000);
+  const totalMin = Math.floor(totalSec / 60);
+  const totalHr = Math.floor(totalMin / 60);
+  const totalDay = Math.floor(totalHr / 24);
+
+  if (diffMs < 0) return "Arriving any moment";
+  if (totalMin < 60) return `Expected in ${totalMin}m`;
+  if (totalHr < 24) return `Expected in ${totalHr}h ${totalMin % 60}m`;
+  return `Expected in ${totalDay}d ${totalHr % 24}h`;
+}

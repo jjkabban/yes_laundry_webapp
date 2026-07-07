@@ -1,13 +1,15 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AuthContextType, User } from "./types/auth";
+import { AuthContextType } from "./types/auth";
+import { User } from "@/types/shared/user.type";
 import {
   LoginPayload,
   RegisterPayload,
   VerifyUserPayload,
 } from "@/lib/api/type/auth.type";
 import {
+  getMe,
   loginUser,
   logoutUser,
   registerUser,
@@ -23,6 +25,7 @@ type Props = {
 
 export default function AuthContextProvider({ children, initUser }: Props) {
   const [user, setUser] = useState<User | null>(initUser);
+  const [isUserLoading, setIsUserLoading] = useState(false);
 
   const login = async (userData: LoginPayload) => {
     const res = await loginUser(userData);
@@ -32,7 +35,7 @@ export default function AuthContextProvider({ children, initUser }: Props) {
     return res.data;
   };
   const logout = async () => {
-    const res = await logoutUser(user?.id as string);
+    const res = await logoutUser();
     if (res.success) {
       setUser(null);
     }
@@ -51,13 +54,33 @@ export default function AuthContextProvider({ children, initUser }: Props) {
     }
   };
   const loadUser = () => {};
+  const refetchUser = async () => {
+    try {
+      setIsUserLoading(true);
+      const res = await getMe();
 
-  useEffect(() => {
-    console.log("the user from auth is ", user);
-  }, []);
+      if (res.success && res.data) {
+        setUser(res.data);
+      }
+    } catch (err: any) {
+      throw Error(err);
+    } finally {
+      setIsUserLoading(false);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ login, logout, user, register, verify }}>
+    <AuthContext.Provider
+      value={{
+        login,
+        refetchUser,
+        isUserLoading,
+        logout,
+        user,
+        register,
+        verify,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

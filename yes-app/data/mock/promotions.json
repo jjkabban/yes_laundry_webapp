@@ -1,0 +1,68 @@
+[
+  {
+    "id": "promo_first_order",
+    "campaignName": "First Order Discount",
+    "description": "Enjoy 15% off your first laundry order.",
+    "discountType": "PERCENTAGE",
+    "discountValue": 15,
+    "minOrderValue": 0,
+    "startsAt": "2026-01-01T00:00:00.000Z",
+    "expiresAt": "2026-12-31T23:59:59.000Z",
+    "isActive": true
+  },
+  {
+    "id": "promo_free_pickup",
+    "campaignName": "Free Pickup & Delivery",
+    "description": "Get free pickup and delivery on all orders this week.",
+    "discountType": "FIXED_AMOUNT",
+    "discountValue": 20,
+    "minOrderValue": 80,
+    "startsAt": "2026-06-20T00:00:00.000Z",
+    "expiresAt": "2026-06-30T23:59:59.000Z",
+    "isActive": true
+  },
+  {
+    "id": "promo_weekend_special",
+    "campaignName": "Weekend Laundry Deal",
+    "description": "Save 10% on all laundry orders during weekends.",
+    "discountType": "PERCENTAGE",
+    "discountValue": 10,
+    "minOrderValue": 50,
+    "startsAt": "2026-06-01T00:00:00.000Z",
+    "expiresAt": "2026-08-31T23:59:59.000Z",
+    "isActive": true
+  },
+  {
+    "id": "promo_dry_cleaning",
+    "campaignName": "Dry Cleaning Special",
+    "description": "Enjoy 20% off all dry cleaning services.",
+    "discountType": "PERCENTAGE",
+    "discountValue": 20,
+    "minOrderValue": 100,
+    "startsAt": "2026-06-10T00:00:00.000Z",
+    "expiresAt": "2026-07-10T23:59:59.000Z",
+    "isActive": true
+  },
+  {
+    "id": "promo_loyalty_reward",
+    "campaignName": "Loyalty Reward",
+    "description": "Get GH₵10 off your next order as a returning customer.",
+    "discountType": "FIXED_AMOUNT",
+    "discountValue": 10,
+    "minOrderValue": 60,
+    "startsAt": "2026-01-01T00:00:00.000Z",
+    "expiresAt": null,
+    "isActive": true
+  },
+  {
+    "id": "promo_express_service",
+    "campaignName": "Express Care",
+    "description": "Fast-track your laundry with priority handling.",
+    "discountType": "PERCENTAGE",
+    "discountValue": 5,
+    "minOrderValue": 120,
+    "startsAt": "2026-06-01T00:00:00.000Z",
+    "expiresAt": "2026-09-01T23:59:59.000Z",
+    "isActive": true
+  }
+]

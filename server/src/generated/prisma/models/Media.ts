@@ -191,6 +191,8 @@ export type MediaWhereInput = {
   size?: Prisma.StringFilter<"Media"> | string
   createdAt?: Prisma.DateTimeFilter<"Media"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  howItWorks?: Prisma.HowItWorksListRelationFilter
+  serviceCover?: Prisma.XOR<Prisma.ServiceNullableScalarRelationFilter, Prisma.ServiceWhereInput> | null
   serviceMedia?: Prisma.ServiceMediaListRelationFilter
 }
 
@@ -202,6 +204,8 @@ export type MediaOrderByWithRelationInput = {
   size?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userProfile?: Prisma.UserOrderByWithRelationInput
+  howItWorks?: Prisma.HowItWorksOrderByRelationAggregateInput
+  serviceCover?: Prisma.ServiceOrderByWithRelationInput
   serviceMedia?: Prisma.ServiceMediaOrderByRelationAggregateInput
 }
 
@@ -216,6 +220,8 @@ export type MediaWhereUniqueInput = Prisma.AtLeast<{
   size?: Prisma.StringFilter<"Media"> | string
   createdAt?: Prisma.DateTimeFilter<"Media"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  howItWorks?: Prisma.HowItWorksListRelationFilter
+  serviceCover?: Prisma.XOR<Prisma.ServiceNullableScalarRelationFilter, Prisma.ServiceWhereInput> | null
   serviceMedia?: Prisma.ServiceMediaListRelationFilter
 }, "id">
 
@@ -251,6 +257,8 @@ export type MediaCreateInput = {
   size: string
   createdAt?: Date | string
   userProfile?: Prisma.UserCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceCreateNestedOneWithoutCoverImageInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutMediaInput
 }
 
@@ -262,6 +270,8 @@ export type MediaUncheckedCreateInput = {
   size: string
   createdAt?: Date | string
   userProfile?: Prisma.UserUncheckedCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceUncheckedCreateNestedOneWithoutCoverImageInput
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
@@ -273,6 +283,8 @@ export type MediaUpdateInput = {
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUpdateOneWithoutCoverImageNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutMediaNestedInput
 }
 
@@ -284,6 +296,8 @@ export type MediaUncheckedUpdateInput = {
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserUncheckedUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUncheckedUpdateOneWithoutCoverImageNestedInput
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
@@ -355,6 +369,34 @@ export type EnumMediaTypeFieldUpdateOperationsInput = {
   set?: $Enums.MediaType
 }
 
+export type MediaCreateNestedOneWithoutHowItWorksInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutHowItWorksInput, Prisma.MediaUncheckedCreateWithoutHowItWorksInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHowItWorksInput
+  connect?: Prisma.MediaWhereUniqueInput
+}
+
+export type MediaUpdateOneRequiredWithoutHowItWorksNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutHowItWorksInput, Prisma.MediaUncheckedCreateWithoutHowItWorksInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHowItWorksInput
+  upsert?: Prisma.MediaUpsertWithoutHowItWorksInput
+  connect?: Prisma.MediaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutHowItWorksInput, Prisma.MediaUpdateWithoutHowItWorksInput>, Prisma.MediaUncheckedUpdateWithoutHowItWorksInput>
+}
+
+export type MediaCreateNestedOneWithoutServiceCoverInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutServiceCoverInput, Prisma.MediaUncheckedCreateWithoutServiceCoverInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutServiceCoverInput
+  connect?: Prisma.MediaWhereUniqueInput
+}
+
+export type MediaUpdateOneRequiredWithoutServiceCoverNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutServiceCoverInput, Prisma.MediaUncheckedCreateWithoutServiceCoverInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutServiceCoverInput
+  upsert?: Prisma.MediaUpsertWithoutServiceCoverInput
+  connect?: Prisma.MediaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutServiceCoverInput, Prisma.MediaUpdateWithoutServiceCoverInput>, Prisma.MediaUncheckedUpdateWithoutServiceCoverInput>
+}
+
 export type MediaCreateNestedOneWithoutServiceMediaInput = {
   create?: Prisma.XOR<Prisma.MediaCreateWithoutServiceMediaInput, Prisma.MediaUncheckedCreateWithoutServiceMediaInput>
   connectOrCreate?: Prisma.MediaCreateOrConnectWithoutServiceMediaInput
@@ -385,6 +427,134 @@ export type MediaUpdateOneWithoutUserProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutUserProfileInput, Prisma.MediaUpdateWithoutUserProfileInput>, Prisma.MediaUncheckedUpdateWithoutUserProfileInput>
 }
 
+export type MediaCreateWithoutHowItWorksInput = {
+  id?: string
+  url: string
+  type: $Enums.MediaType
+  mimeType: string
+  size: string
+  createdAt?: Date | string
+  userProfile?: Prisma.UserCreateNestedOneWithoutProfileImageInput
+  serviceCover?: Prisma.ServiceCreateNestedOneWithoutCoverImageInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutMediaInput
+}
+
+export type MediaUncheckedCreateWithoutHowItWorksInput = {
+  id?: string
+  url: string
+  type: $Enums.MediaType
+  mimeType: string
+  size: string
+  createdAt?: Date | string
+  userProfile?: Prisma.UserUncheckedCreateNestedOneWithoutProfileImageInput
+  serviceCover?: Prisma.ServiceUncheckedCreateNestedOneWithoutCoverImageInput
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutMediaInput
+}
+
+export type MediaCreateOrConnectWithoutHowItWorksInput = {
+  where: Prisma.MediaWhereUniqueInput
+  create: Prisma.XOR<Prisma.MediaCreateWithoutHowItWorksInput, Prisma.MediaUncheckedCreateWithoutHowItWorksInput>
+}
+
+export type MediaUpsertWithoutHowItWorksInput = {
+  update: Prisma.XOR<Prisma.MediaUpdateWithoutHowItWorksInput, Prisma.MediaUncheckedUpdateWithoutHowItWorksInput>
+  create: Prisma.XOR<Prisma.MediaCreateWithoutHowItWorksInput, Prisma.MediaUncheckedCreateWithoutHowItWorksInput>
+  where?: Prisma.MediaWhereInput
+}
+
+export type MediaUpdateToOneWithWhereWithoutHowItWorksInput = {
+  where?: Prisma.MediaWhereInput
+  data: Prisma.XOR<Prisma.MediaUpdateWithoutHowItWorksInput, Prisma.MediaUncheckedUpdateWithoutHowItWorksInput>
+}
+
+export type MediaUpdateWithoutHowItWorksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserUpdateOneWithoutProfileImageNestedInput
+  serviceCover?: Prisma.ServiceUpdateOneWithoutCoverImageNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaUncheckedUpdateWithoutHowItWorksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserUncheckedUpdateOneWithoutProfileImageNestedInput
+  serviceCover?: Prisma.ServiceUncheckedUpdateOneWithoutCoverImageNestedInput
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaCreateWithoutServiceCoverInput = {
+  id?: string
+  url: string
+  type: $Enums.MediaType
+  mimeType: string
+  size: string
+  createdAt?: Date | string
+  userProfile?: Prisma.UserCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutImageInput
+  serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutMediaInput
+}
+
+export type MediaUncheckedCreateWithoutServiceCoverInput = {
+  id?: string
+  url: string
+  type: $Enums.MediaType
+  mimeType: string
+  size: string
+  createdAt?: Date | string
+  userProfile?: Prisma.UserUncheckedCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutImageInput
+  serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutMediaInput
+}
+
+export type MediaCreateOrConnectWithoutServiceCoverInput = {
+  where: Prisma.MediaWhereUniqueInput
+  create: Prisma.XOR<Prisma.MediaCreateWithoutServiceCoverInput, Prisma.MediaUncheckedCreateWithoutServiceCoverInput>
+}
+
+export type MediaUpsertWithoutServiceCoverInput = {
+  update: Prisma.XOR<Prisma.MediaUpdateWithoutServiceCoverInput, Prisma.MediaUncheckedUpdateWithoutServiceCoverInput>
+  create: Prisma.XOR<Prisma.MediaCreateWithoutServiceCoverInput, Prisma.MediaUncheckedCreateWithoutServiceCoverInput>
+  where?: Prisma.MediaWhereInput
+}
+
+export type MediaUpdateToOneWithWhereWithoutServiceCoverInput = {
+  where?: Prisma.MediaWhereInput
+  data: Prisma.XOR<Prisma.MediaUpdateWithoutServiceCoverInput, Prisma.MediaUncheckedUpdateWithoutServiceCoverInput>
+}
+
+export type MediaUpdateWithoutServiceCoverInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutImageNestedInput
+  serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaUncheckedUpdateWithoutServiceCoverInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserUncheckedUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutImageNestedInput
+  serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutMediaNestedInput
+}
+
 export type MediaCreateWithoutServiceMediaInput = {
   id?: string
   url: string
@@ -393,6 +563,8 @@ export type MediaCreateWithoutServiceMediaInput = {
   size: string
   createdAt?: Date | string
   userProfile?: Prisma.UserCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceCreateNestedOneWithoutCoverImageInput
 }
 
 export type MediaUncheckedCreateWithoutServiceMediaInput = {
@@ -403,6 +575,8 @@ export type MediaUncheckedCreateWithoutServiceMediaInput = {
   size: string
   createdAt?: Date | string
   userProfile?: Prisma.UserUncheckedCreateNestedOneWithoutProfileImageInput
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceUncheckedCreateNestedOneWithoutCoverImageInput
 }
 
 export type MediaCreateOrConnectWithoutServiceMediaInput = {
@@ -429,6 +603,8 @@ export type MediaUpdateWithoutServiceMediaInput = {
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUpdateOneWithoutCoverImageNestedInput
 }
 
 export type MediaUncheckedUpdateWithoutServiceMediaInput = {
@@ -439,6 +615,8 @@ export type MediaUncheckedUpdateWithoutServiceMediaInput = {
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserUncheckedUpdateOneWithoutProfileImageNestedInput
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUncheckedUpdateOneWithoutCoverImageNestedInput
 }
 
 export type MediaCreateWithoutUserProfileInput = {
@@ -448,6 +626,8 @@ export type MediaCreateWithoutUserProfileInput = {
   mimeType: string
   size: string
   createdAt?: Date | string
+  howItWorks?: Prisma.HowItWorksCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceCreateNestedOneWithoutCoverImageInput
   serviceMedia?: Prisma.ServiceMediaCreateNestedManyWithoutMediaInput
 }
 
@@ -458,6 +638,8 @@ export type MediaUncheckedCreateWithoutUserProfileInput = {
   mimeType: string
   size: string
   createdAt?: Date | string
+  howItWorks?: Prisma.HowItWorksUncheckedCreateNestedManyWithoutImageInput
+  serviceCover?: Prisma.ServiceUncheckedCreateNestedOneWithoutCoverImageInput
   serviceMedia?: Prisma.ServiceMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
@@ -484,6 +666,8 @@ export type MediaUpdateWithoutUserProfileInput = {
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  howItWorks?: Prisma.HowItWorksUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUpdateOneWithoutCoverImageNestedInput
   serviceMedia?: Prisma.ServiceMediaUpdateManyWithoutMediaNestedInput
 }
 
@@ -494,6 +678,8 @@ export type MediaUncheckedUpdateWithoutUserProfileInput = {
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  howItWorks?: Prisma.HowItWorksUncheckedUpdateManyWithoutImageNestedInput
+  serviceCover?: Prisma.ServiceUncheckedUpdateOneWithoutCoverImageNestedInput
   serviceMedia?: Prisma.ServiceMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
@@ -503,10 +689,12 @@ export type MediaUncheckedUpdateWithoutUserProfileInput = {
  */
 
 export type MediaCountOutputType = {
+  howItWorks: number
   serviceMedia: number
 }
 
 export type MediaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  howItWorks?: boolean | MediaCountOutputTypeCountHowItWorksArgs
   serviceMedia?: boolean | MediaCountOutputTypeCountServiceMediaArgs
 }
 
@@ -518,6 +706,13 @@ export type MediaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the MediaCountOutputType
    */
   select?: Prisma.MediaCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MediaCountOutputType without action
+ */
+export type MediaCountOutputTypeCountHowItWorksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HowItWorksWhereInput
 }
 
 /**
@@ -536,6 +731,8 @@ export type MediaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   size?: boolean
   createdAt?: boolean
   userProfile?: boolean | Prisma.Media$userProfileArgs<ExtArgs>
+  howItWorks?: boolean | Prisma.Media$howItWorksArgs<ExtArgs>
+  serviceCover?: boolean | Prisma.Media$serviceCoverArgs<ExtArgs>
   serviceMedia?: boolean | Prisma.Media$serviceMediaArgs<ExtArgs>
   _count?: boolean | Prisma.MediaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["media"]>
@@ -570,6 +767,8 @@ export type MediaSelectScalar = {
 export type MediaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "type" | "mimeType" | "size" | "createdAt", ExtArgs["result"]["media"]>
 export type MediaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.Media$userProfileArgs<ExtArgs>
+  howItWorks?: boolean | Prisma.Media$howItWorksArgs<ExtArgs>
+  serviceCover?: boolean | Prisma.Media$serviceCoverArgs<ExtArgs>
   serviceMedia?: boolean | Prisma.Media$serviceMediaArgs<ExtArgs>
   _count?: boolean | Prisma.MediaCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -580,6 +779,8 @@ export type $MediaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Media"
   objects: {
     userProfile: Prisma.$UserPayload<ExtArgs> | null
+    howItWorks: Prisma.$HowItWorksPayload<ExtArgs>[]
+    serviceCover: Prisma.$ServicePayload<ExtArgs> | null
     serviceMedia: Prisma.$ServiceMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -984,6 +1185,8 @@ readonly fields: MediaFieldRefs;
 export interface Prisma__MediaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   userProfile<T extends Prisma.Media$userProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$userProfileArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  howItWorks<T extends Prisma.Media$howItWorksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$howItWorksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HowItWorksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceCover<T extends Prisma.Media$serviceCoverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$serviceCoverArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   serviceMedia<T extends Prisma.Media$serviceMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$serviceMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1429,6 +1632,49 @@ export type Media$userProfileArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Media.howItWorks
+ */
+export type Media$howItWorksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HowItWorks
+   */
+  select?: Prisma.HowItWorksSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HowItWorks
+   */
+  omit?: Prisma.HowItWorksOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HowItWorksInclude<ExtArgs> | null
+  where?: Prisma.HowItWorksWhereInput
+  orderBy?: Prisma.HowItWorksOrderByWithRelationInput | Prisma.HowItWorksOrderByWithRelationInput[]
+  cursor?: Prisma.HowItWorksWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HowItWorksScalarFieldEnum | Prisma.HowItWorksScalarFieldEnum[]
+}
+
+/**
+ * Media.serviceCover
+ */
+export type Media$serviceCoverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Service
+   */
+  select?: Prisma.ServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Service
+   */
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
 }
 
 /**

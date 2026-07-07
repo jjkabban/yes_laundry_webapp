@@ -6,6 +6,13 @@ export type LoginRequestPayload = {
   rememberMe: boolean;
   email: string;
 };
+export type UserLocation = {
+  address: string | null;
+  city: string | null;
+  neighborhood: string | null;
+  isDefault: boolean;
+  label: string | null;
+};
 export type User = {
   firstName: string;
   lastName: string;
@@ -14,6 +21,7 @@ export type User = {
   email: string | null;
   id: string;
   profileImage?: string;
+  address: UserLocation[];
 };
 export type LoginResponsePayload = User;
 export type RegisterRequestPayload = {
@@ -37,4 +45,16 @@ export type VerifyResponsePayload = User;
 export type PhoneNumberSignupPayload = {
   phoneNumber: string;
   id: string;
+};
+
+export type LocationResponsePayload = {
+  address: string | null;
+  city: string | null;
+  neighborhood: string | null;
+};
+
+export type LocationRequestPayload = {
+  label: string;
+  isDefault: boolean;
+  address: string;
 };

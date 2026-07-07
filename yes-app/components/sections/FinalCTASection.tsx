@@ -3,10 +3,12 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Logo } from "../ui";
+import { useRouter } from "next/navigation";
 
 export default function FinalCTASection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const router = useRouter();
 
   return (
     <section
@@ -42,27 +44,38 @@ export default function FinalCTASection() {
         </motion.div>
 
         <motion.div
+          whileTap={{ scale: 1.04 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-2 w-3/5"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
         >
-          <button className="flex md:w-1/2 sm:w-2/3 items-center justify-center gap-2 bg-brand hover:bg-[#003a73] text-white font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5">
+          <button
+            onClick={() => {
+              router.push("signup");
+            }}
+            className="flex md:w-1/2 sm:w-2/3 items-center justify-center gap-2 bg-brand hover:bg-[#003a73] text-white font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
+          >
             Create account
             <ArrowRight size={15} strokeWidth={2.5} />
           </button>
-          <button className="text-white/60 md:w-1/2 sm:w-2/3 hover:text-white text-sm font-medium px-6 py-3.5 rounded-full border border-white/10 hover:border-white/25 transition-all duration-300">
-            Book as guest
+          <button
+            onClick={() => {
+              router.push("signup");
+            }}
+            className="text-white/60 md:w-1/2 sm:w-2/3 hover:text-white text-sm font-medium px-6 py-3.5 rounded-full border border-white/10 hover:border-white/25 transition-all duration-300"
+          >
+            Start your order now
           </button>
         </motion.div>
 
         <motion.p
-          className="text-[11px] text-white/30 mt-1"
+          className="text-[11px] text-white/50 mt-1"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          No subscription required · Cancel anytime
+          Book anytime · Pay per order · Less stress
         </motion.p>
       </div>
     </section>

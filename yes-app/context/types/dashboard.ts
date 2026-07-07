@@ -2,7 +2,7 @@ export type ActivePanelType =
   | "messages"
   | "notifications"
   | "orders"
-  | "track"
+  | "profile"
   | null;
 
 export type DashboardContextType = {

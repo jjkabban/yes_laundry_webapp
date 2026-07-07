@@ -8,6 +8,7 @@ import {
   MessageScreen,
   NotificationScreen,
   OrderScreen,
+  ProfileScreen,
 } from "@/components/screens";
 import { Footer } from "@/components/navigation";
 
@@ -20,7 +21,7 @@ export default function CustomerLayout({
   const { panel, openPanel } = usePanel();
 
   return (
-    <div className="bg-foreground">
+    <div className="bg-bgBase">
       <div className="md:hidden">
         <CustomerTabs />
         <main>{children}</main>
@@ -32,7 +33,7 @@ export default function CustomerLayout({
         <div className="w-16 shrink-0" />
 
         {openPanel && panel && (
-          <div className="w-2/5 h-screen overflow-y-auto border-r border-r-black/10">
+          <div className="w-2/5 h-screen overflow-y-auto border-r border-r-black/80">
             <AnimatePresence>
               <motion.div
                 initial={{ x: "-100%" }}
@@ -46,6 +47,8 @@ export default function CustomerLayout({
                   <NotificationScreen />
                 ) : panel === "orders" ? (
                   <OrderScreen />
+                ) : panel === "profile" ? (
+                  <ProfileScreen />
                 ) : null}
               </motion.div>
             </AnimatePresence>

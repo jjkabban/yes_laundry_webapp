@@ -11,10 +11,12 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Check } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RegisterPayload } from "@/lib/api/type/auth.type";
 import { useToast } from "@/context/ToastContext";
+import { useBookingData } from "@/context/BookingDataContext";
+import { Logo } from "@/components/ui";
 
 export default function SignupFormPage() {
   const type = useSearchParams().get("type");
@@ -38,6 +40,12 @@ export default function SignupFormPage() {
   const { register } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
+
+  const { formData } = useBookingData();
+
+  useEffect(() => {
+    if (formData) setForm((prev) => ({ ...prev, ...formData }));
+  }, [formData]);
 
   const onInputChange = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -95,7 +103,6 @@ export default function SignupFormPage() {
         err?.message ??
         "Invalid code. Please try again.";
 
-      showToast(serverError, "error", 3000);
       if (Array.isArray(err?.error)) {
         err.error.forEach(
           ({ field, message }: { field: string; message: string }) => {
@@ -109,15 +116,15 @@ export default function SignupFormPage() {
   };
   return (
     <div className="min-h-screen">
-      <div className="flex items-center z-10 flex-row px-5 py-4 gap-6 shadow-sm fixed left-0 right-0 w-full bg-white">
-        <ArrowLeft
-          className="cursor-pointer shrink-0"
-          onClick={() => router.back()}
-        />
-        <h4 className="text-xl sm:text-2xl font-meduim">Let's get in!</h4>
-      </div>
+      <div className="flex flex-col  mx-3  md:w-2/5 md:mx-auto items-center flex-1 min-h-screen relative pt-24 pb-10 px-4">
+        <div className="py-4 flex flex-col items-center gap-6 justify-center">
+          <div className="mr-3">
+            <Logo height={200} width={220} />
+          </div>
 
-      <div className="flex flex-col md:w-2/5 md:mx-auto items-center flex-1 min-h-screen relative pt-24 pb-10 px-4">
+          <h3 className="text-2xl font-semibold">Create your account</h3>
+        </div>
+
         <form
           className="w-full max-w-md"
           onSubmit={(e) => {

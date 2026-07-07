@@ -1,19 +1,18 @@
 "use client";
-
 import React, { createContext, useContext, useState } from "react";
-import { OrdersContextType } from "./types/order";
+import { OrderContextType } from "./types/order";
 import useOrders from "@/hooks/useOrders";
 
-const OrderContext = createContext<OrdersContextType | null>(null);
+const OrderContext = createContext<OrderContextType | null>(null);
 
 export default function OrderContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isOrdersLoading, orders, error } = useOrders();
+  const { isOrdersLoading, orders: orderData, error } = useOrders();
   return (
-    <OrderContext.Provider value={{ orders, isOrdersLoading, error }}>
+    <OrderContext.Provider value={{ orderData, isOrdersLoading, error }}>
       {children}
     </OrderContext.Provider>
   );

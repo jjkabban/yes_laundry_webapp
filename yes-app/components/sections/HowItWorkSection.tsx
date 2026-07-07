@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useWindow from "@/hooks/useWindow";
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -30,15 +31,16 @@ const steps = [
 ];
 
 const imageCollage = [
-  "/images/work1.jpg",
-  "/images/work2.jpg",
+  "/images/schedule_laundry.jpg",
+  "/images/pickup_laundry.jpg",
   "/images/work3.jpg",
-  "/images/work4.jpg",
+  "/images/laundry_delivery.jpg",
 ];
 
 export default function HowItWorksSection() {
   const { isMobile, isTablet } = useWindow();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const router = useRouter();
 
   const isSmallScreen = isMobile || isTablet;
 
@@ -54,7 +56,7 @@ export default function HowItWorksSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="text-center mb-6">
-            <span className="text-[13px] font-semibold uppercase tracking-[0.25em] text-gold">
+            <span className="text-[13px] font-bold uppercase tracking-[0.25em] text-brand">
               How it works
             </span>
             <h2 className="mt-3 text-3xl md:text-4xl font-semibold text-paragraph tracking-tight">
@@ -66,80 +68,83 @@ export default function HowItWorksSection() {
             </p>
           </div>
 
-          {isSmallScreen ? (
-            <div className="flex flex-col divide-y divide-paragraph/8">
-              {steps.map((step, index) => {
-                const isOpen = openIndex === index;
-                return (
-                  <div key={step.number}>
-                    <button
-                      onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className="w-full flex items-center justify-between py-4 text-left"
+          <div className="flex  flex-col divide-y divide-paragraph/8">
+            {steps.map((step, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div key={step.number}>
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full flex items-center justify-between py-4 text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl font-semibold text-brand tracking-tight w-6">
+                        {step.number}
+                      </span>
+                      <span className=" font-medium font-heading">
+                        {step.title}
+                      </span>
+                    </div>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-[#b8964e] text-xl leading-none shrink-0 ml-4"
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl font-semibold text-brand tracking-tight w-6">
-                          {step.number}
-                        </span>
-                        <span className=" font-medium font-heading">
-                          {step.title}
-                        </span>
-                      </div>
-                      <motion.span
-                        animate={{ rotate: isOpen ? 45 : 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-[#b8964e] text-xl leading-none shrink-0 ml-4"
-                      >
-                        <Plus size={20} />
-                      </motion.span>
-                    </button>
+                      <Plus size={20} />
+                    </motion.span>
+                  </button>
 
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          key="content"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <p className="pb-4 pl-9  text-[#5a6472] leading-relaxed">
-                            {step.description}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {steps.map((step) => (
-                <div
-                  key={step.number}
-                  className="flex flex-col gap-3 p-6 rounded-2xl  border border-paragraph/5"
-                >
-                  <span className="text-3xl font-semibold text-[#b8964e]/30 tracking-tight">
-                    {step.number}
-                  </span>
-                  <h3 className="text-base font-semibold text-paragraph">
-                    {step.title}
-                  </h3>
-                  <p className="text-[13px] text-[#5a6472] leading-relaxed">
-                    {step.description}
-                  </p>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="pb-4 pl-9  text-[#5a6472] leading-relaxed">
+                          {step.description}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </div>
+
+          <div className="hidden md:grid grid-cols-2 gap-4">
+            {steps.map((step) => (
+              <div
+                key={step.number}
+                className="flex flex-col gap-3 p-6 rounded-2xl  border border-paragraph/5"
+              >
+                <span className="text-3xl font-semibold text-[#b8964e]/30 tracking-tight">
+                  {step.number}
+                </span>
+                <h3 className="text-base font-semibold text-paragraph">
+                  {step.title}
+                </h3>
+                <p className="text-[13px] text-[#5a6472] leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <div className="text-center mt-8">
             <p className=" text-paragraph mb-4">
               Enjoy convenience and quality every time with Yes Laundry.
             </p>
-            <button className="bg-brand text-white md:m-auto md:w-1/2 font-semibold px-8 py-3.5 rounded-full transition-all duration-300 w-full hover:-translate-y-0.5 mt-3">
-              Starting booking
+            <button
+              onClick={() => {
+                router.push("signup");
+              }}
+              className="bg-brand text-white md:m-auto md:w-1/2 font-semibold px-8 py-3.5 rounded-full transition-all duration-300 w-full hover:-translate-y-0.5 mt-3"
+            >
+              Start booking
             </button>
           </div>
         </motion.div>
@@ -156,8 +161,12 @@ export default function HowItWorksSection() {
         >
           {imageCollage.map((img, index) => (
             <motion.div
+              onClick={() => {
+                router.push("how-it-works");
+              }}
+              whileTap={{ scale: 1.1 }}
               key={img + index}
-              className="relative w-full h-[220] xl:h-[300] rounded-xl overflow-hidden"
+              className="relative w-full h-[220] xl:h-[300] rounded-3xl overflow-hidden"
               variants={{
                 hidden: { opacity: 0, scale: 0.8 },
                 visible: {

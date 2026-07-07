@@ -1,0 +1,20 @@
+enum SlotName {
+  MORNING
+  AFTERNOON
+  EVENING
+}
+
+model TimeSlot {
+  id String @id @default(cuid())
+
+  name  SlotName // "morning", "afternoon", "evening"
+  label String // "Morning (8:00 - 11:00)"
+
+  startTime        String // "08:00"
+  endTime          String // "11:00"
+  serviceDefaults  ServiceTimeSlotDefault[]
+  serviceOverrides ServiceTimeSlotOverride[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

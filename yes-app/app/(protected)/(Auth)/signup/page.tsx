@@ -1,36 +1,15 @@
 "use client";
 import { Logo } from "@/components/ui";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Mail, Phone } from "lucide-react";
+import { CheckCircle2, Mail, Phone } from "lucide-react";
 import GoogleLogo from "../../../../assets/google_logo.png";
 import AppleLogo from "../../../../assets/apple_logo.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-const thumbnails = [
-  {
-    image: "/images/slide1.jpg",
-    descriptions: "Laundry piling up while your day gets busier.",
-  },
-  {
-    image: "/images/slide2.jpg",
-    descriptions: "Schedule a pickup and leave the rest to us.",
-  },
-  {
-    image: "/images/slide3.jpg",
-    descriptions: "Every garment cleaned with premium care.",
-  },
-  {
-    image: "/images/slide4.jpg",
-    descriptions: "Freshly folded clothes delivered to your door.",
-  },
-  {
-    image: "/images/slide5.jpg",
-    descriptions: "More time for life, less time on laundry.",
-  },
-];
+import { thumbnails } from "@/data/pages/signup";
+import { useBookingData } from "@/context/BookingDataContext";
 
 const slideVariants = {
   enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%" }),
@@ -48,6 +27,7 @@ export default function SignupPage() {
     0, 1,
   ]);
   const [activeDot, setActiveDot] = useState<number>(0);
+  const { formData, extraInfo } = useBookingData();
 
   const goTo = (index: number) => {
     setSlide(([prev]) => [index, index > prev ? 1 : -1]);
@@ -69,6 +49,10 @@ export default function SignupPage() {
     el.scrollTo({ left: offset, behavior: "smooth" });
     setActiveDot(index);
   };
+
+  useEffect(() => {
+    console.log("form data is ", formData, "extra info is", extraInfo);
+  }, [formData]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -138,12 +122,12 @@ export default function SignupPage() {
         {/* Mobile thumbnail*/}
         <div
           ref={scrollerRef}
-          className="flex md:hidden mt-6 md:mt-10 flex-row gap-3 pl-8 w-full overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
+          className="flex md:hidden mt-10 md:mt-10 flex-row gap-3 pl-8 w-full overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
         >
           {thumbnails.map((img, i) => (
             <div
               key={img.image + i}
-              className="h-[260] w-[400] md:w-11/12 md:h-[380] shrink-0 relative overflow-hidden rounded-2xl snap-center"
+              className="h-[230] w-[320] md:w-11/12 md:h-[380] shrink-0 relative overflow-hidden rounded-2xl snap-center"
             >
               <Image
                 src={img.image}
@@ -152,7 +136,7 @@ export default function SignupPage() {
                 className="object-cover"
               />
               <div className="absolute z-20 bottom-0 left-0 right-0 px-4 py-3 bg-linear-to-t from-black/90 to-transparent">
-                <span className="text-white text-xl font-semibold">
+                <span className="text-white text-[18px] font-semibold">
                   {img.descriptions}
                 </span>
               </div>
@@ -170,10 +154,19 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center">
-            <h3 className="text-center text-2xl font-semibold px-4 mt-6 md:mt-0 md:w-1/2 ">
+          <div className="flex flex-col items-center justify-center">
+            <h3 className="text-center text-[22px] font-semibold px-4 mt-6 md:mt-0 md:w-1/2 ">
               Get in quickly lets make your life simpler and clothes cleaner
             </h3>
+
+            {formData && (
+              <div className="flex items-center gap-2 mx-auto mt-4 w-fit rounded-full bg-emerald-500/10 border border-emerald-500/20 px-4 py-2">
+                <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                <span className="text-[12.5px] font-medium text-emerald-700">
+                  {extraInfo}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col mx-5 mt-8 md:max-w-sm md:mx-auto md:w-full">
@@ -183,7 +176,7 @@ export default function SignupPage() {
               whileHover={{ scale: 1.02, opacity: 0.9 }}
               className="bg-brand rounded-xl cursor-pointer flex flex-row text-white font-medium items-center justify-center py-4 gap-2"
             >
-              <Phone />
+              <Phone size={20} />
               <span>Continue with phone</span>
             </motion.button>
 
@@ -194,7 +187,7 @@ export default function SignupPage() {
               }}
               className="border-brand border-[1] mt-4 cursor-pointer rounded-xl flex flex-row text-black font-medium items-center justify-center py-4 gap-2"
             >
-              <Mail />
+              <Mail size={20} />
               <span>Continue with email</span>
             </motion.button>
 
@@ -205,7 +198,7 @@ export default function SignupPage() {
               whileHover={{ scale: 1.02, opacity: 0.9 }}
               className="border-brand border-[1] cursor-pointer mt-4 rounded-xl flex flex-row text-black font-medium items-center justify-center py-3 gap-2"
             >
-              <div className="relative h-[30] w-[30]">
+              <div className="relative h-[25] w-[25]">
                 <Image src={GoogleLogo} fill alt="google_logo" />
               </div>
               <span>Continue with Google</span>

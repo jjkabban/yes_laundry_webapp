@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/api/auth.server";
 import { ToastProvider } from "@/context/ToastContext";
 import OrderContextProvider from "@/context/OrderContext";
 import { Footer } from "@/components/navigation";
+import OrderDraftContextProvider from "@/context/OrderDraftContext";
 
 export default async function ProtectedLayout({
   children,
@@ -17,7 +18,9 @@ export default async function ProtectedLayout({
       <AuthContextProvider initUser={data?.data ?? null}>
         <SocketContextProvider user={data?.data ?? null}>
           <OrderContextProvider>
-            <ToastProvider>{children}</ToastProvider>
+            <OrderDraftContextProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </OrderDraftContextProvider>
           </OrderContextProvider>
         </SocketContextProvider>
       </AuthContextProvider>

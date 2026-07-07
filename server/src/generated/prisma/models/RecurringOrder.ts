@@ -294,6 +294,7 @@ export type RecurringOrderWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"RecurringOrder"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
+  addOns?: Prisma.RecurringOrderAddOnListRelationFilter
   generatedOrders?: Prisma.OrderListRelationFilter
 }
 
@@ -314,6 +315,7 @@ export type RecurringOrderOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.UserOrderByWithRelationInput
   service?: Prisma.ServiceOrderByWithRelationInput
+  addOns?: Prisma.RecurringOrderAddOnOrderByRelationAggregateInput
   generatedOrders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
@@ -337,6 +339,7 @@ export type RecurringOrderWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"RecurringOrder"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
+  addOns?: Prisma.RecurringOrderAddOnListRelationFilter
   generatedOrders?: Prisma.OrderListRelationFilter
 }, "id">
 
@@ -397,6 +400,7 @@ export type RecurringOrderCreateInput = {
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutRecurringOrdersInput
   service: Prisma.ServiceCreateNestedOneWithoutRecurringOrdersInput
+  addOns?: Prisma.RecurringOrderAddOnCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -415,6 +419,7 @@ export type RecurringOrderUncheckedCreateInput = {
   lastRunAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -433,6 +438,7 @@ export type RecurringOrderUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutRecurringOrdersNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  addOns?: Prisma.RecurringOrderAddOnUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -451,6 +457,7 @@ export type RecurringOrderUncheckedUpdateInput = {
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -506,6 +513,11 @@ export type RecurringOrderUncheckedUpdateManyInput = {
 export type RecurringOrderNullableScalarRelationFilter = {
   is?: Prisma.RecurringOrderWhereInput | null
   isNot?: Prisma.RecurringOrderWhereInput | null
+}
+
+export type RecurringOrderScalarRelationFilter = {
+  is?: Prisma.RecurringOrderWhereInput
+  isNot?: Prisma.RecurringOrderWhereInput
 }
 
 export type RecurringOrderCountOrderByAggregateInput = {
@@ -593,6 +605,20 @@ export type RecurringOrderUpdateOneWithoutGeneratedOrdersNestedInput = {
   delete?: Prisma.RecurringOrderWhereInput | boolean
   connect?: Prisma.RecurringOrderWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.RecurringOrderUpdateToOneWithWhereWithoutGeneratedOrdersInput, Prisma.RecurringOrderUpdateWithoutGeneratedOrdersInput>, Prisma.RecurringOrderUncheckedUpdateWithoutGeneratedOrdersInput>
+}
+
+export type RecurringOrderCreateNestedOneWithoutAddOnsInput = {
+  create?: Prisma.XOR<Prisma.RecurringOrderCreateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.RecurringOrderCreateOrConnectWithoutAddOnsInput
+  connect?: Prisma.RecurringOrderWhereUniqueInput
+}
+
+export type RecurringOrderUpdateOneRequiredWithoutAddOnsNestedInput = {
+  create?: Prisma.XOR<Prisma.RecurringOrderCreateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedCreateWithoutAddOnsInput>
+  connectOrCreate?: Prisma.RecurringOrderCreateOrConnectWithoutAddOnsInput
+  upsert?: Prisma.RecurringOrderUpsertWithoutAddOnsInput
+  connect?: Prisma.RecurringOrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RecurringOrderUpdateToOneWithWhereWithoutAddOnsInput, Prisma.RecurringOrderUpdateWithoutAddOnsInput>, Prisma.RecurringOrderUncheckedUpdateWithoutAddOnsInput>
 }
 
 export type EnumRecurrenceFrequencyFieldUpdateOperationsInput = {
@@ -698,6 +724,7 @@ export type RecurringOrderCreateWithoutGeneratedOrdersInput = {
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutRecurringOrdersInput
   service: Prisma.ServiceCreateNestedOneWithoutRecurringOrdersInput
+  addOns?: Prisma.RecurringOrderAddOnCreateNestedManyWithoutRecurringOrderInput
 }
 
 export type RecurringOrderUncheckedCreateWithoutGeneratedOrdersInput = {
@@ -715,6 +742,7 @@ export type RecurringOrderUncheckedCreateWithoutGeneratedOrdersInput = {
   lastRunAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedCreateNestedManyWithoutRecurringOrderInput
 }
 
 export type RecurringOrderCreateOrConnectWithoutGeneratedOrdersInput = {
@@ -748,6 +776,7 @@ export type RecurringOrderUpdateWithoutGeneratedOrdersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutRecurringOrdersNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  addOns?: Prisma.RecurringOrderAddOnUpdateManyWithoutRecurringOrderNestedInput
 }
 
 export type RecurringOrderUncheckedUpdateWithoutGeneratedOrdersInput = {
@@ -765,6 +794,95 @@ export type RecurringOrderUncheckedUpdateWithoutGeneratedOrdersInput = {
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedUpdateManyWithoutRecurringOrderNestedInput
+}
+
+export type RecurringOrderCreateWithoutAddOnsInput = {
+  id?: string
+  frequency: $Enums.RecurrenceFrequency
+  dayOfWeek?: number | null
+  dayOfMonth?: number | null
+  preferredTime: string
+  pickupAddress: string
+  deliveryAddress: string
+  isActive?: boolean
+  nextRunAt: Date | string
+  lastRunAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.UserCreateNestedOneWithoutRecurringOrdersInput
+  service: Prisma.ServiceCreateNestedOneWithoutRecurringOrdersInput
+  generatedOrders?: Prisma.OrderCreateNestedManyWithoutRecurringOrderInput
+}
+
+export type RecurringOrderUncheckedCreateWithoutAddOnsInput = {
+  id?: string
+  customerId: string
+  serviceId: string
+  frequency: $Enums.RecurrenceFrequency
+  dayOfWeek?: number | null
+  dayOfMonth?: number | null
+  preferredTime: string
+  pickupAddress: string
+  deliveryAddress: string
+  isActive?: boolean
+  nextRunAt: Date | string
+  lastRunAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  generatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutRecurringOrderInput
+}
+
+export type RecurringOrderCreateOrConnectWithoutAddOnsInput = {
+  where: Prisma.RecurringOrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.RecurringOrderCreateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedCreateWithoutAddOnsInput>
+}
+
+export type RecurringOrderUpsertWithoutAddOnsInput = {
+  update: Prisma.XOR<Prisma.RecurringOrderUpdateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedUpdateWithoutAddOnsInput>
+  create: Prisma.XOR<Prisma.RecurringOrderCreateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedCreateWithoutAddOnsInput>
+  where?: Prisma.RecurringOrderWhereInput
+}
+
+export type RecurringOrderUpdateToOneWithWhereWithoutAddOnsInput = {
+  where?: Prisma.RecurringOrderWhereInput
+  data: Prisma.XOR<Prisma.RecurringOrderUpdateWithoutAddOnsInput, Prisma.RecurringOrderUncheckedUpdateWithoutAddOnsInput>
+}
+
+export type RecurringOrderUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  frequency?: Prisma.EnumRecurrenceFrequencyFieldUpdateOperationsInput | $Enums.RecurrenceFrequency
+  dayOfWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dayOfMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nextRunAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.UserUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  service?: Prisma.ServiceUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  generatedOrders?: Prisma.OrderUpdateManyWithoutRecurringOrderNestedInput
+}
+
+export type RecurringOrderUncheckedUpdateWithoutAddOnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceId?: Prisma.StringFieldUpdateOperationsInput | string
+  frequency?: Prisma.EnumRecurrenceFrequencyFieldUpdateOperationsInput | $Enums.RecurrenceFrequency
+  dayOfWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dayOfMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nextRunAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutRecurringOrderNestedInput
 }
 
 export type RecurringOrderCreateWithoutServiceInput = {
@@ -781,6 +899,7 @@ export type RecurringOrderCreateWithoutServiceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutRecurringOrdersInput
+  addOns?: Prisma.RecurringOrderAddOnCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -798,6 +917,7 @@ export type RecurringOrderUncheckedCreateWithoutServiceInput = {
   lastRunAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -861,6 +981,7 @@ export type RecurringOrderCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   service: Prisma.ServiceCreateNestedOneWithoutRecurringOrdersInput
+  addOns?: Prisma.RecurringOrderAddOnCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -878,6 +999,7 @@ export type RecurringOrderUncheckedCreateWithoutCustomerInput = {
   lastRunAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedCreateNestedManyWithoutRecurringOrderInput
   generatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutRecurringOrderInput
 }
 
@@ -937,6 +1059,7 @@ export type RecurringOrderUpdateWithoutServiceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  addOns?: Prisma.RecurringOrderAddOnUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -954,6 +1077,7 @@ export type RecurringOrderUncheckedUpdateWithoutServiceInput = {
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -1003,6 +1127,7 @@ export type RecurringOrderUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   service?: Prisma.ServiceUpdateOneRequiredWithoutRecurringOrdersNestedInput
+  addOns?: Prisma.RecurringOrderAddOnUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -1020,6 +1145,7 @@ export type RecurringOrderUncheckedUpdateWithoutCustomerInput = {
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addOns?: Prisma.RecurringOrderAddOnUncheckedUpdateManyWithoutRecurringOrderNestedInput
   generatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutRecurringOrderNestedInput
 }
 
@@ -1045,10 +1171,12 @@ export type RecurringOrderUncheckedUpdateManyWithoutCustomerInput = {
  */
 
 export type RecurringOrderCountOutputType = {
+  addOns: number
   generatedOrders: number
 }
 
 export type RecurringOrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  addOns?: boolean | RecurringOrderCountOutputTypeCountAddOnsArgs
   generatedOrders?: boolean | RecurringOrderCountOutputTypeCountGeneratedOrdersArgs
 }
 
@@ -1060,6 +1188,13 @@ export type RecurringOrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Typ
    * Select specific fields to fetch from the RecurringOrderCountOutputType
    */
   select?: Prisma.RecurringOrderCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RecurringOrderCountOutputType without action
+ */
+export type RecurringOrderCountOutputTypeCountAddOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RecurringOrderAddOnWhereInput
 }
 
 /**
@@ -1087,6 +1222,7 @@ export type RecurringOrderSelect<ExtArgs extends runtime.Types.Extensions.Intern
   updatedAt?: boolean
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
+  addOns?: boolean | Prisma.RecurringOrder$addOnsArgs<ExtArgs>
   generatedOrders?: boolean | Prisma.RecurringOrder$generatedOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.RecurringOrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["recurringOrder"]>
@@ -1150,6 +1286,7 @@ export type RecurringOrderOmit<ExtArgs extends runtime.Types.Extensions.Internal
 export type RecurringOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
+  addOns?: boolean | Prisma.RecurringOrder$addOnsArgs<ExtArgs>
   generatedOrders?: boolean | Prisma.RecurringOrder$generatedOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.RecurringOrderCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1167,6 +1304,7 @@ export type $RecurringOrderPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     customer: Prisma.$UserPayload<ExtArgs>
     service: Prisma.$ServicePayload<ExtArgs>
+    addOns: Prisma.$RecurringOrderAddOnPayload<ExtArgs>[]
     generatedOrders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1580,6 +1718,7 @@ export interface Prisma__RecurringOrderClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   service<T extends Prisma.ServiceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  addOns<T extends Prisma.RecurringOrder$addOnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RecurringOrder$addOnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecurringOrderAddOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   generatedOrders<T extends Prisma.RecurringOrder$generatedOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RecurringOrder$generatedOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2022,6 +2161,30 @@ export type RecurringOrderDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many RecurringOrders to delete.
    */
   limit?: number
+}
+
+/**
+ * RecurringOrder.addOns
+ */
+export type RecurringOrder$addOnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RecurringOrderAddOn
+   */
+  select?: Prisma.RecurringOrderAddOnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RecurringOrderAddOn
+   */
+  omit?: Prisma.RecurringOrderAddOnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecurringOrderAddOnInclude<ExtArgs> | null
+  where?: Prisma.RecurringOrderAddOnWhereInput
+  orderBy?: Prisma.RecurringOrderAddOnOrderByWithRelationInput | Prisma.RecurringOrderAddOnOrderByWithRelationInput[]
+  cursor?: Prisma.RecurringOrderAddOnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RecurringOrderAddOnScalarFieldEnum | Prisma.RecurringOrderAddOnScalarFieldEnum[]
 }
 
 /**

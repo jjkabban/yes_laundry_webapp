@@ -1,7 +1,7 @@
 "use client";
 import Icon from "@/components/icons/LucideIcons";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePanel } from "@/context/DashboardContext";
 import OrderStepper from "@/components/ui/OrdersStepper";
 import {
@@ -10,809 +10,28 @@ import {
   RecentDraftOrders,
 } from "@/components/components";
 import { useOrderContext } from "@/context/OrderContext";
-import { Order, OrderDraft } from "@/context/types/order";
+import { Order, OrderDraft } from "@/types/shared/order.type";
 import ServiceList from "@/components/components/ServiceList";
-import { Service } from "@/context/types/service";
+import { Service } from "@/types/shared/service.types";
 import { Promotion } from "@/context/types/promotions";
 import { ReferralCard } from "@/components/ui";
-
-// order of page and feeds to fetch
-// tab, active orders(order status, progress), sechdule cta, service cards, promo/offer card, recent orders
-// how it works strip , loyalty points, referral points
-
-const mockOrder: Order[] = [
-  {
-    id: "clx9k2m3n0002abc123def456",
-    orderNumber: "YL-002",
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    customer: {
-      id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-      firstName: "Justice",
-      lastName: "Abban",
-      email: "abbanjustice134@gmail.com",
-      phoneNumber: "0241234567",
-      profileImage: null,
-    },
-
-    assignedStaffId: "clx9k2m3n0003staff789",
-    assignedStaff: {
-      id: "clx9k2m3n0003staff789",
-      firstName: "Kwame",
-      lastName: "Mensah",
-      phoneNumber: "0551234567",
-      profileImage: null,
-    },
-
-    serviceId: "clx9k2m3n0004service",
-    service: {
-      id: "clx9k2m3n0004service",
-      name: "Standard Wash",
-      priceModel: "PER_ITEM",
-    },
-
-    status: "DELIVERED",
-
-    bagCount: null,
-    weightKg: null,
-    items: [
-      {
-        id: "clx9k2m3n0005item1",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0006si1",
-        serviceItem: { id: "clx9k2m3n0006si1", name: "Shirt", price: 5.0 },
-        quantity: 3,
-        unitPriceAtOrder: 5.0,
-        notes: null,
-      },
-      {
-        id: "clx9k2m3n0007item2",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0008si2",
-        serviceItem: { id: "clx9k2m3n0008si2", name: "Trousers", price: 8.0 },
-        quantity: 2,
-        unitPriceAtOrder: 8.0,
-        notes: "Handle with care",
-      },
-      {
-        id: "clx9k2m3n0009item3",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0010si3",
-        serviceItem: { id: "clx9k2m3n0010si3", name: "Bedsheet", price: 12.0 },
-        quantity: 1,
-        unitPriceAtOrder: 12.0,
-        notes: null,
-      },
-    ],
-
-    recurringOrderId: null,
-
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: "2026-06-24T09:00:00.000Z",
-    pickedUpAt: "2026-06-24T09:20:00.000Z",
-
-    deliveryAddress: "14 Spintex Road, Accra",
-    deliveryWindow: "2026-06-25T17:00:00.000Z",
-    deliveredAt: null,
-
-    subtotal: 43.0,
-    deliveryFee: 5.0,
-    discount: 0.0,
-    total: 48.0,
-
-    transactions: [
-      {
-        id: "clx9k2m3n0011tx1",
-        orderId: "clx9k2m3n0002abc123def456",
-        amount: 48.0,
-        status: "PENDING",
-        method: "MOBILE_MONEY",
-        reference: "MM-20260624-00123",
-        failureReason: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        updatedAt: "2026-06-24T08:55:00.000Z",
-      },
-    ],
-
-    events: [
-      {
-        id: "clx9k2m3n0012ev1",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CREATED",
-        status: "PENDING",
-        notes: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0013ev2",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CONFIRMED",
-        status: "CONFIRMED",
-        notes: null,
-        createdAt: "2026-06-24T09:00:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0014ev3",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PICKED_UP",
-        status: "PICKED_UP",
-        notes: "Items collected from customer",
-        createdAt: "2026-06-24T09:20:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0015ev4",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PROCESSING_STARTED",
-        status: "IN_PROGRESS",
-        notes: null,
-        createdAt: "2026-06-24T11:00:00.000Z",
-        workedOnById: "",
-      },
-    ],
-
-    createdAt: "2026-06-24T08:55:00.000Z",
-    updatedAt: "2026-06-24T11:00:00.000Z",
-  },
-  {
-    id: "clx9k2m3n0002abc123def456",
-    orderNumber: "YL-002",
-
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    customer: {
-      id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-      firstName: "Justice",
-      lastName: "Abban",
-      email: "abbanjustice134@gmail.com",
-      phoneNumber: "0241234567",
-      profileImage: null,
-    },
-
-    assignedStaffId: "clx9k2m3n0003staff789",
-    assignedStaff: {
-      id: "clx9k2m3n0003staff789",
-      firstName: "Kwame",
-      lastName: "Mensah",
-      phoneNumber: "0551234567",
-      profileImage: null,
-    },
-
-    serviceId: "clx9k2m3n0004service",
-    service: {
-      id: "clx9k2m3n0004service",
-      name: "Standard Wash",
-      priceModel: "PER_ITEM",
-    },
-
-    status: "READY",
-
-    bagCount: null,
-    weightKg: null,
-    items: [
-      {
-        id: "clx9k2m3n0005item1",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0006si1",
-        serviceItem: { id: "clx9k2m3n0006si1", name: "Shirt", price: 5.0 },
-        quantity: 3,
-        unitPriceAtOrder: 5.0,
-        notes: null,
-      },
-      {
-        id: "clx9k2m3n0007item2",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0008si2",
-        serviceItem: { id: "clx9k2m3n0008si2", name: "Trousers", price: 8.0 },
-        quantity: 2,
-        unitPriceAtOrder: 8.0,
-        notes: "Handle with care",
-      },
-      {
-        id: "clx9k2m3n0009item3",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0010si3",
-        serviceItem: { id: "clx9k2m3n0010si3", name: "Bedsheet", price: 12.0 },
-        quantity: 1,
-        unitPriceAtOrder: 12.0,
-        notes: null,
-      },
-    ],
-
-    recurringOrderId: null,
-
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: "2026-06-24T09:00:00.000Z",
-    pickedUpAt: "2026-06-24T09:20:00.000Z",
-
-    deliveryAddress: "14 Spintex Road, Accra",
-    deliveryWindow: "2026-06-25T17:00:00.000Z",
-    deliveredAt: null,
-
-    subtotal: 43.0,
-    deliveryFee: 5.0,
-    discount: 0.0,
-    total: 48.0,
-
-    transactions: [
-      {
-        id: "clx9k2m3n0011tx1",
-        orderId: "clx9k2m3n0002abc123def456",
-        amount: 48.0,
-        status: "PENDING",
-        method: "MOBILE_MONEY",
-        reference: "MM-20260624-00123",
-        failureReason: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        updatedAt: "2026-06-24T08:55:00.000Z",
-      },
-    ],
-
-    events: [
-      {
-        id: "clx9k2m3n0012ev1",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CREATED",
-        status: "PENDING",
-        notes: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0013ev2",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CONFIRMED",
-        status: "CONFIRMED",
-        notes: null,
-        createdAt: "2026-06-24T09:00:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0014ev3",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PICKED_UP",
-        status: "PICKED_UP",
-        notes: "Items collected from customer",
-        createdAt: "2026-06-24T09:20:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0015ev4",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PROCESSING_STARTED",
-        status: "IN_PROGRESS",
-        notes: null,
-        createdAt: "2026-06-24T11:00:00.000Z",
-        workedOnById: "",
-      },
-    ],
-
-    createdAt: "2026-06-24T08:55:00.000Z",
-    updatedAt: "2026-06-24T11:00:00.000Z",
-  },
-  {
-    id: "clx9k2m3n0002abc123def456",
-    orderNumber: "YL-002",
-
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    customer: {
-      id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-      firstName: "Justice",
-      lastName: "Abban",
-      email: "abbanjustice134@gmail.com",
-      phoneNumber: "0241234567",
-      profileImage: null,
-    },
-
-    assignedStaffId: "clx9k2m3n0003staff789",
-    assignedStaff: {
-      id: "clx9k2m3n0003staff789",
-      firstName: "Kwame",
-      lastName: "Mensah",
-      phoneNumber: "0551234567",
-      profileImage: null,
-    },
-
-    serviceId: "clx9k2m3n0004service",
-    service: {
-      id: "clx9k2m3n0004service",
-      name: "Standard Wash",
-      priceModel: "PER_ITEM",
-    },
-
-    status: "IN_PROGRESS",
-
-    bagCount: null,
-    weightKg: null,
-    items: [
-      {
-        id: "clx9k2m3n0005item1",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0006si1",
-        serviceItem: { id: "clx9k2m3n0006si1", name: "Shirt", price: 5.0 },
-        quantity: 3,
-        unitPriceAtOrder: 5.0,
-        notes: null,
-      },
-      {
-        id: "clx9k2m3n0007item2",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0008si2",
-        serviceItem: { id: "clx9k2m3n0008si2", name: "Trousers", price: 8.0 },
-        quantity: 2,
-        unitPriceAtOrder: 8.0,
-        notes: "Handle with care",
-      },
-      {
-        id: "clx9k2m3n0009item3",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0010si3",
-        serviceItem: { id: "clx9k2m3n0010si3", name: "Bedsheet", price: 12.0 },
-        quantity: 1,
-        unitPriceAtOrder: 12.0,
-        notes: null,
-      },
-    ],
-
-    recurringOrderId: null,
-
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: "2026-06-24T09:00:00.000Z",
-    pickedUpAt: "2026-06-24T09:20:00.000Z",
-
-    deliveryAddress: "14 Spintex Road, Accra",
-    deliveryWindow: "2026-06-25T17:00:00.000Z",
-    deliveredAt: null,
-
-    subtotal: 43.0,
-    deliveryFee: 5.0,
-    discount: 0.0,
-    total: 48.0,
-
-    transactions: [
-      {
-        id: "clx9k2m3n0011tx1",
-        orderId: "clx9k2m3n0002abc123def456",
-        amount: 48.0,
-        status: "PENDING",
-        method: "MOBILE_MONEY",
-        reference: "MM-20260624-00123",
-        failureReason: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        updatedAt: "2026-06-24T08:55:00.000Z",
-      },
-    ],
-
-    events: [
-      {
-        id: "clx9k2m3n0012ev1",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CREATED",
-        status: "PENDING",
-        notes: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0013ev2",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CONFIRMED",
-        status: "CONFIRMED",
-        notes: null,
-        createdAt: "2026-06-24T09:00:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0014ev3",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PICKED_UP",
-        status: "PICKED_UP",
-        notes: "Items collected from customer",
-        createdAt: "2026-06-24T09:20:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0015ev4",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PROCESSING_STARTED",
-        status: "IN_PROGRESS",
-        notes: null,
-        createdAt: "2026-06-24T11:00:00.000Z",
-        workedOnById: "",
-      },
-    ],
-
-    createdAt: "2026-06-24T08:55:00.000Z",
-    updatedAt: "2026-06-24T11:00:00.000Z",
-  },
-  {
-    id: "clx9k2m3n0002abc123def456",
-    orderNumber: "YL-002",
-
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    customer: {
-      id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-      firstName: "Justice",
-      lastName: "Abban",
-      email: "abbanjustice134@gmail.com",
-      phoneNumber: "0241234567",
-      profileImage: null,
-    },
-
-    assignedStaffId: "clx9k2m3n0003staff789",
-    assignedStaff: {
-      id: "clx9k2m3n0003staff789",
-      firstName: "Kwame",
-      lastName: "Mensah",
-      phoneNumber: "0551234567",
-      profileImage: null,
-    },
-
-    serviceId: "clx9k2m3n0004service",
-    service: {
-      id: "clx9k2m3n0004service",
-      name: "Standard Wash",
-      priceModel: "PER_ITEM",
-    },
-
-    status: "IN_PROGRESS",
-
-    bagCount: null,
-    weightKg: null,
-    items: [
-      {
-        id: "clx9k2m3n0005item1",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0006si1",
-        serviceItem: { id: "clx9k2m3n0006si1", name: "Shirt", price: 5.0 },
-        quantity: 3,
-        unitPriceAtOrder: 5.0,
-        notes: null,
-      },
-      {
-        id: "clx9k2m3n0007item2",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0008si2",
-        serviceItem: { id: "clx9k2m3n0008si2", name: "Trousers", price: 8.0 },
-        quantity: 2,
-        unitPriceAtOrder: 8.0,
-        notes: "Handle with care",
-      },
-      {
-        id: "clx9k2m3n0009item3",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0010si3",
-        serviceItem: { id: "clx9k2m3n0010si3", name: "Bedsheet", price: 12.0 },
-        quantity: 1,
-        unitPriceAtOrder: 12.0,
-        notes: null,
-      },
-    ],
-
-    recurringOrderId: null,
-
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: "2026-06-24T09:00:00.000Z",
-    pickedUpAt: "2026-06-24T09:20:00.000Z",
-
-    deliveryAddress: "14 Spintex Road, Accra",
-    deliveryWindow: "2026-06-25T17:00:00.000Z",
-    deliveredAt: null,
-
-    subtotal: 43.0,
-    deliveryFee: 5.0,
-    discount: 0.0,
-    total: 48.0,
-
-    transactions: [
-      {
-        id: "clx9k2m3n0011tx1",
-        orderId: "clx9k2m3n0002abc123def456",
-        amount: 48.0,
-        status: "PENDING",
-        method: "MOBILE_MONEY",
-        reference: "MM-20260624-00123",
-        failureReason: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        updatedAt: "2026-06-24T08:55:00.000Z",
-      },
-    ],
-
-    events: [
-      {
-        id: "clx9k2m3n0012ev1",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CREATED",
-        status: "PENDING",
-        notes: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0013ev2",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CONFIRMED",
-        status: "CONFIRMED",
-        notes: null,
-        createdAt: "2026-06-24T09:00:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0014ev3",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PICKED_UP",
-        status: "PICKED_UP",
-        notes: "Items collected from customer",
-        createdAt: "2026-06-24T09:20:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0015ev4",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PROCESSING_STARTED",
-        status: "IN_PROGRESS",
-        notes: null,
-        createdAt: "2026-06-24T11:00:00.000Z",
-        workedOnById: "",
-      },
-    ],
-
-    createdAt: "2026-06-24T08:55:00.000Z",
-    updatedAt: "2026-06-24T11:00:00.000Z",
-  },
-  {
-    id: "clx9k2m3n0002abc123def456",
-    orderNumber: "YL-002",
-
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    customer: {
-      id: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-      firstName: "Justice",
-      lastName: "Abban",
-      email: "abbanjustice134@gmail.com",
-      phoneNumber: "0241234567",
-      profileImage: null,
-    },
-
-    assignedStaffId: "clx9k2m3n0003staff789",
-    assignedStaff: {
-      id: "clx9k2m3n0003staff789",
-      firstName: "Kwame",
-      lastName: "Mensah",
-      phoneNumber: "0551234567",
-      profileImage: null,
-    },
-
-    serviceId: "clx9k2m3n0004service",
-    service: {
-      id: "clx9k2m3n0004service",
-      name: "Standard Wash",
-      priceModel: "PER_ITEM",
-    },
-
-    status: "IN_PROGRESS",
-
-    bagCount: null,
-    weightKg: null,
-    items: [
-      {
-        id: "clx9k2m3n0005item1",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0006si1",
-        serviceItem: { id: "clx9k2m3n0006si1", name: "Shirt", price: 5.0 },
-        quantity: 3,
-        unitPriceAtOrder: 5.0,
-        notes: null,
-      },
-      {
-        id: "clx9k2m3n0007item2",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0008si2",
-        serviceItem: { id: "clx9k2m3n0008si2", name: "Trousers", price: 8.0 },
-        quantity: 2,
-        unitPriceAtOrder: 8.0,
-        notes: "Handle with care",
-      },
-      {
-        id: "clx9k2m3n0009item3",
-        orderId: "clx9k2m3n0002abc123def456",
-        serviceItemId: "clx9k2m3n0010si3",
-        serviceItem: { id: "clx9k2m3n0010si3", name: "Bedsheet", price: 12.0 },
-        quantity: 1,
-        unitPriceAtOrder: 12.0,
-        notes: null,
-      },
-    ],
-
-    recurringOrderId: null,
-
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: "2026-06-24T09:00:00.000Z",
-    pickedUpAt: "2026-06-24T09:20:00.000Z",
-
-    deliveryAddress: "14 Spintex Road, Accra",
-    deliveryWindow: "2026-06-25T17:00:00.000Z",
-    deliveredAt: null,
-
-    subtotal: 43.0,
-    deliveryFee: 5.0,
-    discount: 0.0,
-    total: 48.0,
-
-    transactions: [
-      {
-        id: "clx9k2m3n0011tx1",
-        orderId: "clx9k2m3n0002abc123def456",
-        amount: 48.0,
-        status: "PENDING",
-        method: "MOBILE_MONEY",
-        reference: "MM-20260624-00123",
-        failureReason: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        updatedAt: "2026-06-24T08:55:00.000Z",
-      },
-    ],
-
-    events: [
-      {
-        id: "clx9k2m3n0012ev1",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CREATED",
-        status: "PENDING",
-        notes: null,
-        createdAt: "2026-06-24T08:55:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0013ev2",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "CONFIRMED",
-        status: "CONFIRMED",
-        notes: null,
-        createdAt: "2026-06-24T09:00:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0014ev3",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PICKED_UP",
-        status: "PICKED_UP",
-        notes: "Items collected from customer",
-        createdAt: "2026-06-24T09:20:00.000Z",
-        workedOnById: "",
-      },
-      {
-        id: "clx9k2m3n0015ev4",
-        orderId: "clx9k2m3n0002abc123def456",
-        eventType: "PROCESSING_STARTED",
-        status: "IN_PROGRESS",
-        notes: null,
-        createdAt: "2026-06-24T11:00:00.000Z",
-        workedOnById: "",
-      },
-    ],
-
-    createdAt: "2026-06-24T08:55:00.000Z",
-    updatedAt: "2026-06-24T11:00:00.000Z",
-  },
-];
-
-const mockDrafts: OrderDraft[] = [
-  {
-    id: "draft_001",
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    serviceId: "clx9k2m3n0004service",
-    bagCount: 2,
-    weightKg: null,
-    items: null,
-    pickupAddress: "14 Spintex Road, Accra",
-    pickupWindow: null,
-    deliveryAddress: null,
-    deliveryWindow: null,
-    currentStep: "2",
-    createdAt: "2026-06-23T10:00:00.000Z",
-    updatedAt: "2026-06-23T10:45:00.000Z",
-  },
-  {
-    id: "draft_002",
-    customerId: "d179a4cc-b611-4793-a065-bb2fadc12e4d",
-    serviceId: "clx9k2m3n0005service",
-    bagCount: null,
-    weightKg: null,
-    items: {
-      clx9k2m3n0006si1: { name: "Shirt", quantity: 3, unitPrice: 5.0 },
-      clx9k2m3n0008si2: { name: "Trousers", quantity: 2, unitPrice: 8.0 },
-    },
-    pickupAddress: "East Legon, Accra",
-    pickupWindow: "2026-06-25T09:00:00.000Z",
-    deliveryAddress: null,
-    deliveryWindow: null,
-    currentStep: "3",
-    createdAt: "2026-06-22T08:00:00.000Z",
-    updatedAt: "2026-06-24T07:30:00.000Z",
-  },
-];
-
-export const SERVICES: Service[] = [
-  {
-    id: "svc_stain_removal",
-    title: "Stain Removal",
-    description:
-      "Professional treatment for tough stains — oil, wine, ink, and more. Each item is assessed and treated individually before washing.",
-    contextDescription: "Tough stains removed with expert care.",
-    coverImage: "/images/services/stain-removal.jpg",
-    turnaroundTime: "2 days",
-    basePrice: 25,
-    priceModel: "PER_ITEM",
-    isActive: true,
-    icon: "stain-removal",
-  },
-  {
-    id: "svc_dry_cleaning",
-    title: "Dry Cleaning",
-    description:
-      "Solvent-based cleaning for delicate fabrics — suits, dresses, silk, and wool that can't be machine washed.",
-    contextDescription: "Premium care for delicate garments.",
-    coverImage: "/images/services/dry-cleaning.jpg",
-    turnaroundTime: "3 days",
-    basePrice: 55,
-    priceModel: "PER_ITEM",
-    isActive: true,
-    icon: "dry-cleaning",
-  },
-  {
-    id: "svc_ironing",
-    title: "Ironing / Pressing",
-    description:
-      "Crisp, wrinkle-free results for everyday wear and formal items. Garments are steamed and pressed to a professional finish.",
-    contextDescription: "Perfectly pressed and wrinkle-free.",
-    coverImage: "/images/services/ironing.jpg",
-    turnaroundTime: "Next day",
-    basePrice: 15,
-    priceModel: "PER_ITEM",
-    isActive: true,
-    icon: "ironing",
-  },
-  {
-    id: "svc_personal_laundry",
-    title: "Personal Laundry",
-    description:
-      "Wash, dry, and fold service for everyday clothing. Sorted by colour, washed at the right temperature, and neatly folded.",
-    contextDescription: "Fresh, clean clothes without the hassle.",
-    coverImage: "/images/services/personal-laundry.jpg",
-    turnaroundTime: "Next day",
-    basePrice: 8,
-    priceModel: "BY_WEIGHT",
-    isActive: true,
-    icon: "personal-laundry",
-  },
-  {
-    id: "svc_commercial_laundry",
-    title: "Commercial Laundry",
-    description:
-      "Bulk laundry for businesses — hotels, restaurants, salons, and offices. High-volume washing with consistent quality and fast turnaround.",
-    contextDescription: "Reliable laundry solutions for businesses.",
-    coverImage: "/images/services/commercial-laundry.jpg",
-    turnaroundTime: "2 days",
-    basePrice: 120,
-    priceModel: "PER_BAG",
-    isActive: true,
-    icon: "commercial-laundry",
-  },
-  {
-    id: "svc_stain_removal",
-    title: "Stain Removal",
-    description:
-      "Professional treatment for tough stains — oil, wine, ink, and more. Each item is assessed and treated individually before washing.",
-    contextDescription: "Tough stains removed with expert care.",
-    coverImage: "/images/services/stain-removal.jpg",
-    turnaroundTime: "2 days",
-    basePrice: 25,
-    priceModel: "PER_ITEM",
-    isActive: true,
-    icon: "stain-removal",
-  },
-];
+import { useRouter } from "next/navigation";
+import useWindow from "@/hooks/useWindow";
+import { BottomSheet, AddressInput } from "@/components/components";
+import { X } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useGeolocation } from "@/hooks/useGeolocation";
+import { useServices } from "@/hooks/useServices";
+import { ManualLocationPayload } from "@/lib/api/type/auth.type";
+import { useToast } from "@/context/ToastContext";
+import { SERVICES } from "../../../../data/objects/services";
+import { ORDERS, ORDER_DRAFTS } from "../../../../data/objects/order";
+import {
+  useCreateDraftOrder,
+  useDraftOrders,
+  useUpdateOrderDraft,
+} from "@/hooks/useDraftOrders";
+import useOrders from "@/hooks/useOrders";
 
 export const PROMOTIONS: Promotion[] = [
   {
@@ -883,47 +102,151 @@ export const PROMOTIONS: Promotion[] = [
 ];
 
 export default function CustomerHomePage() {
-  const [pickupAddress, setPickupAddress] = useState("East legon, Accra");
-  const [services, setServices] = useState<Service[]>(SERVICES);
+  const [draftAddress, setDraftAddress] = useState<ManualLocationPayload>({
+    label: "",
+    isDefault: true,
+    address: "",
+  });
+
   const [promotions, setPromotions] = useState<Promotion[]>(PROMOTIONS);
-  const [recentOrders, setRecentOrders] = useState<OrderDraft[]>([]);
-  const [draftOrders, setDraftOrders] = useState<OrderDraft[]>(mockDrafts);
-  const [howItworks, setHowItWorks] = useState();
   const [loyaltyPoints, setLoyaltyPoints] = useState();
   const [referralPoints, setReferralPoints] = useState();
-  const { orders, isOrdersLoading } = useOrderContext();
 
-  const { panel, onPanelSelect } = usePanel();
+  const [openSheet, setOpenSheet] = useState(false);
+  const [isSubmittingAddress, setIsSubmittingAddress] = useState(false);
+
+  const { isMobile } = useWindow();
+  const { user, refetchUser, isUserLoading } = useAuth();
+  const { submitDefaultLocation, error, requestLocation, result, status } =
+    useGeolocation();
+
+  const { mutate: updateDraftOrder } = useUpdateOrderDraft();
+  const { mutate: createDraftOrder } = useCreateDraftOrder();
+  const { orderData, isOrdersLoading } = useOrderContext();
+  const {
+    data: draftOrderData,
+    isLoading: isDraftOrderLoading,
+    isError: draftOrderError,
+  } = useDraftOrders();
+  const router = useRouter();
+  const { data: servicesData, isError, isLoading } = useServices();
+  const { showToast } = useToast();
+  const { panel, onPanelSelect, openPanel } = usePanel();
+
+  const services =
+    servicesData?.data ??
+    (process.env.NODE_ENV === "development" ? SERVICES : []);
+
+  const orders =
+    orderData ?? (process.env.NODE_ENV === "development" ? ORDERS : []);
+
+  const draftOrders =
+    draftOrderData?.data ??
+    (process.env.NODE_ENV === "development" ? ORDER_DRAFTS : []);
+
+  const closeSheet = useCallback(() => {
+    setOpenSheet(false);
+  }, []);
+
+  useEffect(() => {
+    console.log("the orders fetched are ", orderData);
+  }, [orderData]);
+
+  const pickupAddress = useMemo(() => {
+    const addresses = user?.address;
+    if (!addresses || addresses.length === 0) return null;
+
+    const defaultAddress = addresses.find((a) => a.isDefault);
+    return defaultAddress?.address ?? addresses[0].address;
+  }, [user]);
+
+  useEffect(() => {
+    if (
+      !isUserLoading &&
+      user &&
+      (!user.address || user.address.length === 0)
+    ) {
+      requestLocation();
+    }
+  }, [isUserLoading, user]);
+
+  useEffect(() => {
+    if (status === "success" && result?.address) {
+      setDraftAddress((prev) => ({
+        ...prev,
+        address: result.address ?? prev.address,
+      }));
+    }
+  }, [status, result]);
+
+  const handleAddAddress = async () => {
+    if (!draftAddress.address.trim()) return;
+
+    setIsSubmittingAddress(true);
+    try {
+      const res = await submitDefaultLocation({
+        ...draftAddress,
+        address: draftAddress.address.trim(),
+      });
+
+      refetchUser();
+      showToast("Address added successfully", "success", 2000);
+      closeSheet();
+
+      setDraftAddress({ label: "", isDefault: true, address: "" });
+    } catch (err) {
+      showToast("Failed to save pickup address", "error", 300);
+    } finally {
+      setIsSubmittingAddress(false);
+    }
+  };
 
   return (
     <div className="pb-30">
       <div className="bg-brand/90 px-3">
-        <div className=" pt-5 pb-16 md:max-w-6xl  mx-3 md:mx-auto ">
-          <div className=" text-white flex flex-row justify-between">
-            <div className="flex flex-row py-1 items-center gap-2 bg-brand/50 px-2 rounded-full">
+        <div className=" pt-5 pb-16 md:max-w-3xl  mx-auto md:mx-auto ">
+          <div className=" text-white flex flex-row justify-between ">
+            <div
+              onClick={() => {
+                setOpenSheet(true);
+              }}
+              className="flex flex-row py-1 items-center gap-2 bg-brand/50 px-2 rounded-full"
+            >
               <Icon name={"MapPin"} />
 
               <div className="flex flex-col gap-0">
                 <span className="text-xs text-white/80">Pickup from</span>
-                <span className="font-semibold text-sm">{pickupAddress}</span>
+                <span className="font-semibold text-sm">
+                  {pickupAddress ?? "Not set"}
+                </span>
               </div>
 
               <Icon name="ChevronDown" size={18} />
             </div>
-
-            <div className="flex flex-row items-center gap-8 pr-2">
+            <div className="flex flex-row items-center gap-4 pr-2">
               <motion.button
-                className=""
+                whileHover={{ backgroundColor: "#0561bd", scale: 1.04 }}
+                className={`cursor-pointer p-2 rounded-full  ${panel === "messages" ? "bg-[#0876e4]" : "bg-transparent"} `}
                 onClick={() => {
-                  onPanelSelect("messages");
+                  if (!isMobile) {
+                    onPanelSelect("messages");
+                  } else {
+                    router.push("/messages");
+                  }
                 }}
               >
                 <Icon name="MessageCircle" />
               </motion.button>
               <motion.button
+                whileHover={{ backgroundColor: "#0561bd", scale: 1.04 }}
                 onClick={() => {
-                  onPanelSelect("notifications");
+                  if (!isMobile) {
+                    onPanelSelect("notifications");
+                  } else {
+                    router.push("/notifications");
+                  }
                 }}
+                className={`cursor-pointer p-2 rounded-full ${panel === "notifications" && "bg-[#0876e4]"}`}
               >
                 <Icon name="Bell" />
               </motion.button>
@@ -932,8 +255,16 @@ export default function CustomerHomePage() {
         </div>
       </div>
 
-      <div className="mt-[-26]">
-        <div className="flex flex-row bg-background md:max-w-4xl xl:max-w-6xl md:mx-5  mx-3 xl:mx-auto justify-between px-4 py-3 border border-paragraph/40 shadow-sm rounded-2xl">
+      <motion.div
+        whileTap={{ scale: 1.04 }}
+        className="mt-[-26]"
+        onClick={() => {
+          router.push("/select-service");
+        }}
+      >
+        <div
+          className={`flex flex-row bg-background md:max-w-3xl md:mx-auto xl:max-w-6xl   mx-3 xl:mx-auto justify-between px-4 py-3 border border-paragraph/40 shadow-sm rounded-2xl ${openPanel ? "mx-6" : "md:mx-auto"}`}
+        >
           <div className="flex flex-row gap-3 items-center">
             <div className="bg-brand/10 flex items-center px-3 py-3 rounded-3xl">
               <Icon name="ShoppingBag" className="" color="#004a94" />
@@ -953,13 +284,13 @@ export default function CustomerHomePage() {
             <Icon name="ChevronRight" size={20} color="#666" />
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* content */}
-      <div className="max-w-6xl mx-auto py-5">
-        {mockOrder.length > 0 && (
+      <div className="max-w-4xl mx-auto md:mx-5 py-5">
+        {(orders?.length ?? 0) > 0 && (
           <div>
-            <LiveOrderPreview orders={mockOrder} />
+            <LiveOrderPreview orders={orders as Order[]} />
           </div>
         )}
 
@@ -983,6 +314,58 @@ export default function CustomerHomePage() {
           <ReferralCard />
         </div>
       </div>
+
+      <BottomSheet open={openSheet} onClose={closeSheet} height="90%">
+        <div className="flex flex-col p-5 h-full w-full relative">
+          <div className="flex items-end justify-end pb-4" onClick={closeSheet}>
+            <X size={20} />
+          </div>
+
+          <div>
+            <h2 className="text-[20px] font-medium">Add pickup address</h2>
+            <p className="text-[14px] text-paragraph/80 py-2 mb-5">
+              This address will be your default pickup address. You can update
+              it anytime.
+            </p>
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="text"
+              value={draftAddress.label}
+              onChange={(e) =>
+                setDraftAddress((prev) => ({ ...prev, label: e.target.value }))
+              }
+              placeholder="Label (e.g. Home, Work)"
+              className="rounded-lg border border-paragraph/10 bg-[#FBFAF7] px-4 py-2.5 text-[13.5px] w-full outline-none focus:border-brand"
+            />
+          </div>
+
+          <AddressInput
+            onChangeValue={(value) => {
+              setDraftAddress((prev) => ({ ...prev, address: value }));
+            }}
+          />
+
+          {status === "denied" && (
+            <p className="text-[12.5px] text-[#8a92a0] mt-2">
+              Location access was denied — you can still enter your address
+              manually above.
+            </p>
+          )}
+          {error && status === "error" && (
+            <p className="text-[12.5px] text-red-600 mt-2">{error}</p>
+          )}
+
+          <button
+            onClick={handleAddAddress}
+            disabled={isSubmittingAddress || !draftAddress.address.trim()}
+            className="bg-brand font-medium flex items-center text-center bottom-10 text-white w-[90%] absolute rounded-full py-3 px-3 justify-center self-center disabled:opacity-60"
+          >
+            {isSubmittingAddress ? "Saving..." : "Add address"}
+          </button>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

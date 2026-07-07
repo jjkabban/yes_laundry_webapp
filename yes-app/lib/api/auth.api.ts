@@ -7,9 +7,11 @@ import {
   RegisterResponse,
   VerifyUserPayload,
   VerifyUserResponse,
+  ManualLocationPayload,
+  UserLocationPayload,
 } from "./type/auth.type";
 import { ApiResponse } from "./type/response.api";
-import { User } from "@/context/types/auth";
+import { User } from "@/types/shared/user.type";
 
 export const loginUser = async (
   userData: LoginPayload,
@@ -37,8 +39,21 @@ export const verifyUser = async (
     ...data,
   });
 
-export const logoutUser = async (id: string) =>
-  api.post<Promise<ApiResponse<null>>>("/auth/logout", { id });
+export const logoutUser = async () =>
+  api.post<Promise<ApiResponse<null>>>("/auth/logout");
 
 export const resendOtp = async (id: string) =>
   api.post<Promise<ApiResponse<null>>>("/auth/resend-otp", { id });
+
+export const getLocation = async (
+  url: string,
+): Promise<ApiResponse<UserLocationPayload>> =>
+  api.get<Promise<ApiResponse<UserLocationPayload>>>(url);
+
+export const setManualLocation = async (data: ManualLocationPayload) =>
+  api.post<Promise<ApiResponse<null>>>("/auth/location", {
+    ...data,
+  });
+
+export const getMe = async () =>
+  api.get<Promise<ApiResponse<User>>>("/auth/me");

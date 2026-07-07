@@ -1,0 +1,26 @@
+enum LocationSource {
+  GPS
+  IP
+  MANUAL
+}
+
+model Location {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  label        String?
+  address      String
+  city         String?
+  neighborhood String?
+
+  isDefault Boolean        @default(false)
+  source    LocationSource @default(MANUAL)
+  longitude Float?
+  latitude  Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}

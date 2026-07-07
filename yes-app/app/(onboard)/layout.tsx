@@ -1,5 +1,5 @@
 import React from "react";
-import { TopNavbar } from "@/components/navigation";
+import { Footer, TopNavbar } from "@/components/navigation";
 
 export default function HomeLayout({
   children,
@@ -7,9 +7,10 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-background">
+    <div className="bg-background overflow-hidden w-full">
       <TopNavbar />
       {children}
+      <Footer />
     </div>
   );
 }

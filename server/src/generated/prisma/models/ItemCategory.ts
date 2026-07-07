@@ -427,30 +427,6 @@ export type ItemCategoryScalarRelationFilter = {
   isNot?: Prisma.ItemCategoryWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type ItemCategoryCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.ItemCategoryCreateWithoutItemsInput, Prisma.ItemCategoryUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.ItemCategoryCreateOrConnectWithoutItemsInput

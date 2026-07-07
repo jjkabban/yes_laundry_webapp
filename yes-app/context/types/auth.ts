@@ -3,18 +3,7 @@ import {
   RegisterPayload,
   VerifyUserPayload,
 } from "@/lib/api/type/auth.type";
-
-export type Roles = "CUSTOMER" | "ADMIN" | "STAFF";
-
-export type User = {
-  firstName: string;
-  lastName: string;
-  role: Roles;
-  id: string;
-  email: string;
-  phoneNumber: string;
-  profileImage: string;
-};
+import { User } from "@/types/shared/user.type";
 
 export type AuthContextType = {
   login: (userData: LoginPayload) => Promise<User | undefined>;
@@ -22,4 +11,6 @@ export type AuthContextType = {
   verify: (data: VerifyUserPayload) => Promise<User | undefined>;
   logout: () => void;
   user: User | null;
+  refetchUser: () => void;
+  isUserLoading: boolean;
 };

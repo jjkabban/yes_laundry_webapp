@@ -13,7 +13,7 @@ export const globalError = (
     success: false,
     data: null,
     error: [
-      { field: "system", message: "Something went wron. Try again later" },
+      { field: "system", message: "Something went wrong. Try again later" },
     ],
   });
 };

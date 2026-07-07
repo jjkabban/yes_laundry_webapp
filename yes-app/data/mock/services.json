@@ -1,0 +1,585 @@
+[
+  {
+    "id": "svc_stain_removal",
+    "title": "Stain Removal",
+    "description": "Professional treatment for tough stains — oil, wine, ink, and more. Each item is assessed and treated individually before washing.",
+    "contextDescription": "Tough stains removed with expert care.",
+    "coverImage": "/images/services/stain-removal.jpg",
+    "turnaroundTime": "2 days",
+    "basePrice": 25,
+    "priceModel": "PER_ITEM",
+    "isActive": true,
+    "icon": "stain-removal",
+    "media": [],
+    "items": [
+      {
+        "categoryName": "Clothing",
+        "items": [
+          {
+            "id": "shirt",
+            "name": "Shirt",
+            "image": "/images/items/shirt.png",
+            "unitPrice": 15,
+            "extraInfo": "Cotton and formal shirts"
+          },
+          {
+            "id": "tshirt",
+            "name": "T-Shirt",
+            "image": "/images/items/tshirt.png",
+            "unitPrice": 12,
+            "extraInfo": "Casual short and long sleeve"
+          },
+          {
+            "id": "dress",
+            "name": "Dress",
+            "image": "/images/items/dress.png",
+            "unitPrice": 25,
+            "extraInfo": "Casual and occasion dresses"
+          },
+          {
+            "id": "jeans",
+            "name": "Jeans",
+            "image": "/images/items/jeans.png",
+            "unitPrice": 20,
+            "extraInfo": "Denim jeans of all sizes"
+          },
+          {
+            "id": "trousers",
+            "name": "Trousers",
+            "image": "/images/items/trousers.png",
+            "unitPrice": 18,
+            "extraInfo": "Formal and casual trousers"
+          }
+        ]
+      },
+      {
+        "categoryName": "Formal Wear",
+        "items": [
+          {
+            "id": "suit",
+            "name": "Suit",
+            "image": "/images/items/suit.png",
+            "unitPrice": 60,
+            "extraInfo": "Two-piece and three-piece suits"
+          },
+          {
+            "id": "blazer",
+            "name": "Blazer",
+            "image": "/images/items/blazer.png",
+            "unitPrice": 40,
+            "extraInfo": "Formal and casual blazers"
+          }
+        ]
+      },
+      {
+        "categoryName": "Bedding",
+        "items": [
+          {
+            "id": "bedsheet",
+            "name": "Bedsheet",
+            "image": "/images/items/bedsheet.png",
+            "unitPrice": 30,
+            "extraInfo": "Single, double and king-size sheets"
+          },
+          {
+            "id": "duvet",
+            "name": "Duvet",
+            "image": "/images/items/duvet.png",
+            "unitPrice": 80,
+            "extraInfo": "Duvets and comforters"
+          },
+          {
+            "id": "blanket",
+            "name": "Blanket",
+            "image": "/images/items/blanket.png",
+            "unitPrice": 70,
+            "extraInfo": "Light and heavy blankets"
+          }
+        ]
+      }
+    ],
+    "addOns": [
+      {
+        "id": "express-service",
+        "name": "Express Service",
+        "description": "Priority cleaning with faster turnaround.",
+        "price": 20
+      },
+      {
+        "id": "stain-treatment",
+        "name": "Stain Treatment",
+        "description": "Extra attention for stubborn stains.",
+        "price": 15
+      },
+      {
+        "id": "garment-protection",
+        "name": "Garment Protection",
+        "description": "Protective packaging for delicate clothing.",
+        "price": 10
+      }
+    ],
+    "availability": {
+      "id": "avail_stain_removal",
+      "windowDays": 90,
+      "blockedDays": [0],
+      "blockedDates": ["2026-12-25", "2026-12-26", "2027-01-01"]
+    },
+    "timeSlots": [
+      {
+        "id": "slot_morning_1",
+        "name": "MORNING",
+        "startTime": "08:00",
+        "endTime": "12:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_afternoon_1",
+        "name": "AFTERNOON",
+        "startTime": "12:00",
+        "endTime": "16:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_evening_1",
+        "name": "EVENING",
+        "startTime": "16:00",
+        "endTime": "19:00",
+        "isOverriden": false
+      }
+    ]
+  },
+  {
+    "id": "svc_dry_cleaning",
+    "title": "Dry Cleaning",
+    "description": "Solvent-based cleaning for delicate fabrics — suits, dresses, silk, and wool that can't be machine washed.",
+    "contextDescription": "Premium care for delicate garments.",
+    "coverImage": "/images/services/dry-cleaning.jpg",
+    "turnaroundTime": "3 days",
+    "basePrice": 55,
+    "priceModel": "PER_ITEM",
+    "isActive": true,
+    "icon": "dry-cleaning",
+    "media": [],
+    "items": [
+      {
+        "categoryName": "Formal Wear",
+        "items": [
+          {
+            "id": "suit",
+            "name": "Suit",
+            "image": "/images/items/suit.png",
+            "unitPrice": 60,
+            "extraInfo": "Two-piece and three-piece suits"
+          },
+          {
+            "id": "blazer",
+            "name": "Blazer",
+            "image": "/images/items/blazer.png",
+            "unitPrice": 40,
+            "extraInfo": "Formal and casual blazers"
+          },
+          {
+            "id": "tie",
+            "name": "Tie",
+            "image": "/images/items/tie.png",
+            "unitPrice": 10,
+            "extraInfo": "Neckties and bow ties"
+          }
+        ]
+      },
+      {
+        "categoryName": "Clothing",
+        "items": [
+          {
+            "id": "dress",
+            "name": "Dress",
+            "image": "/images/items/dress.png",
+            "unitPrice": 25,
+            "extraInfo": "Casual and occasion dresses"
+          },
+          {
+            "id": "skirt",
+            "name": "Skirt",
+            "image": "/images/items/skirt.png",
+            "unitPrice": 18,
+            "extraInfo": "Short and long skirts"
+          },
+          {
+            "id": "shirt",
+            "name": "Shirt",
+            "image": "/images/items/shirt.png",
+            "unitPrice": 15,
+            "extraInfo": "Cotton and formal shirts"
+          }
+        ]
+      }
+    ],
+    "addOns": [
+      {
+        "id": "express-service",
+        "name": "Express Service",
+        "description": "Priority cleaning with faster turnaround.",
+        "price": 30
+      },
+      {
+        "id": "garment-protection",
+        "name": "Garment Protection",
+        "description": "Protective packaging for delicate clothing.",
+        "price": 10
+      },
+      {
+        "id": "stain-treatment",
+        "name": "Stain Treatment",
+        "description": "Extra attention for stubborn stains.",
+        "price": 15
+      },
+      {
+        "id": "premium-detergent",
+        "name": "Premium Detergent",
+        "description": "Suitable for delicate fabrics and sensitive skin.",
+        "price": 10
+      }
+    ],
+    "availability": {
+      "id": "avail_dry_cleaning",
+      "windowDays": 90,
+      "blockedDays": [0],
+      "blockedDates": ["2026-12-25", "2026-12-26", "2027-01-01"]
+    },
+    "timeSlots": [
+      {
+        "id": "slot_morning_2",
+        "name": "MORNING",
+        "startTime": "08:00",
+        "endTime": "12:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_afternoon_2",
+        "name": "AFTERNOON",
+        "startTime": "12:00",
+        "endTime": "16:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_evening_2",
+        "name": "EVENING",
+        "startTime": "16:00",
+        "endTime": "19:00",
+        "isOverriden": false
+      }
+    ]
+  },
+  {
+    "id": "svc_ironing",
+    "title": "Ironing / Pressing",
+    "description": "Crisp, wrinkle-free results for everyday wear and formal items. Garments are steamed and pressed to a professional finish.",
+    "contextDescription": "Perfectly pressed and wrinkle-free.",
+    "coverImage": "/images/services/ironing.jpg",
+    "turnaroundTime": "Next day",
+    "basePrice": 15,
+    "priceModel": "PER_ITEM",
+    "isActive": true,
+    "icon": "ironing",
+    "media": [],
+    "items": [
+      {
+        "categoryName": "Clothing",
+        "items": [
+          {
+            "id": "shirt",
+            "name": "Shirt",
+            "image": "/images/items/shirt.png",
+            "unitPrice": 15,
+            "extraInfo": "Cotton and formal shirts"
+          },
+          {
+            "id": "tshirt",
+            "name": "T-Shirt",
+            "image": "/images/items/tshirt.png",
+            "unitPrice": 12,
+            "extraInfo": "Casual short and long sleeve"
+          },
+          {
+            "id": "trousers",
+            "name": "Trousers",
+            "image": "/images/items/trousers.png",
+            "unitPrice": 18,
+            "extraInfo": "Formal and casual trousers"
+          },
+          {
+            "id": "dress",
+            "name": "Dress",
+            "image": "/images/items/dress.png",
+            "unitPrice": 25,
+            "extraInfo": "Casual and occasion dresses"
+          },
+          {
+            "id": "skirt",
+            "name": "Skirt",
+            "image": "/images/items/skirt.png",
+            "unitPrice": 18,
+            "extraInfo": "Short and long skirts"
+          },
+          {
+            "id": "shorts",
+            "name": "Shorts",
+            "image": "/images/items/shorts.png",
+            "unitPrice": 12,
+            "extraInfo": "Cotton and denim shorts"
+          },
+          {
+            "id": "hoodie",
+            "name": "Hoodie",
+            "image": "/images/items/hoodie.png",
+            "unitPrice": 25,
+            "extraInfo": "Hoodies and sweatshirts"
+          }
+        ]
+      },
+      {
+        "categoryName": "Formal Wear",
+        "items": [
+          {
+            "id": "suit",
+            "name": "Suit",
+            "image": "/images/items/suit.png",
+            "unitPrice": 60,
+            "extraInfo": "Two-piece and three-piece suits"
+          },
+          {
+            "id": "blazer",
+            "name": "Blazer",
+            "image": "/images/items/blazer.png",
+            "unitPrice": 40,
+            "extraInfo": "Formal and casual blazers"
+          }
+        ]
+      },
+      {
+        "categoryName": "Home",
+        "items": [
+          {
+            "id": "curtain",
+            "name": "Curtain",
+            "image": "/images/items/curtain.png",
+            "unitPrice": 35,
+            "extraInfo": "Priced per curtain panel"
+          },
+          {
+            "id": "towel",
+            "name": "Towel",
+            "image": "/images/items/towel.png",
+            "unitPrice": 12,
+            "extraInfo": "Bath, hand and face towels"
+          }
+        ]
+      }
+    ],
+    "addOns": [
+      {
+        "id": "express-service",
+        "name": "Express Service",
+        "description": "Priority cleaning with faster turnaround.",
+        "price": 10
+      },
+      {
+        "id": "extra-starch",
+        "name": "Extra Starch",
+        "description": "Provides a crisp finish for shirts and uniforms.",
+        "price": 5
+      },
+      {
+        "id": "hand-ironing",
+        "name": "Hand Ironing",
+        "description": "Carefully ironed by hand for a premium finish.",
+        "price": 12
+      },
+      {
+        "id": "perfume-finish",
+        "name": "Perfume Finish",
+        "description": "Adds a long-lasting fresh fragrance.",
+        "price": 8
+      }
+    ],
+    "availability": {
+      "id": "avail_ironing",
+      "windowDays": 90,
+      "blockedDays": [0],
+      "blockedDates": ["2026-12-25", "2026-12-26", "2027-01-01"]
+    },
+    "timeSlots": [
+      {
+        "id": "slot_morning_3",
+        "name": "MORNING",
+        "startTime": "08:00",
+        "endTime": "12:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_afternoon_3",
+        "name": "AFTERNOON",
+        "startTime": "12:00",
+        "endTime": "16:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_evening_3",
+        "name": "EVENING",
+        "startTime": "16:00",
+        "endTime": "19:00",
+        "isOverriden": false
+      }
+    ]
+  },
+  {
+    "id": "svc_personal_laundry",
+    "title": "Personal Laundry",
+    "description": "Wash, dry, and fold service for everyday clothing. Sorted by colour, washed at the right temperature, and neatly folded.",
+    "contextDescription": "Fresh, clean clothes without the hassle.",
+    "coverImage": "/images/services/personal-laundry.jpg",
+    "turnaroundTime": "Next day",
+    "basePrice": 8,
+    "priceModel": "BY_WEIGHT",
+    "isActive": true,
+    "icon": "personal-laundry",
+    "media": [],
+    "items": [],
+    "addOns": [
+      {
+        "id": "fabric-softener",
+        "name": "Fabric Softener",
+        "description": "Leaves clothes softer and fresher.",
+        "price": 8
+      },
+      {
+        "id": "premium-detergent",
+        "name": "Premium Detergent",
+        "description": "Suitable for delicate fabrics and sensitive skin.",
+        "price": 10
+      },
+      {
+        "id": "perfume-finish",
+        "name": "Perfume Finish",
+        "description": "Adds a long-lasting fresh fragrance.",
+        "price": 8
+      },
+      {
+        "id": "express-service",
+        "name": "Express Service",
+        "description": "Priority cleaning with faster turnaround.",
+        "price": 20
+      },
+      {
+        "id": "hand-ironing",
+        "name": "Hand Ironing",
+        "description": "Carefully ironed by hand for a premium finish.",
+        "price": 12
+      }
+    ],
+    "availability": {
+      "id": "avail_personal_laundry",
+      "windowDays": 90,
+      "blockedDays": [0],
+      "blockedDates": ["2026-12-25", "2026-12-26", "2027-01-01"]
+    },
+    "timeSlots": [
+      {
+        "id": "slot_morning_4",
+        "name": "MORNING",
+        "startTime": "08:00",
+        "endTime": "12:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_afternoon_4",
+        "name": "AFTERNOON",
+        "startTime": "12:00",
+        "endTime": "16:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_evening_4",
+        "name": "EVENING",
+        "startTime": "16:00",
+        "endTime": "19:00",
+        "isOverriden": false
+      }
+    ]
+  },
+  {
+    "id": "svc_commercial_laundry",
+    "title": "Commercial Laundry",
+    "description": "Bulk laundry for businesses — hotels, restaurants, salons, and offices. High-volume washing with consistent quality and fast turnaround.",
+    "contextDescription": "Reliable laundry solutions for businesses.",
+    "coverImage": "/images/services/commercial-laundry.jpg",
+    "turnaroundTime": "2 days",
+    "basePrice": 120,
+    "priceModel": "PER_BAG",
+    "isActive": true,
+    "icon": "commercial-laundry",
+    "media": [],
+    "items": [],
+    "addOns": [
+      {
+        "id": "express-service",
+        "name": "Express Service",
+        "description": "Priority cleaning with faster turnaround.",
+        "price": 40
+      },
+      {
+        "id": "fabric-softener",
+        "name": "Fabric Softener",
+        "description": "Leaves clothes softer and fresher.",
+        "price": 8
+      },
+      {
+        "id": "premium-detergent",
+        "name": "Premium Detergent",
+        "description": "Suitable for delicate fabrics and sensitive skin.",
+        "price": 10
+      },
+      {
+        "id": "garment-protection",
+        "name": "Garment Protection",
+        "description": "Protective packaging for delicate clothing.",
+        "price": 10
+      },
+      {
+        "id": "perfume-finish",
+        "name": "Perfume Finish",
+        "description": "Adds a long-lasting fresh fragrance.",
+        "price": 8
+      }
+    ],
+    "availability": {
+      "id": "avail_commercial_laundry",
+      "windowDays": 180,
+      "blockedDays": [0],
+      "blockedDates": ["2026-12-25", "2026-12-26", "2027-01-01"]
+    },
+    "timeSlots": [
+      {
+        "id": "slot_morning_5",
+        "name": "MORNING",
+        "startTime": "07:00",
+        "endTime": "11:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_afternoon_5",
+        "name": "AFTERNOON",
+        "startTime": "11:00",
+        "endTime": "15:00",
+        "isOverriden": false
+      },
+      {
+        "id": "slot_evening_5",
+        "name": "EVENING",
+        "startTime": "15:00",
+        "endTime": "18:00",
+        "isOverriden": false
+      }
+    ]
+  }
+]

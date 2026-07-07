@@ -1,72 +1,82 @@
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSocket } from "@/context/SocketContext";
-import { useToast } from "@/context/ToastContext";
-import { Order } from "@/context/types/order";
 import { getUserOrders } from "@/lib/api/order.api";
 import {
   NewOrderPayload,
   OrderStatusChangedPayload,
 } from "@/lib/api/type/order.type";
-import { useEffect, useState } from "react";
+import { Order } from "@/types/shared/order.type";
+
+const ORDERS_KEY = ["orders"];
+const ACTIVE_STATUSES: Order["status"][] = [
+  "PENDING",
+  "CONFIRMED",
+  "PICKED_UP",
+  "IN_PROGRESS",
+  "READY",
+  "OUT_FOR_DELIVERY",
+];
+
+async function fetchOrders(): Promise<Order[]> {
+  const res = await getUserOrders();
+  if (!res.success || !res.data) throw new Error("Failed to load orders");
+  return res.data;
+}
 
 export default function useOrders() {
-  const [orders, setOrders] = useState<Order[] | null>(null);
-  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+  const queryClient = useQueryClient();
   const { socket } = useSocket();
-  const { showToast } = useToast();
 
-  const fetchOrders = async (isBackground = false) => {
-    try {
-      if (!isBackground) setIsOrdersLoading(true);
-      const res = await getUserOrders();
-      if (res.success && res.data) {
-        setOrders(res.data);
-        setError(null);
-      }
-    } catch (err) {
-      if (!isBackground) {
-        setError("Failed to load orders");
-      } else {
-        showToast("Couldn't refresh orders", "warning");
-      }
-    } finally {
-      if (!isBackground) setIsOrdersLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders(false);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => fetchOrders(true), 60000);
-    return () => clearInterval(interval);
-  }, []);
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    error,
+  } = useQuery({
+    queryKey: ORDERS_KEY,
+    queryFn: fetchOrders,
+    refetchInterval: (query) => {
+      const hasActiveOrder = query.state.data?.some((o) =>
+        ACTIVE_STATUSES.includes(o.status),
+      );
+      return hasActiveOrder ? 15_000 : false;
+    },
+  });
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("order:new", (payload: NewOrderPayload) => {
-      setOrders((prev) => [...payload.order, ...(prev ?? [])]);
-    });
-    socket.on("order:status_changed", (payload: OrderStatusChangedPayload) => {
-      setOrders(
+    const handleNewOrder = (payload: NewOrderPayload) => {
+      queryClient.setQueryData<Order[]>(ORDERS_KEY, (prev) => [
+        payload.order,
+        ...(prev ?? []),
+      ]);
+    };
+
+    const handleStatusChanged = (payload: OrderStatusChangedPayload) => {
+      queryClient.setQueryData<Order[]>(
+        ORDERS_KEY,
         (prev) =>
           prev?.map((o) =>
             o.id === payload.orderId
               ? { ...o, status: payload.status, updatedAt: payload.updatedAt }
               : o,
-          ) ?? null,
+          ) ?? prev,
       );
-    });
+    };
+
+    socket.on("order:new", handleNewOrder);
+    socket.on("order:status_changed", handleStatusChanged);
 
     return () => {
-      socket.off("order:new");
-      socket.off("order:status_changed");
-      socket.off("payment:confirmed");
+      socket.off("order:new", handleNewOrder);
+      socket.off("order:status_changed", handleStatusChanged);
     };
-  }, [socket]);
+  }, [socket, queryClient]);
 
-  return { isOrdersLoading, error, orders };
+  return {
+    isOrdersLoading,
+    error: error ? "Failed to load orders" : null,
+    orders: orders ?? null,
+  };
 }

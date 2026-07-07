@@ -29,11 +29,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+html,
+body {
+  overflow-x: hidden;
+}
 @theme {
   --color-brand: #004a94;
+  --color-brandDim: #8cb4db;
   --color-paragraph: #0a1929;
   --color-section: #606060;
   --color-text: #343a40;
   --color-foreground: #f1f5f9;
   --color-gold: #f6a40c;
+  --color-bgBase: #fafafa;
 }

@@ -260,7 +260,7 @@ export type UserWhereInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderListRelationFilter
   createdServices?: Prisma.ServiceListRelationFilter
   updatedServices?: Prisma.ServiceListRelationFilter
-  sessions?: Prisma.SessionListRelationFilter
+  locations?: Prisma.LocationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -298,7 +298,7 @@ export type UserOrderByWithRelationInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderOrderByRelationAggregateInput
   createdServices?: Prisma.ServiceOrderByRelationAggregateInput
   updatedServices?: Prisma.ServiceOrderByRelationAggregateInput
-  sessions?: Prisma.SessionOrderByRelationAggregateInput
+  locations?: Prisma.LocationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -339,7 +339,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   liveOrderWorkedOn?: Prisma.LiveOrderListRelationFilter
   createdServices?: Prisma.ServiceListRelationFilter
   updatedServices?: Prisma.ServiceListRelationFilter
-  sessions?: Prisma.SessionListRelationFilter
+  locations?: Prisma.LocationListRelationFilter
 }, "id" | "email" | "phoneNumber" | "hashedPassword" | "profileImageId">
 
 export type UserOrderByWithAggregationInput = {
@@ -412,7 +412,7 @@ export type UserCreateInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -449,7 +449,7 @@ export type UserUncheckedCreateInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -486,7 +486,7 @@ export type UserUpdateInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -523,7 +523,7 @@ export type UserUncheckedUpdateInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -945,18 +945,18 @@ export type UserUpdateOneRequiredWithoutRecentServicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRecentServicesInput, Prisma.UserUpdateWithoutRecentServicesInput>, Prisma.UserUncheckedUpdateWithoutRecentServicesInput>
 }
 
-export type UserCreateNestedOneWithoutSessionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
+export type UserCreateNestedOneWithoutLocationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationsInput, Prisma.UserUncheckedCreateWithoutLocationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
-  upsert?: Prisma.UserUpsertWithoutSessionsInput
+export type UserUpdateOneRequiredWithoutLocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationsInput, Prisma.UserUncheckedCreateWithoutLocationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationsInput
+  upsert?: Prisma.UserUpsertWithoutLocationsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLocationsInput, Prisma.UserUpdateWithoutLocationsInput>, Prisma.UserUncheckedUpdateWithoutLocationsInput>
 }
 
 export type UserCreateNestedOneWithoutProviderInput = {
@@ -1010,7 +1010,7 @@ export type UserCreateWithoutLiveOrderWorkedOnInput = {
   liveOrderEvents?: Prisma.LiveOrderCreateNestedManyWithoutTriggeredByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLiveOrderWorkedOnInput = {
@@ -1046,7 +1046,7 @@ export type UserUncheckedCreateWithoutLiveOrderWorkedOnInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutTriggeredByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLiveOrderWorkedOnInput = {
@@ -1087,7 +1087,7 @@ export type UserCreateWithoutLiveOrderEventsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLiveOrderEventsInput = {
@@ -1123,7 +1123,7 @@ export type UserUncheckedCreateWithoutLiveOrderEventsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLiveOrderEventsInput = {
@@ -1175,7 +1175,7 @@ export type UserUpdateWithoutLiveOrderWorkedOnInput = {
   liveOrderEvents?: Prisma.LiveOrderUpdateManyWithoutTriggeredByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLiveOrderWorkedOnInput = {
@@ -1211,7 +1211,7 @@ export type UserUncheckedUpdateWithoutLiveOrderWorkedOnInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedUpdateManyWithoutTriggeredByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLiveOrderEventsInput = {
@@ -1258,7 +1258,7 @@ export type UserUpdateWithoutLiveOrderEventsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLiveOrderEventsInput = {
@@ -1294,7 +1294,7 @@ export type UserUncheckedUpdateWithoutLiveOrderEventsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLoyaltyAccountInput = {
@@ -1330,7 +1330,7 @@ export type UserCreateWithoutLoyaltyAccountInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLoyaltyAccountInput = {
@@ -1366,7 +1366,7 @@ export type UserUncheckedCreateWithoutLoyaltyAccountInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLoyaltyAccountInput = {
@@ -1418,7 +1418,7 @@ export type UserUpdateWithoutLoyaltyAccountInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLoyaltyAccountInput = {
@@ -1454,7 +1454,7 @@ export type UserUncheckedUpdateWithoutLoyaltyAccountInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProfileImageInput = {
@@ -1490,7 +1490,7 @@ export type UserCreateWithoutProfileImageInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileImageInput = {
@@ -1526,7 +1526,7 @@ export type UserUncheckedCreateWithoutProfileImageInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileImageInput = {
@@ -1578,7 +1578,7 @@ export type UserUpdateWithoutProfileImageInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileImageInput = {
@@ -1614,7 +1614,7 @@ export type UserUncheckedUpdateWithoutProfileImageInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutConversationParticipantsInput = {
@@ -1650,7 +1650,7 @@ export type UserCreateWithoutConversationParticipantsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutConversationParticipantsInput = {
@@ -1686,7 +1686,7 @@ export type UserUncheckedCreateWithoutConversationParticipantsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutConversationParticipantsInput = {
@@ -1738,7 +1738,7 @@ export type UserUpdateWithoutConversationParticipantsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationParticipantsInput = {
@@ -1774,7 +1774,7 @@ export type UserUncheckedUpdateWithoutConversationParticipantsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -1810,7 +1810,7 @@ export type UserCreateWithoutSentMessagesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -1846,7 +1846,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -1898,7 +1898,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -1934,7 +1934,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1970,7 +1970,7 @@ export type UserCreateWithoutNotificationsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -2006,7 +2006,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2058,7 +2058,7 @@ export type UserUpdateWithoutNotificationsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2094,7 +2094,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCustomerOrdersInput = {
@@ -2130,7 +2130,7 @@ export type UserCreateWithoutCustomerOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCustomerOrdersInput = {
@@ -2166,7 +2166,7 @@ export type UserUncheckedCreateWithoutCustomerOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCustomerOrdersInput = {
@@ -2207,7 +2207,7 @@ export type UserCreateWithoutStaffOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStaffOrdersInput = {
@@ -2243,7 +2243,7 @@ export type UserUncheckedCreateWithoutStaffOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStaffOrdersInput = {
@@ -2295,7 +2295,7 @@ export type UserUpdateWithoutCustomerOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
@@ -2331,7 +2331,7 @@ export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutStaffOrdersInput = {
@@ -2378,7 +2378,7 @@ export type UserUpdateWithoutStaffOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStaffOrdersInput = {
@@ -2414,7 +2414,7 @@ export type UserUncheckedUpdateWithoutStaffOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRecurringOrdersInput = {
@@ -2450,7 +2450,7 @@ export type UserCreateWithoutRecurringOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRecurringOrdersInput = {
@@ -2486,7 +2486,7 @@ export type UserUncheckedCreateWithoutRecurringOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRecurringOrdersInput = {
@@ -2538,7 +2538,7 @@ export type UserUpdateWithoutRecurringOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRecurringOrdersInput = {
@@ -2574,7 +2574,7 @@ export type UserUncheckedUpdateWithoutRecurringOrdersInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrderDraftsInput = {
@@ -2610,7 +2610,7 @@ export type UserCreateWithoutOrderDraftsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrderDraftsInput = {
@@ -2646,7 +2646,7 @@ export type UserUncheckedCreateWithoutOrderDraftsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrderDraftsInput = {
@@ -2698,7 +2698,7 @@ export type UserUpdateWithoutOrderDraftsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrderDraftsInput = {
@@ -2734,7 +2734,7 @@ export type UserUncheckedUpdateWithoutOrderDraftsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOtpsInput = {
@@ -2770,7 +2770,7 @@ export type UserCreateWithoutOtpsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpsInput = {
@@ -2806,7 +2806,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpsInput = {
@@ -2858,7 +2858,7 @@ export type UserUpdateWithoutOtpsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpsInput = {
@@ -2894,7 +2894,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCampaignsCreatedInput = {
@@ -2930,7 +2930,7 @@ export type UserCreateWithoutCampaignsCreatedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCampaignsCreatedInput = {
@@ -2966,7 +2966,7 @@ export type UserUncheckedCreateWithoutCampaignsCreatedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCampaignsCreatedInput = {
@@ -3018,7 +3018,7 @@ export type UserUpdateWithoutCampaignsCreatedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCampaignsCreatedInput = {
@@ -3054,7 +3054,7 @@ export type UserUncheckedUpdateWithoutCampaignsCreatedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPersonalPromotionsInput = {
@@ -3090,7 +3090,7 @@ export type UserCreateWithoutPersonalPromotionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPersonalPromotionsInput = {
@@ -3126,7 +3126,7 @@ export type UserUncheckedCreateWithoutPersonalPromotionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPersonalPromotionsInput = {
@@ -3178,7 +3178,7 @@ export type UserUpdateWithoutPersonalPromotionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPersonalPromotionsInput = {
@@ -3214,7 +3214,7 @@ export type UserUncheckedUpdateWithoutPersonalPromotionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPromotionRedemptionsInput = {
@@ -3250,7 +3250,7 @@ export type UserCreateWithoutPromotionRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPromotionRedemptionsInput = {
@@ -3286,7 +3286,7 @@ export type UserUncheckedCreateWithoutPromotionRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPromotionRedemptionsInput = {
@@ -3338,7 +3338,7 @@ export type UserUpdateWithoutPromotionRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPromotionRedemptionsInput = {
@@ -3374,7 +3374,7 @@ export type UserUncheckedUpdateWithoutPromotionRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReferralsMadeInput = {
@@ -3410,7 +3410,7 @@ export type UserCreateWithoutReferralsMadeInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsMadeInput = {
@@ -3446,7 +3446,7 @@ export type UserUncheckedCreateWithoutReferralsMadeInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsMadeInput = {
@@ -3487,7 +3487,7 @@ export type UserCreateWithoutReferralReceivedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralReceivedInput = {
@@ -3523,7 +3523,7 @@ export type UserUncheckedCreateWithoutReferralReceivedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralReceivedInput = {
@@ -3575,7 +3575,7 @@ export type UserUpdateWithoutReferralsMadeInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsMadeInput = {
@@ -3611,7 +3611,7 @@ export type UserUncheckedUpdateWithoutReferralsMadeInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReferralReceivedInput = {
@@ -3658,7 +3658,7 @@ export type UserUpdateWithoutReferralReceivedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralReceivedInput = {
@@ -3694,7 +3694,7 @@ export type UserUncheckedUpdateWithoutReferralReceivedInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRewardRedemptionsInput = {
@@ -3730,7 +3730,7 @@ export type UserCreateWithoutRewardRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRewardRedemptionsInput = {
@@ -3766,7 +3766,7 @@ export type UserUncheckedCreateWithoutRewardRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRewardRedemptionsInput = {
@@ -3818,7 +3818,7 @@ export type UserUpdateWithoutRewardRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRewardRedemptionsInput = {
@@ -3854,7 +3854,7 @@ export type UserUncheckedUpdateWithoutRewardRedemptionsInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedServicesInput = {
@@ -3890,7 +3890,7 @@ export type UserCreateWithoutCreatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderCreateNestedManyWithoutTriggeredByInput
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedServicesInput = {
@@ -3926,7 +3926,7 @@ export type UserUncheckedCreateWithoutCreatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutTriggeredByInput
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedServicesInput = {
@@ -3967,7 +3967,7 @@ export type UserCreateWithoutUpdatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderCreateNestedManyWithoutTriggeredByInput
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedServicesInput = {
@@ -4003,7 +4003,7 @@ export type UserUncheckedCreateWithoutUpdatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutTriggeredByInput
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedServicesInput = {
@@ -4055,7 +4055,7 @@ export type UserUpdateWithoutCreatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUpdateManyWithoutTriggeredByNestedInput
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedServicesInput = {
@@ -4091,7 +4091,7 @@ export type UserUncheckedUpdateWithoutCreatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedUpdateManyWithoutTriggeredByNestedInput
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedServicesInput = {
@@ -4138,7 +4138,7 @@ export type UserUpdateWithoutUpdatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUpdateManyWithoutTriggeredByNestedInput
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedServicesInput = {
@@ -4174,7 +4174,7 @@ export type UserUncheckedUpdateWithoutUpdatedServicesInput = {
   liveOrderEvents?: Prisma.LiveOrderUncheckedUpdateManyWithoutTriggeredByNestedInput
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRecentServicesInput = {
@@ -4210,7 +4210,7 @@ export type UserCreateWithoutRecentServicesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRecentServicesInput = {
@@ -4246,7 +4246,7 @@ export type UserUncheckedCreateWithoutRecentServicesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRecentServicesInput = {
@@ -4298,7 +4298,7 @@ export type UserUpdateWithoutRecentServicesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRecentServicesInput = {
@@ -4334,10 +4334,10 @@ export type UserUncheckedUpdateWithoutRecentServicesInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutSessionsInput = {
+export type UserCreateWithoutLocationsInput = {
   id?: string
   email?: string | null
   firstName: string
@@ -4373,7 +4373,7 @@ export type UserCreateWithoutSessionsInput = {
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
 }
 
-export type UserUncheckedCreateWithoutSessionsInput = {
+export type UserUncheckedCreateWithoutLocationsInput = {
   id?: string
   email?: string | null
   firstName: string
@@ -4409,23 +4409,23 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
-export type UserCreateOrConnectWithoutSessionsInput = {
+export type UserCreateOrConnectWithoutLocationsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationsInput, Prisma.UserUncheckedCreateWithoutLocationsInput>
 }
 
-export type UserUpsertWithoutSessionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+export type UserUpsertWithoutLocationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLocationsInput, Prisma.UserUncheckedUpdateWithoutLocationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationsInput, Prisma.UserUncheckedCreateWithoutLocationsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSessionsInput = {
+export type UserUpdateToOneWithWhereWithoutLocationsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLocationsInput, Prisma.UserUncheckedUpdateWithoutLocationsInput>
 }
 
-export type UserUpdateWithoutSessionsInput = {
+export type UserUpdateWithoutLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4461,7 +4461,7 @@ export type UserUpdateWithoutSessionsInput = {
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSessionsInput = {
+export type UserUncheckedUpdateWithoutLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4530,7 +4530,7 @@ export type UserCreateWithoutProviderInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProviderInput = {
@@ -4566,7 +4566,7 @@ export type UserUncheckedCreateWithoutProviderInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedCreateNestedManyWithoutWorkedOnByInput
   createdServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatedByInput
   updatedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutUpdatedByInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  locations?: Prisma.LocationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProviderInput = {
@@ -4618,7 +4618,7 @@ export type UserUpdateWithoutProviderInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProviderInput = {
@@ -4654,7 +4654,7 @@ export type UserUncheckedUpdateWithoutProviderInput = {
   liveOrderWorkedOn?: Prisma.LiveOrderUncheckedUpdateManyWithoutWorkedOnByNestedInput
   createdServices?: Prisma.ServiceUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedServices?: Prisma.ServiceUncheckedUpdateManyWithoutUpdatedByNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  locations?: Prisma.LocationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -4682,7 +4682,7 @@ export type UserCountOutputType = {
   liveOrderWorkedOn: number
   createdServices: number
   updatedServices: number
-  sessions: number
+  locations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4705,7 +4705,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   liveOrderWorkedOn?: boolean | UserCountOutputTypeCountLiveOrderWorkedOnArgs
   createdServices?: boolean | UserCountOutputTypeCountCreatedServicesArgs
   updatedServices?: boolean | UserCountOutputTypeCountUpdatedServicesArgs
-  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  locations?: boolean | UserCountOutputTypeCountLocationsArgs
 }
 
 /**
@@ -4854,8 +4854,8 @@ export type UserCountOutputTypeCountUpdatedServicesArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SessionWhereInput
+export type UserCountOutputTypeCountLocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationWhereInput
 }
 
 
@@ -4894,7 +4894,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   liveOrderWorkedOn?: boolean | Prisma.User$liveOrderWorkedOnArgs<ExtArgs>
   createdServices?: boolean | Prisma.User$createdServicesArgs<ExtArgs>
   updatedServices?: boolean | Prisma.User$updatedServicesArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  locations?: boolean | Prisma.User$locationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -4969,7 +4969,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   liveOrderWorkedOn?: boolean | Prisma.User$liveOrderWorkedOnArgs<ExtArgs>
   createdServices?: boolean | Prisma.User$createdServicesArgs<ExtArgs>
   updatedServices?: boolean | Prisma.User$updatedServicesArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  locations?: boolean | Prisma.User$locationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5004,7 +5004,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     liveOrderWorkedOn: Prisma.$LiveOrderPayload<ExtArgs>[]
     createdServices: Prisma.$ServicePayload<ExtArgs>[]
     updatedServices: Prisma.$ServicePayload<ExtArgs>[]
-    sessions: Prisma.$SessionPayload<ExtArgs>[]
+    locations: Prisma.$LocationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5435,7 +5435,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   liveOrderWorkedOn<T extends Prisma.User$liveOrderWorkedOnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$liveOrderWorkedOnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdServices<T extends Prisma.User$createdServicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdServicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedServices<T extends Prisma.User$updatedServicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedServicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locations<T extends Prisma.User$locationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$locationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6391,27 +6391,27 @@ export type User$updatedServicesArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * User.sessions
+ * User.locations
  */
-export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$locationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Session
+   * Select specific fields to fetch from the Location
    */
-  select?: Prisma.SessionSelect<ExtArgs> | null
+  select?: Prisma.LocationSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Session
+   * Omit specific fields from the Location
    */
-  omit?: Prisma.SessionOmit<ExtArgs> | null
+  omit?: Prisma.LocationOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SessionInclude<ExtArgs> | null
-  where?: Prisma.SessionWhereInput
-  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
-  cursor?: Prisma.SessionWhereUniqueInput
+  include?: Prisma.LocationInclude<ExtArgs> | null
+  where?: Prisma.LocationWhereInput
+  orderBy?: Prisma.LocationOrderByWithRelationInput | Prisma.LocationOrderByWithRelationInput[]
+  cursor?: Prisma.LocationWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+  distinct?: Prisma.LocationScalarFieldEnum | Prisma.LocationScalarFieldEnum[]
 }
 
 /**

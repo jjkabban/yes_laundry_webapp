@@ -37,6 +37,11 @@ model Order {
   pickupAddress String
   pickupWindow  DateTime
   pickedUpAt    DateTime?
+  timeSlot      SlotName // "morning"
+  addOns OrderAddOn[]
+
+  startTime String // "10:00"
+  endTime   String // "11:00"
 
   deliveryAddress String
   deliveryWindow  DateTime?
@@ -56,6 +61,76 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model RecurringOrderItem {
+  id String @id @default(cuid())
+
+  recurringOrderId String
+  recurringOrder   RecurringOrder @relation(fields: [recurringOrderId], references: [id], onDelete: Cascade)
+
+  serviceItemId String
+  serviceItem   ServiceItem @relation(fields: [serviceItemId], references: [id])
+
+  quantity     Int
+  priceAtOrder Decimal @db.Decimal(10, 2)
+  notes        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([recurringOrderId, serviceItemId])
+}
+
+model OrderAddOn {
+  id String @id @default(uuid())
+  orderId String 
+  order  Order @relation(fields: [orderId], references: [id])
+
+  serviceAddOnId String
+  serviceAddOn ServiceAddOn @relation(fields: [serviceAddOnId], references: [id])
+  priceAtOrder Decimal @db.Decimal(10, 2)
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderDraftAddOn {
+  id String @id @default(cuid())
+
+  orderDraftId String
+  orderDraft   OrderDraft @relation(fields: [orderDraftId], references: [id], onDelete: Cascade)
+   priceAtOrder Decimal @db.Decimal(10, 2)
+
+  serviceAddOnId String
+  serviceAddOn   ServiceAddOn @relation(fields: [serviceAddOnId], references: [id])
+
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+
+  @@unique([orderDraftId, serviceAddOnId])
+}
+
+model RecurringOrderAddOn {
+  id String @id @default(cuid())
+
+  recurringOrderId String
+  recurringOrder   RecurringOrder @relation(fields: [recurringOrderId], references: [id], onDelete: Cascade)
+
+  serviceAddOnId String
+  serviceAddOn   ServiceAddOn @relation(fields: [serviceAddOnId], references: [id])
+   priceAtOrder Decimal @db.Decimal(10, 2)
+
+  
+
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+
+  @@unique([recurringOrderId, serviceAddOnId])
+}
+
 
 model OrderItem {
   id      String @id @default(cuid())
@@ -92,6 +167,8 @@ model RecurringOrder {
 
   pickupAddress   String
   deliveryAddress String
+  addOns RecurringOrderAddOn[]
+  items  RecurringOrderItem[]
 
   isActive  Boolean   @default(true)
   nextRunAt DateTime // when the next Order should be auto-generated
@@ -111,6 +188,7 @@ model OrderDraft {
 
   serviceId String?
   service   Service? @relation(fields: [serviceId], references: [id])
+  addOns OrderDraftAddOn[]
 
   bagCount Int?
   weightKg Decimal? @db.Decimal(5, 2)
