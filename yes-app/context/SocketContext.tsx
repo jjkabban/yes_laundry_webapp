@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { Socket, io } from "socket.io-client";
 import { SocketContextType } from "./types/socket";
-import { User } from "./types/auth";
+import { User } from "@/types/shared/user.type";
 
 const SocketContext = createContext<SocketContextType | null>(null);
 export default function SocketContextProvider({

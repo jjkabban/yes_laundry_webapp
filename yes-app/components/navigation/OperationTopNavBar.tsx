@@ -84,9 +84,9 @@ export default function OperationTopNavBar() {
             </motion.button>
             {!isDesktop && (
               <h3 className="font-medium text-[18px]">
-                {user?.role === "Admin"
+                {user?.role === "ADMIN"
                   ? "Admin Dashboard"
-                  : user?.role === "Staff"
+                  : user?.role === "STAFF"
                     ? "Staff Dashboard"
                     : null}
               </h3>
@@ -94,9 +94,9 @@ export default function OperationTopNavBar() {
           </div>
           <AnimatePresence>
             {openMenu &&
-              (user?.role === "Admin" ? (
+              (user?.role === "ADMIN" ? (
                 <AdminSideBar onMenuClose={onCloseMenu} />
-              ) : user?.role === "Staff" ? (
+              ) : user?.role === "STAFF" ? (
                 <StaffSideBar onMenuClose={onCloseMenu} />
               ) : null)}
           </AnimatePresence>
@@ -104,9 +104,9 @@ export default function OperationTopNavBar() {
 
         {isDesktop && (
           <h3 className="font-medium text-[18px]">
-            {user?.role === "Admin"
+            {user?.role === "ADMIN"
               ? "Admin Dashboard"
-              : user?.role === "Staff"
+              : user?.role === "STAFF"
                 ? "Staff Dashboard"
                 : null}
           </h3>

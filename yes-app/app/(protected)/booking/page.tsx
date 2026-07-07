@@ -13,19 +13,24 @@ import mockService from "../../../data/mock/services.json";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useServiceId } from "@/hooks/useServices";
+import {
+  useServiceId,
+  useServices,
+  useServiceWizardId,
+} from "@/hooks/useServices";
 import {
   Service,
-  ServiceAddOn,
   ServiceAvailability,
   ServiceTimeSlot,
-} from "@/lib/api/type/service.types";
+} from "@/types/shared/service.types";
+
 import CheckBox from "@/components/ui/CheckBox";
 import { BottomSheet } from "@/components/components";
 import { DayPicker, Matcher } from "react-day-picker";
 import "react-day-picker/style.css";
 import { AddressInput } from "@/components/components";
 import { useOrderDraft } from "@/context/OrderDraftContext";
+import { PaymentMethod } from "@/types/shared/transaction.type";
 
 const laundryItems = [
   {
@@ -477,12 +482,11 @@ const SheetContent = ({
 
 // ── Main page ─────────────────────────────────────────────────
 
-type PaymentMethodTypes = "mtn" | "telecel" | "airtelTigo" | "pickup";
 export default function OrderFormPage() {
   const params = useSearchParams();
   const id = params.get("sid");
   const router = useRouter();
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethodTypes>();
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod>();
 
   const [step, setStep] = useState<number>(1);
   const [quantities, setQuantities] = useState<Quantities>({});
@@ -500,18 +504,18 @@ export default function OrderFormPage() {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [timeSlot, setTimeSlots] = useState<ServiceTimeSlot[] | null>(null);
 
-  const { data } = useServiceId(id as string);
+  const { data } = useServiceWizardId(id as string);
+  const selectedService = data?.data;
 
   const memo = useMemo(() => {
-    const serviceData = mockService.find((sv) => sv.id === id);
-    if (!serviceData) return null;
-    const { addOns, timeSlots, availability } = serviceData;
+    if (!selectedService) return null;
+    const { addOns, availability, timeSlots } = selectedService;
     setTimeSlots(timeSlots as ServiceTimeSlot[]);
     return {
       addOns,
       timeSlots: timeSlots as ServiceTimeSlot[],
       availability: availability as ServiceAvailability,
-      service: serviceData as Service,
+      service: selectedService as Service,
     };
   }, [id]);
 
@@ -656,7 +660,7 @@ export default function OrderFormPage() {
     (step === 4 && !paymentMethods);
 
   const onPaymentSelect = useCallback(
-    (method: PaymentMethodTypes) => {
+    (method: PaymentMethod) => {
       setPaymentMethods(method);
     },
     [paymentMethods],
@@ -810,7 +814,7 @@ export default function OrderFormPage() {
                 Optional add-ons
               </h3>
               <div className="bg-white rounded-2xl py-3 px-4">
-                {addOns.map((adn, index) => {
+                {addOns?.map((adn, index) => {
                   const isSelected = selectedAddOns.includes(adn.id);
                   return (
                     <div
@@ -1179,7 +1183,7 @@ export default function OrderFormPage() {
               </h3>
               <div
                 onClick={() => {
-                  onPaymentSelect("pickup");
+                  onPaymentSelect("PICKUP");
                 }}
                 className=" relative border-[2] border-paragraph/20 px-2 flex gap-3 py-6 rounded-2xl"
               >
@@ -1196,7 +1200,7 @@ export default function OrderFormPage() {
                 <div className="absolute top-2 right-2">
                   <CheckBox
                     className="h-5 w-5 rounded-full"
-                    checked={paymentMethods === "pickup"}
+                    checked={paymentMethods === "PICKUP"}
                   />
                 </div>
               </div>
@@ -1204,7 +1208,7 @@ export default function OrderFormPage() {
               <div className="py-2 border-b-[1] flex flex-col gap-4 border-paragraph/10">
                 <div
                   onClick={() => {
-                    onPaymentSelect("mtn");
+                    onPaymentSelect("MTN");
                   }}
                   className=" relative border-[2] border-paragraph/20 px-2 flex gap-3 py-6 rounded-2xl"
                 >
@@ -1228,14 +1232,14 @@ export default function OrderFormPage() {
                   <div className="absolute top-2 right-2">
                     <CheckBox
                       className="h-5 w-5 rounded-full"
-                      checked={paymentMethods === "mtn"}
+                      checked={paymentMethods === "MTN"}
                     />
                   </div>
                 </div>
 
                 <div
                   onClick={() => {
-                    onPaymentSelect("airtelTigo");
+                    onPaymentSelect("AIRTELTIGO");
                   }}
                   className=" relative border-[2] border-paragraph/20 px-2 flex gap-3 py-6 rounded-2xl"
                 >
@@ -1259,13 +1263,13 @@ export default function OrderFormPage() {
                   <div className="absolute top-2 right-2">
                     <CheckBox
                       className="h-5 w-5 rounded-full"
-                      checked={paymentMethods === "airtelTigo"}
+                      checked={paymentMethods === "AIRTELTIGO"}
                     />
                   </div>
                 </div>
                 <div
                   onClick={() => {
-                    onPaymentSelect("telecel");
+                    onPaymentSelect("TELECEL");
                   }}
                   className=" relative border-[2] border-paragraph/20 px-2 flex gap-3 py-6 rounded-2xl"
                 >
@@ -1289,7 +1293,7 @@ export default function OrderFormPage() {
                   <div className="absolute top-2 right-2">
                     <CheckBox
                       className="h-5 w-5 rounded-full"
-                      checked={paymentMethods === "telecel"}
+                      checked={paymentMethods === "TELECEL"}
                     />
                   </div>
                 </div>
@@ -1326,7 +1330,7 @@ export default function OrderFormPage() {
                 const id = "addheiaiaii848750kayyhehdoskd";
 
                 router.push(`booking-confirmation?type=success&oid=${id}`);
-                const addOnSelected = addOns.filter((adn) =>
+                const addOnSelected = addOns?.filter((adn) =>
                   selectedAddOns.includes(adn.id),
                 );
                 saveOrder({
@@ -1334,7 +1338,7 @@ export default function OrderFormPage() {
                   totalPrice,
                   addOns: addOnSelected,
                   quantities: quantities,
-                  paymentMethod: paymentMethods as PaymentMethodTypes,
+                  paymentMethod: paymentMethods as PaymentMethod,
                 });
                 return;
               }

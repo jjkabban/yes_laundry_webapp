@@ -96,3 +96,14 @@ export type ServiceDetail = Service & {
   handleAndCare: ServiceHandleAndCare[];
   includes: ServiceIncludes[];
 };
+
+export type ServiceWizardDetail = Service & {
+  items?: ServiceItem[];
+  addOns?: AddOn[];
+  availability?: ServiceAvailability;
+  timeSlots?: ServiceTimeSlot[];
+  priceModel: ServicePriceModel;
+  coverImage: ImageType;
+  turnaroundTime: string;
+  basePrice: number;
+};

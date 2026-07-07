@@ -225,7 +225,7 @@ export default function BookingConfirmationPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="font-semibold text-[15px]">
-                  {data?.paymentMethod === "pickup"
+                  {data?.paymentMethod === "PICKUP"
                     ? "Amount due at pickup"
                     : "Total paid"}
                 </h2>
@@ -235,7 +235,7 @@ export default function BookingConfirmationPage() {
                   {addOns &&
                     addOns.length > 0 &&
                     ` • ${addOns.length} add-on${addOns.length !== 1 ? "s" : ""}`}
-                  {data?.paymentMethod === "pickup" && " • Pay at pickup"}
+                  {data?.paymentMethod === "PICKUP" && " • Pay at pickup"}
                 </p>
               </div>
               <span className="text-[18px] font-semibold text-brand">

@@ -1,4 +1,10 @@
-export type PaymentMethod = "CASH" | "CARD" | "MOBILE_MONEY";
+export type PaymentMethod =
+  | "CASH"
+  | "CARD"
+  | "MTN"
+  | "AIRTELTIGO"
+  | "TELECEL"
+  | "PICKUP";
 export type PaymentProvider = "MTN" | "AIRTELTIGO" | "TELECEL";
 export type PaymentStatus =
   | "PENDING"

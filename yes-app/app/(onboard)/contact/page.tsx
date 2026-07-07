@@ -36,7 +36,7 @@ const initialForm: FormState = {
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
-  const { setClientError } = useClientError();
+  const { logClientError } = useClientError();
   const pathName = usePathname();
 
   const handleChange = (
@@ -59,14 +59,6 @@ export default function ContactPage() {
       setStatus("sent");
       setForm(initialForm);
     } catch (err: any) {
-      setClientError([
-        {
-          pathName,
-          page: "contact-page",
-          message: err?.message,
-          type: err?.type,
-        },
-      ]);
     } finally {
       setStatus("sent");
     }

@@ -2,10 +2,7 @@
 
 import { useServices } from "@/hooks/useServices";
 import { getServices } from "@/lib/api/service.api";
-import {
-  ServicePriceModel,
-  ServiceResponsePayload,
-} from "@/lib/api/type/service.types";
+import { ServicePriceModel, Service } from "@/types/shared/service.types";
 import { ArrowLeft, Timer } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";

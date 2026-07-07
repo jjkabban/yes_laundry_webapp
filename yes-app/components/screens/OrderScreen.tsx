@@ -1,7 +1,7 @@
 "use client";
 import OrderStepper from "@/components/ui/OrdersStepper";
 import { useOrderContext } from "@/context/OrderContext";
-import { ORDER_STATUS_CONFIG } from "@/helpers/status";
+import { getOrderStatusInfo, ORDER_STATUS_CONFIG } from "@/helpers/status";
 import {
   formatDate,
   formatOrderTime,
@@ -21,7 +21,7 @@ import { useMemo, useState } from "react";
 type FilterTab = "all" | "ongoing" | "completed" | "cancelled";
 
 export default function OrderScreen() {
-  const { orders, isOrdersLoading } = useOrderContext();
+  const { orderData: orders, isOrdersLoading } = useOrderContext();
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
 
   const displayOrders = useMemo(() => {
@@ -115,6 +115,10 @@ export default function OrderScreen() {
                       : null;
                   const isCancelled = ord.status === "CANCELLED";
                   const status = ORDER_STATUS_CONFIG[ord.status];
+                  const orderStatusInfo = getOrderStatusInfo(
+                    ord.status,
+                    ord.events,
+                  );
 
                   return (
                     <div
@@ -156,9 +160,6 @@ export default function OrderScreen() {
                           <span className="text-[14px]  font-medium">
                             {status.title}
                           </span>
-                          <span className="text-[12px] text-paragraph/80">
-                            {status.extraInfo}
-                          </span>
                         </div>
                       </div>
 
@@ -167,7 +168,7 @@ export default function OrderScreen() {
                           status={ord.status}
                           cancelled={isCancelled}
                           isPast={false}
-                          orientation="horizontal"
+                          description={orderStatusInfo}
                         />
                       </div>
 

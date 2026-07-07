@@ -22,9 +22,12 @@ import { FloatingButton } from "@/components/components/FloatingButton";
 import { TopHeader } from "@/components/ui/TopHeader";
 
 export async function generateStaticParams() {
-  const res = await getServices();
-  const services = res.data;
-  return services?.map((service) => ({ id: service.id }));
+  const res = await getServices(); // or whatever fetch it uses
+  const services = res.data ?? [];
+
+  return services.map((service) => ({
+    id: service.id.toString(),
+  }));
 }
 
 const whatsIncluded = [

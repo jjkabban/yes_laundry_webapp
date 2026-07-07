@@ -1,6 +1,9 @@
 import { AddOn } from "@/types/shared/addOn.type";
 import { Order } from "@/types/shared/order.type";
-import { PaymentMethod } from "@/types/shared/transaction.type";
+import {
+  PaymentMethod,
+  PaymentProvider,
+} from "@/types/shared/transaction.type";
 export type OrderDraftDataType = {
   quantities: Record<string, number>;
   pickupAddress: string;
@@ -8,7 +11,7 @@ export type OrderDraftDataType = {
   pickupDate: string;
   deliveryAddress: string;
   note: string;
-  addOns: AddOn[];
+  addOns?: AddOn[];
   totalPrice: number;
   paymentMethod: PaymentMethod;
 };

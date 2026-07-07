@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, MapPin, ShoppingBag } from "lucide-react";
-import { Order, RecurrenceFrequency } from "@/context/types/order";
+import { Order, RecurrenceFrequency } from "@/types/shared/order.type";
 import RecurringOrderActions from "./RecurringActionRow";
 
 export interface RecurringOrder extends Order {

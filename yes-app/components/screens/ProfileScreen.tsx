@@ -49,7 +49,7 @@ const menuSections = [
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { orders } = useOrderContext();
+  const { orderData: orders } = useOrderContext();
 
   const user = {
     firstName: "Justice",

@@ -23,14 +23,17 @@ import { getServiceStats, ServiceStats } from "@/data/pages/service.general";
 import Icon from "@/components/icons/LucideIcons";
 
 export async function generateStaticParams() {
-  const res = await getServices();
-  const services = res.data ?? [];
+  try {
+    const res = await getServices();
+    const services = res.data ?? [];
 
-  if (!services) return notFound();
-
-  return services.map((service) => ({
-    id: service.id.toString(),
-  }));
+    return services.map((service) => ({
+      id: service.id.toString(),
+    }));
+  } catch (err) {
+    console.error("generateStaticParams: failed to fetch services", err);
+    return [];
+  }
 }
 
 const whatsIncluded = [
